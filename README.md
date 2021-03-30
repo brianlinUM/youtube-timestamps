@@ -8,11 +8,11 @@ Tools used in this project includes NPM and webpack.
 ## Installation
 First install all npm packages in `package-lock.json` by running from root `/`:
 
-`npm ci`
+`npm install`
 
 Then, build the .js bundles by running:
 
-`npx webpack`
+`npm run build`
 
 This builds the source .js files to `dist/javascript/`. After building, we need to install the extension to the Chrome browser. This requires enabling *Developer Mode* in `chrome://extensions/`.
 "Load unpacked" from `dist/`, which contains `manifest.json`.
