@@ -6,13 +6,16 @@ The project is currently implemented using Javascript and Vue, and makes extensi
 Tools used in this project includes NPM and webpack.
 
 ## Installation
-First install all npm packages in `package-lock.json` by running from root `/`:
+Before beginning, make sure to have Node.js and NPM installed.
 
-`npm ci`
+
+Install all Node dependencies by running from root `/`:
+
+`npm install`
 
 Then, build the .js bundles by running:
 
-`npx webpack`
+`npm run build`
 
 This builds the source .js files to `dist/javascript/`. After building, we need to install the extension to the Chrome browser. This requires enabling *Developer Mode* in `chrome://extensions/`.
 "Load unpacked" from `dist/`, which contains `manifest.json`.
