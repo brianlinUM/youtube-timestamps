@@ -1,4 +1,4 @@
-Current plans for MVP1:
+Current plans for v0.1.0:
 
 In-page:
 Hotkey to add current timestamp to extension storage

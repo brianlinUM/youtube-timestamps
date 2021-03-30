@@ -18,4 +18,4 @@ This builds the source .js files to `dist/javascript/`. After building, we need 
 "Load unpacked" from `dist/`, which contains `manifest.json`.
 
 ## Current Progress
-Minimum Viable Product 1 (**MVP1**) is currently in development - see Plans.txt for an outline.
+**v0.1.0**: version is currently in development - see Plans.txt for an outline.
