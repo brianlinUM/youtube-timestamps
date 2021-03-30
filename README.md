@@ -6,7 +6,10 @@ The project is currently implemented using Javascript and Vue, and makes extensi
 Tools used in this project includes NPM and webpack.
 
 ## Installation
-First install all npm packages in `package-lock.json` by running from root `/`:
+Before beginning, make sure to have Node.js and NPM installed.
+
+
+Install all Node dependencies by running from root `/`:
 
 `npm install`
 
