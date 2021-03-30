@@ -1,7 +1,6 @@
 Current plans for MVP1:
 
 In-page:
-In-page button to add current timestamp to extension storage
 Hotkey to add current timestamp to extension storage
 
 Popup:
