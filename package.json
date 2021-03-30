@@ -1,0 +1,36 @@
+{
+    "name": "youtube-timestamps",
+    "version": "0.1.0",
+    "description": "A Chrome Extension for saving timestamps of YouTube videos",
+    "author": "Brian Lin <brianlin@umich.edu>",
+    "homepage": "https://github.com/brianlinUM/youtube-timestamps#readme",
+    "bugs": "https://github.com/brianlinUM/youtube-timestamps/issues",
+    "keywords": [
+        "YouTube",
+        "video",
+        "timestamp",
+        "bookmark"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/brianlinUM/youtube-timestamps.git"
+    },
+    "main": "src/popup.js",
+    "private": true,
+    "scripts": {
+        "build": "npx webpack"
+    },
+    "dependencies": {
+        "vue": "^2.6.12"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.13.14",
+        "@babel/preset-env": "^7.13.12",
+        "babel-loader": "^8.2.2",
+        "css-loader": "^5.2.0",
+        "vue-loader": "^15.9.6",
+        "vue-template-compiler": "^2.6.12",
+        "webpack": "^5.28.0",
+        "webpack-cli": "^4.6.0"
+    }
+}
