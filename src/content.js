@@ -16,10 +16,14 @@ function getCurrentTimestampInfo() {
         "ytp-time-current"
     )[0].innerText;
     const videoId = getVideoId();
+    const title = document.getElementsByClassName(
+        "title style-scope ytd-video-primary-info-renderer"
+    )[0].firstChild.innerText;
 
     return {
         timestamp: time,
         videoId: videoId,
+        title: title,
     }
 }
 
