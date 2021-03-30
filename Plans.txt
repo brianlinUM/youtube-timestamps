@@ -1,0 +1,11 @@
+Current plans for MVP1:
+
+In-page:
+In-page button to add current timestamp to extension storage
+Hotkey to add current timestamp to extension storage
+
+Popup:
+Display added timestamps for current video
+Display added timestamps for all videos
+Button to remove timestamps / videos
+Clicking on popup timestamp moves the video progress to the timestamp

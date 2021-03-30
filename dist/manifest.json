@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Youtube Timestamps",
+    "short_name": "YT Timestamps",
+    "version": "0.1.0",
+    "author": "Brian Lin",
+    "default_locale": "en",
+    "description": "A Chrome Extension for saving timestamps of YouTube videos",
+    "version_name": "MVP 1",
+  
+    "incognito": "not_allowed",
+    "permissions": ["storage", "tabs"],
+    "action": {
+        "default_title": "Youtube Timestamps Popup",
+        "default_popup": "/html/popup.html" 
+    },
+
+    "content_scripts": [{
+        "js": [
+            "/javascript/content.bundle.js"
+        ],
+        "matches": [
+            "https://www.youtube.com/watch?v=*"
+        ]
+    }]
+}
