@@ -109,18 +109,23 @@ export default {
             chrome.storage.local.clear();
             this.videos = {};
         },
+        // remove single video and all its timestamps
         removeVideo(videoToRemove) {
             const {videoId} = videoToRemove;
             chrome.storage.local.remove(videoId);
+            // needs to use $delete to be reactive
             this.$delete(this.videos, videoId);
         },
+        // remove single timestamp of a video
         removeTimestamp(videoToRemove) {
             const {videoId, timestamp} = videoToRemove;
             chrome.storage.local.get(videoId, (data) => {
                 let videoStorageMeta = data[videoId];
                 const indexToRemove = videoStorageMeta.timestamps.indexOf(timestamp);
+                // remove single timestamp
                 videoStorageMeta.timestamps.splice(indexToRemove, 1);
 
+                // update chrome storage and instance
                 chrome.storage.local.set({
                     [videoId]: videoStorageMeta
                 });

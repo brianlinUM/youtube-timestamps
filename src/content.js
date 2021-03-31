@@ -26,10 +26,19 @@ function getCurrentTimestampInfo() {
 }
 
 
+// Change video's current time
+function changeTime (newTime) {
+    let video = document.getElementsByTagName("video")[0]
+    video.currentTime = newTime;
+}
+
+
 // Listen for add timestamp request msg from popup
 chrome.runtime.onMessage.addListener((request, sender, response) => {
     if (request.msg === "add-timestamp") {
         const timestampData = getCurrentTimestampInfo();
         response(timestampData);
+    } else if (request.msg === "change-time") {
+        changeTime(request.timestamp);
     }
 });
