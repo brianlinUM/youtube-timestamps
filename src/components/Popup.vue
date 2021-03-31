@@ -7,26 +7,38 @@
                 Add Timestamp
         </button>
         <button
-            type="button" id="remove-all-btn" @click="clearAllTimestamps"
+            type="button" id="remove-all-btn"
+            @click="clearAllTimestamps"
         >
             Clear All Timestamps
         </button>
         <ul>
-            <li v-for="timestamp in timestamps" :key="timestamp">{{timestamp[0]}}: {{timestamp[1]}}</li>
+            <li v-for="(meta, videoId) in videos" :key="videoId">
+                <div>
+                    <h1 class="videoTitle">{{meta.title}}</h1>
+                    <ul>
+                        <li v-for="timestamp in meta.timestamps" :key="timestamp">
+                            <p class="videoTimestamp">{{timestamp}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </template>
 
 
 <script>
+// Chrome local storage is the single source of truth for timestamps.
+// Storage is organized as:
+// {videoId: {title, timestamps:[timestamp,...]}}
 export default {
     data () {
         return {
-            timestamps: [],
+            videos: {},
             isYoutubeVideoTab: false,
         }
     },
-
     created () {
         // check if the active tab is a youtube video and hide
         // add timestamp btn if not.
@@ -38,8 +50,9 @@ export default {
                 this.isYoutubeVideoTab = tabs.length > 0;
             }
         );
-        chrome.storage.local.get("timestamps", (data) => {
-            this.timestamps = data.timestamps ? data.timestamps : [];
+        // retrieve data from local Chrome storage
+        chrome.storage.local.get(null, (data) => {
+            this.videos = data;
         });
     },
 
@@ -51,24 +64,56 @@ export default {
             chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
                 chrome.tabs.sendMessage(
                     tabs[0].id, {msg: "add-timestamp"}, (response) => {
+                        // response format: {videoId, title, timestamp}
+                        this.updateLocalStorage(response);
                         this.addTimestamp(response);
                     }
                 );
             });
         },
-        // add timestamp to popup instance and then to local storage
-        addTimestamp(timestampData) {
-            this.timestamps.push([timestampData.videoId, timestampData.timestamp]);
-            chrome.storage.local.set(
-                {
-                    timestamps: this.timestamps
+        // update local Chrome storage with new timestamp
+        updateLocalStorage(timestampData) {
+            const {videoId, title, timestamp} = timestampData;
+            // get timestamps for given videoId then update it
+            chrome.storage.local.get(videoId, (data) => {
+                // data format: {videoId: {title, timestamps:[timestamp,...]}}
+                let videoMeta = {title: title, timestamps: []};
+                // find out if we need to append to existing data for given videoId
+                if (videoId in data) {
+                    videoMeta = data[videoId];
                 }
-            );
+                videoMeta.timestamps.push(timestamp);
+
+                chrome.storage.local.set(
+                    {
+                        [videoId]: videoMeta,
+                    }, () => {
+                        // DEBUG
+                        chrome.storage.local.get(null, (data) => {
+                            console.log(data);
+                        })
+                    }
+                );
+            });
         },
-        // remove all timestamps from popup instance then from local storage
+        // add new timestamp to popup instance
+        addTimestamp(timestampData) {
+            const {videoId, title, timestamp} = timestampData;
+            if (!(videoId in this.videos)) {
+                // need to add new video using set to make added object reactive
+                this.$set(this.videos, videoId, {
+                    title: title,
+                    timestamps: [timestamp],
+                });
+            } else {
+                // push to existing video
+                this.videos[videoId].timestamps.push(timestamp);
+            }
+        },
+        // remove all timestamps from local storage then from popup instance
         clearAllTimestamps() {
-            this.timestamps = [];
             chrome.storage.local.clear();
+            this.videos = {};
         },
     },
 }
@@ -80,12 +125,16 @@ button {
     height: 30px;
     width: 200px;
 }
-
 #add-timestamp-btn {
     background-color: aqua;
 }
-
 #remove-all-btn {
     background-color: red;
+}
+.videoTitle {
+    font-size: 15px;
+}
+.videoTimestamp {
+    font-size: 12px;
 }
 </style>
