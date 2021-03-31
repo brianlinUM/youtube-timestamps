@@ -12,7 +12,10 @@
         >
             Clear All Timestamps
         </button>
-        <VideoList :videosProp="videos" @remove-timestamp="removeTimestamp"/>
+        <VideoList :videosProp="videos" 
+            @remove-timestamp="removeTimestamp"
+            @remove-video="removeVideo"
+        />
     </div>
 </template>
 
@@ -106,9 +109,23 @@ export default {
             chrome.storage.local.clear();
             this.videos = {};
         },
-        removeTimestamp(videoMeta) {
-            const {videoId, timestamp} = videoMeta;
-            console.log("DEL: ", videoId, timestamp);
+        removeVideo(videoToRemove) {
+            const {videoId} = videoToRemove;
+            chrome.storage.local.remove(videoId);
+            this.$delete(this.videos, videoId);
+        },
+        removeTimestamp(videoToRemove) {
+            const {videoId, timestamp} = videoToRemove;
+            chrome.storage.local.get(videoId, (data) => {
+                let videoStorageMeta = data[videoId];
+                const indexToRemove = videoStorageMeta.timestamps.indexOf(timestamp);
+                videoStorageMeta.timestamps.splice(indexToRemove, 1);
+
+                chrome.storage.local.set({
+                    [videoId]: videoStorageMeta
+                });
+                this.videos[videoId] = videoStorageMeta;
+            });
         }
     },
 }
