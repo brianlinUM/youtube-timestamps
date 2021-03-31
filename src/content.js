@@ -12,16 +12,14 @@ function getVideoId() {
 
 // Obtain all relevant info for the timestamp and returns it.
 function getCurrentTimestampInfo() {
-    const time = document.getElementsByClassName(
-        "ytp-time-current"
-    )[0].innerText;
+    const time = document.getElementsByTagName("video")[0].currentTime;
     const videoId = getVideoId();
     const title = document.getElementsByClassName(
         "title style-scope ytd-video-primary-info-renderer"
     )[0].firstChild.innerText;
 
     return {
-        timestamp: time,
+        timestamp: Math.floor(time),
         videoId: videoId,
         title: title,
     }
