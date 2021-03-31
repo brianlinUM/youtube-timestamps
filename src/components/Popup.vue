@@ -12,27 +12,18 @@
         >
             Clear All Timestamps
         </button>
-        <ul>
-            <li v-for="(meta, videoId) in videos" :key="videoId">
-                <div>
-                    <h1 class="videoTitle">{{meta.title}}</h1>
-                    <ul>
-                        <li v-for="timestamp in meta.timestamps" :key="timestamp">
-                            <p class="videoTimestamp">{{timestamp}}</p>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
+        <VideoList :videosProp="videos" @remove-timestamp="removeTimestamp"/>
     </div>
 </template>
 
 
 <script>
+import VideoList from "./VideoList.vue";
 // Chrome local storage is the single source of truth for timestamps.
 // Storage is organized as:
 // {videoId: {title, timestamps:[timestamp,...]}}
 export default {
+    components: {VideoList},
     data () {
         return {
             videos: {},
@@ -115,6 +106,10 @@ export default {
             chrome.storage.local.clear();
             this.videos = {};
         },
+        removeTimestamp(videoMeta) {
+            const {videoId, timestamp} = videoMeta;
+            console.log("DEL: ", videoId, timestamp);
+        }
     },
 }
 </script>
@@ -130,11 +125,5 @@ button {
 }
 #remove-all-btn {
     background-color: red;
-}
-.videoTitle {
-    font-size: 15px;
-}
-.videoTimestamp {
-    font-size: 12px;
 }
 </style>
