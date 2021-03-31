@@ -4,14 +4,16 @@
             type="button" id="add-timestamp-btn" v-show="isYoutubeVideoTab" 
             @click="sendTimestampRequest"
         >
-                Add Timestamp
+            Add Timestamp
         </button>
+
         <button
             type="button" id="remove-all-btn"
             @click="clearAllTimestamps"
         >
             Clear All Timestamps
         </button>
+
         <VideoList :videosProp="videos" 
             @remove-timestamp="removeTimestamp"
             @remove-video="removeVideo"

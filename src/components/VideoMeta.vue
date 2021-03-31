@@ -1,17 +1,20 @@
 <template>
     <div>
         <a href="#" @click="changeVideo(0)"><h1 class="videoTitle">{{metaProp.title}}</h1></a>
+
         <!-- emit event to grandparent as it handles the data -->
         <button type="button" class="remove-timestamp-btn"
             @click="$parent.$emit('remove-video', {
-                        videoId: videoIdProp
+                videoId: videoIdProp
             })"
         >
             Remove Video
         </button>
+
         <ul>
             <li v-for="timestamp in metaProp.timestamps" :key="timestamp">
                 <a class="videoTimestamp" href="#" @click="changeTime(timestamp)">{{timestamp}}</a>
+
                 <!-- emit event to grandparent as it handles the data -->
                 <button type="button" class="remove-timestamp-btn"
                     @click="$parent.$emit('remove-timestamp', {
