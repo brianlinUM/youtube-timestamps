@@ -5,7 +5,6 @@
     "version": "0.1.0",
     "author": "Brian Lin",
     "description": "A Chrome Extension for saving timestamps of YouTube videos",
-    "version_name": "MVP 1",
   
     "permissions": ["storage", "activeTab"],
     "action": {
