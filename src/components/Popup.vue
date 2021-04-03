@@ -24,7 +24,10 @@
 
 <script>
 import VideoList from "./VideoList.vue";
-import {updateLocalStorage, getAllData} from "../updateStorage.js";
+import {updateLocalStorage, getAllData} from "../common/updateStorage.js";
+import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
+import queryCurrentTab from "../common/obtainCurrentTab.js";
+
 // Chrome local storage is the single source of truth for timestamps.
 // Storage is organized as:
 // {videoId: {title, timestamps:[timestamp,...]}}
@@ -39,14 +42,9 @@ export default {
     created () {
         // check if the active tab is a youtube video and hide
         // add timestamp btn if not.
-        chrome.tabs.query(
-            {
-                active: true, currentWindow: true,
-                url: "https://www.youtube.com/watch?v=*",
-            }, (tabs) => {
-                this.isYoutubeVideoTab = tabs.length > 0;
-            }
-        );
+        queryCurrentTab( (tabs) => {
+            this.isYoutubeVideoTab = tabs.length > 0;
+        }, "https://www.youtube.com/watch?v=*");
 
         // retrieve data from local Chrome storage
         chrome.storage.local.get(null, (data) => {
@@ -65,16 +63,10 @@ export default {
     methods: {
         // Send a request to the active youtube page to retrieve its timestamp.
         // https://developer.chrome.com/docs/extensions/mv2/messaging/
-        sendTimestampRequest () {
-            // No need to check if is Youtube video tab since btn only appears if it is
-            chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-                chrome.tabs.sendMessage(
-                    tabs[0].id, {msg: "obtain-timestamp"}, (response) => {
-                        // response format: {videoId, title, timestamp}
-                        updateLocalStorage(response, getAllData);
-                        this.addTimestamp(response);
-                    }
-                );
+        sendTimestampRequest() {
+            sendObtainTimestampRequest((response) => {
+                updateLocalStorage(response, getAllData);
+                this.addTimestamp(response);
             });
         },
         // add new timestamp to popup instance
