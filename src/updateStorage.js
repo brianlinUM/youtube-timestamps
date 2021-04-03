@@ -1,4 +1,7 @@
 // update local Chrome storage with new timestamp
+// Chrome local storage is the single source of truth for timestamps.
+// Storage is organized as:
+// {videoId: {title, timestamps:[timestamp,...]}}
 function updateLocalStorage(timestampData, callback=null) {
     const {videoId, title, timestamp} = timestampData;
     // get timestamps for given videoId then update it

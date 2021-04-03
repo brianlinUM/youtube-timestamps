@@ -47,9 +47,18 @@ export default {
                 this.isYoutubeVideoTab = tabs.length > 0;
             }
         );
+
         // retrieve data from local Chrome storage
         chrome.storage.local.get(null, (data) => {
             this.videos = data;
+        });
+
+        // update popup instance data with new timestamp.
+        // update msg is from background script.
+        chrome.runtime.onMessage.addListener((request) => {
+            if (request.msg === "update-timestamp") {
+                this.addTimestamp(request.timestampData);
+            }
         });
     },
 

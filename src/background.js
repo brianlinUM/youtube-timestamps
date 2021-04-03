@@ -1,5 +1,14 @@
 import {updateLocalStorage} from "./updateStorage.js";
 
+console.log("Background Script Running");
+
+// send a message to popup instance to update its videos data
+function sendUpdatePopupInstance(timestampData) {
+    chrome.runtime.sendMessage(
+        {msg: "update-timestamp", timestampData: timestampData}
+    );
+}
+
 // send an add timestamp request to content script
 function sendTimestampRequest() {
     chrome.tabs.query(
@@ -12,6 +21,7 @@ function sendTimestampRequest() {
                 chrome.tabs.sendMessage(
                     tabs[0].id, {msg: "add-timestamp"}, (response) => {
                         updateLocalStorage(response);
+                        sendUpdatePopupInstance(response);
                     }
                 );
             }
