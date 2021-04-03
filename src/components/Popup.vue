@@ -24,6 +24,7 @@
 
 <script>
 import VideoList from "./VideoList.vue";
+import {updateLocalStorage, getAllData} from "../updateStorage.js";
 // Chrome local storage is the single source of truth for timestamps.
 // Storage is organized as:
 // {videoId: {title, timestamps:[timestamp,...]}}
@@ -61,33 +62,8 @@ export default {
                 chrome.tabs.sendMessage(
                     tabs[0].id, {msg: "add-timestamp"}, (response) => {
                         // response format: {videoId, title, timestamp}
-                        this.updateLocalStorage(response);
+                        updateLocalStorage(response, getAllData);
                         this.addTimestamp(response);
-                    }
-                );
-            });
-        },
-        // update local Chrome storage with new timestamp
-        updateLocalStorage(timestampData) {
-            const {videoId, title, timestamp} = timestampData;
-            // get timestamps for given videoId then update it
-            chrome.storage.local.get(videoId, (data) => {
-                // data format: {videoId: {title, timestamps:[timestamp,...]}}
-                let videoMeta = {title: title, timestamps: []};
-                // find out if we need to append to existing data for given videoId
-                if (videoId in data) {
-                    videoMeta = data[videoId];
-                }
-                videoMeta.timestamps.push(timestamp);
-
-                chrome.storage.local.set(
-                    {
-                        [videoId]: videoMeta,
-                    }, () => {
-                        // DEBUG
-                        chrome.storage.local.get(null, (data) => {
-                            console.log(data);
-                        })
                     }
                 );
             });

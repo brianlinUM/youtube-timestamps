@@ -21,5 +21,19 @@
         "matches": [
             "https://www.youtube.com/watch?v=*"
         ]
-    }]
+    }],
+
+    "background": {
+        "service_worker": "./background.js"
+    },
+
+    "commands": {
+        "add-timestamp": {
+            "suggested_key": {
+                "default": "Ctrl+Q",
+                "mac": "Command+Shift+E"
+            },
+            "description": "Record current timestamp"
+        }
+    }
 }
