@@ -69,7 +69,7 @@ export default {
             // No need to check if is Youtube video tab since btn only appears if it is
             chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
                 chrome.tabs.sendMessage(
-                    tabs[0].id, {msg: "add-timestamp"}, (response) => {
+                    tabs[0].id, {msg: "obtain-timestamp"}, (response) => {
                         // response format: {videoId, title, timestamp}
                         updateLocalStorage(response, getAllData);
                         this.addTimestamp(response);

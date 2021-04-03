@@ -35,7 +35,7 @@ function changeTime (newTime) {
 
 // Listen for add timestamp request msg from popup
 chrome.runtime.onMessage.addListener((request, sender, response) => {
-    if (request.msg === "add-timestamp") {
+    if (request.msg === "obtain-timestamp") {
         const timestampData = getCurrentTimestampInfo();
         response(timestampData);
     } else if (request.msg === "change-time") {

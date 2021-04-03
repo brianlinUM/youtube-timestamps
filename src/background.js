@@ -19,7 +19,7 @@ function sendTimestampRequest() {
             // needs to be a YouTube video tab
             if (tabs.length > 0) {
                 chrome.tabs.sendMessage(
-                    tabs[0].id, {msg: "add-timestamp"}, (response) => {
+                    tabs[0].id, {msg: "obtain-timestamp"}, (response) => {
                         updateLocalStorage(response);
                         sendUpdatePopupInstance(response);
                     }
