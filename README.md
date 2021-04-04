@@ -34,6 +34,7 @@ This builds the source .js files to `dist/javascript/`. After building, we need 
 "Load unpacked" from `dist/`, which contains `manifest.json`.
 
 ## Current Progress
-**v0.1.0**: released April 3rd, 2021 - see Changelog.md for an outline. This version focuses on basic functionality rather than UI / Aesthetics.
-
-**v0.2.0**: This version is in development - see Plans.md for details. Focuses on improving graphics / UI.
+See changelog.md for additional details
+- **v0.1.0**: released April 3rd, 2021. This version focuses on basic functionality rather than UI / Aesthetics.
+- **v0.1.1**: released April 4th, 2021. Fixes a content script issue.
+- **v0.2.0**: This version is in development - see Plans.md for details. Focuses on improving graphics / UI.
