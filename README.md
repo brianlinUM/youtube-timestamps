@@ -3,8 +3,6 @@ This chrome extension allows a YouTube user to 'bookmark' different parts of a v
 
 When you click on an added timestamp on the extension popup, the current time of the video is changed to the timestamp of the corresponding video.
 
-**Current Bug** There's currently a bug where the extension doesn't work at first, but works when the tab with the youtube video is refreshed. Currently working on patching this.
-
 ### Shortcut Keys
 `CTRL+Q` (`⌘+⇧+E` on Macs): record current timestamp and add to extension.
 
