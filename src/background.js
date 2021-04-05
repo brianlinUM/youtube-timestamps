@@ -1,4 +1,4 @@
-import {updateLocalStorage} from "./common/updateStorage.js";
+import {addTimestampToStorage} from "./common/chromeStorageAPI.js";
 import sendObtainTimestampRequest from "./common/obtainTimestamp.js";
 
 console.log("Background Script Running");
@@ -14,7 +14,8 @@ function sendUpdatePopupInstance(timestampData) {
 chrome.commands.onCommand.addListener((command) => {
     if (command === "add-timestamp") {
         sendObtainTimestampRequest((response) => {
-            updateLocalStorage(response);
+            // we call storage here instead of in popup since popup may not be open
+            addTimestampToStorage(response);
             sendUpdatePopupInstance(response);
         });
     }

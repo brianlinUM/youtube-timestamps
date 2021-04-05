@@ -24,13 +24,10 @@
 
 <script>
 import VideoList from "./VideoList.vue";
-import {updateLocalStorage, getAllData} from "../common/updateStorage.js";
+import * as Storage from "../common/chromeStorageAPI.js";
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
 import queryCurrentTab from "../common/obtainCurrentTab.js";
 
-// Chrome local storage is the single source of truth for timestamps.
-// Storage is organized as:
-// {videoId: {title, timestamps:[timestamp,...]}}
 export default {
     components: {VideoList},
     data () {
@@ -39,7 +36,7 @@ export default {
             isYoutubeVideoTab: false,
         }
     },
-    created () {
+    mounted () {
         // check if the active tab is a youtube video and hide
         // add timestamp btn if not.
         queryCurrentTab( (tabs) => {
@@ -47,15 +44,13 @@ export default {
         }, "https://www.youtube.com/watch?v=*");
 
         // retrieve data from local Chrome storage
-        chrome.storage.local.get(null, (data) => {
-            this.videos = data;
-        });
+        Storage.getAllData((data) => {this.videos = data;});
 
         // update popup instance data with new timestamp.
         // update msg is from background script.
         chrome.runtime.onMessage.addListener((request) => {
             if (request.msg === "update-timestamp") {
-                this.addTimestamp(request.timestampData);
+                this.addInstanceTimestamp(request.timestampData);
             }
         });
     },
@@ -65,12 +60,12 @@ export default {
         // https://developer.chrome.com/docs/extensions/mv2/messaging/
         sendTimestampRequest() {
             sendObtainTimestampRequest((response) => {
-                updateLocalStorage(response, getAllData);
-                this.addTimestamp(response);
+                Storage.addTimestampToStorage(response, Storage.printAllData);
+                this.addInstanceTimestamp(response);
             });
         },
         // add new timestamp to popup instance
-        addTimestamp(timestampData) {
+        addInstanceTimestamp(timestampData) {
             const {videoId, title, timestamp} = timestampData;
             if (!(videoId in this.videos)) {
                 // need to add new video using set to make added object reactive
@@ -85,31 +80,31 @@ export default {
         },
         // remove all timestamps from local storage then from popup instance
         clearAllTimestamps() {
-            chrome.storage.local.clear();
+            Storage.removeAllData();
             this.videos = {};
         },
         // remove single video and all its timestamps
         removeVideo(videoToRemove) {
             const {videoId} = videoToRemove;
-            chrome.storage.local.remove(videoId);
+            Storage.removeVideo(videoId);
             // needs to use $delete to be reactive
             this.$delete(this.videos, videoId);
         },
         // remove single timestamp of a video
         removeTimestamp(videoToRemove) {
             const {videoId, timestamp} = videoToRemove;
-            chrome.storage.local.get(videoId, (data) => {
-                let videoStorageMeta = data[videoId];
-                const indexToRemove = videoStorageMeta.timestamps.indexOf(timestamp);
-                // remove single timestamp
-                videoStorageMeta.timestamps.splice(indexToRemove, 1);
-
-                // update chrome storage and instance
-                chrome.storage.local.set({
-                    [videoId]: videoStorageMeta
-                });
-                this.videos[videoId] = videoStorageMeta;
-            });
+            Storage.updateSingleVideo(
+                videoId,
+                (data) => {
+                    let videoStorageMeta = data[videoId];
+                    const indexToRemove = videoStorageMeta.timestamps.indexOf(timestamp);
+                    // remove single timestamp
+                    videoStorageMeta.timestamps.splice(indexToRemove, 1);
+                    // update current instance
+                    this.videos[videoId] = videoStorageMeta;
+                    return videoStorageMeta;
+                }
+            );
         }
     },
 }
