@@ -26,7 +26,7 @@ export function addTimestampToStorage(timestampData, setCallback=null) {
         // get timestamps for given videoId then update it
         (data) => {
             // data format: {videoId: {title, timestamps:[timestamp,...]}}
-            let videoMeta = {title: title, timestamps: []};
+            let videoMeta = {title, timestamps: []};
             // find out if we need to append to existing data for given videoId
             if (videoId in data) {
                 videoMeta = data[videoId];

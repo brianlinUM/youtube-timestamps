@@ -20,8 +20,8 @@ function getCurrentTimestampInfo() {
 
     return {
         timestamp: Math.floor(time),
-        videoId: videoId,
-        title: title,
+        videoId,
+        title,
     }
 }
 

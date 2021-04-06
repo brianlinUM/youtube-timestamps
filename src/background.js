@@ -6,7 +6,7 @@ console.log("Background Script Running");
 // send a message to popup instance to update its videos data
 function sendUpdatePopupInstance(timestampData) {
     chrome.runtime.sendMessage(
-        {msg: "update-timestamp", timestampData: timestampData}
+        {msg: "update-timestamp", timestampData}
     );
 }
 
