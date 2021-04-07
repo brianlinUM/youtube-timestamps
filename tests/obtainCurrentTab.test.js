@@ -3,8 +3,17 @@ import queryCurrentTab from "../src/common/obtainCurrentTab.js";
 
 beforeAll(() => {
     chrome.tabs.query.mockImplementation((matchers, callback) => {
-        if (matchers.active && matchers.currentWindow) {
-            matchers.url ? callback(["url"]) : callback(["non-url"]);
+        // need to make sure there are no extraneous fields
+        if (
+            Object.keys(matchers).length === 3 &&
+            matchers.active && matchers.currentWindow && matchers.url
+        ) {
+            callback(["url"])
+        } else if (
+            Object.keys(matchers).length === 2 &&
+            matchers.active && matchers.currentWindow
+        ) {
+            callback(["non-url"])
         } else {
             callback([]);
         }
