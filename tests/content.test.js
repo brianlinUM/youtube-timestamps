@@ -86,6 +86,9 @@ describe("listenMessages", () => {
         const responseSpy = jest.fn((response) => {});
 
         listenMessages();
+        chrome.runtime.onMessage.callListeners({ msg: "invalid" }, sender, responseSpy);
+        expect(responseSpy.mock.calls.length).toBe(0);
+
         chrome.runtime.onMessage.callListeners(request, sender, responseSpy);
         expect(responseSpy.mock.calls.length).toBe(1);
         expect(responseSpy.mock.calls[0][0]).toEqual(
@@ -98,9 +101,15 @@ describe("listenMessages", () => {
         const sender = {};
         const response = null;
 
-        listenMessages();
-        chrome.runtime.onMessage.callListeners(request, sender, response);
         const video = document.getElementsByTagName("video")[0];
+
+        listenMessages();
+        chrome.runtime.onMessage.callListeners(
+            { msg: "invalid", timestamp: 5}, sender, response
+        );
+        expect(video.currentTime).toBe(1);
+
+        chrome.runtime.onMessage.callListeners(request, sender, response);
         expect(video.currentTime).toBe(5);
     });
 });
