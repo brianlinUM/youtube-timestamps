@@ -1,6 +1,8 @@
 import { chrome } from 'jest-chrome';
 import * as Storage from "../src/common/chromeStorageAPI.js";
 
+// only test updateSingleVideo and addTimestampToStorage since other functions are trivial.
+
 let mockStorage = {};
 
 beforeEach(() => {
@@ -112,12 +114,64 @@ describe("updateSingleVideo", () => {
     test('execute set callback', () => {
         const getCallbackSpy = jest.fn((data) => {return 2});
         const setCallbackSpy = jest.fn();
-        Storage.updateSingleVideo("1", getCallbackSpy, setCallbackSpy);
 
+        Storage.updateSingleVideo("1", getCallbackSpy, setCallbackSpy);
         expect(setCallbackSpy.mock.calls.length).toBe(1);
-        // check that setCallback has no additional side effects
-        expect(getCallbackSpy.mock.calls.length).toBe(1);
-        expect(getCallbackSpy.mock.calls[0][0]).toEqual({});
-        expect(mockStorage).toEqual({"1": 2});
+    });
+});
+
+describe("addTimestampToStorage", () => {
+    test("add timestamp to new video", () => {
+        let timestampData = {videoId: "1", title: "a", timestamp: 2};
+        Storage.addTimestampToStorage(timestampData);
+        expect(mockStorage).toEqual({
+            "1": {title: "a", timestamps: [2]}
+        });
+
+        timestampData = {videoId: "2", title: "b", timestamp: 3};
+        Storage.addTimestampToStorage(timestampData);
+        expect(mockStorage).toEqual({
+            "1": {title: "a", timestamps: [2]},
+            "2": {title: "b", timestamps: [3]}
+        });
+    });
+
+    test("add timestamp to existing video", () => {
+        mockStorage = {"1": {title: "a", timestamps: []}};
+        let timestampData = {videoId: "1", title: "a", timestamp: 2}
+
+        Storage.addTimestampToStorage(timestampData);
+        expect(mockStorage).toEqual({
+            "1": {title: "a", timestamps: [2]},
+        });
+
+        timestampData.timestamp = 3;
+        Storage.addTimestampToStorage(timestampData);
+        expect(mockStorage).toEqual({
+            "1": {title: "a", timestamps: [2, 3]},
+        });
+    });
+
+    test("add timestamp to existing video in storage with multiple videos", () => {
+        // this test is to make sure unrelated videos remain unchanged
+        mockStorage = {
+            "1": {title: "a", timestamps: [2]},
+            "2": {title: "b", timestamps: [3]},
+            "3": {title: "c", timestamps: [4]}
+        };
+        let timestampData = {videoId: 2, title: "b", timestamp: 5};
+        Storage.addTimestampToStorage(timestampData);
+        expect(mockStorage).toEqual({
+            "1": {title: "a", timestamps: [2]},
+            "2": {title: "b", timestamps: [3, 5]},
+            "3": {title: "c", timestamps: [4]}
+        });
+    });
+
+    test("callback is executed", () => {
+        const callbackSpy = jest.fn();
+        let timestampData = {videoId: 1, title: "a", timestamp: 2};
+        Storage.addTimestampToStorage(timestampData, callbackSpy);
+        expect(callbackSpy.mock.calls.length).toBe(1);
     });
 });
