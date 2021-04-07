@@ -33,12 +33,23 @@ function changeTime (newTime) {
 }
 
 
-// Listen for add timestamp request msg from popup
-chrome.runtime.onMessage.addListener((request, sender, response) => {
-    if (request.msg === "obtain-timestamp") {
-        const timestampData = getCurrentTimestampInfo();
-        response(timestampData);
-    } else if (request.msg === "change-time") {
-        changeTime(request.timestamp);
-    }
-});
+function listenMessages() {
+    // Listen for add timestamp request msg from popup
+    chrome.runtime.onMessage.addListener((request, sender, response) => {
+        if (request.msg === "obtain-timestamp") {
+            const timestampData = getCurrentTimestampInfo();
+            response(timestampData);
+        } else if (request.msg === "change-time") {
+            changeTime(request.timestamp);
+        }
+    });
+}
+
+
+listenMessages();
+
+
+// export for unit tests
+export const testables = {
+    getVideoId, getCurrentTimestampInfo, changeTime, listenMessages
+};
