@@ -15,12 +15,16 @@ Tools used in this project includes NPM and webpack.
 - `./src/`: source code that needs to be webpacked.
   - `./src/common/`: source code that is reused in multiple places.
   - `./src/components/`: Vue Single File Components.
+- `./tests/`: contains unit tests for the project.
+- `./scripts`: contains shell utility scripts.
 - `./Changelog.md`: Lists history of versions.
 - `./Plans.md`: Lists work-in-progress plans for upcoming release.
 
 ## Installation
-Before beginning, make sure to have Node.js and NPM installed.
+To install the chrome extension to the browser *without* building, find the latest release on github: https://github.com/brianlinUM/youtube-timestamps/releases, and from assets download and unzip the `dist-v*.zip`. Then, enable *Developer Mode* in `chrome://extensions/`. "Load unpacked" from `dist-v*/`, which contains `manifest.json`.
 
+## Building
+Before beginning, make sure to have Node.js and NPM installed.
 
 Install all Node dependencies by running from root `/`:
 
@@ -30,8 +34,16 @@ Then, build the .js bundles by running:
 
 `npm run build`
 
-This builds the source .js files to `dist/javascript/`. After building, we need to install the extension to the Chrome browser. This requires enabling *Developer Mode* in `chrome://extensions/`.
-"Load unpacked" from `dist/`, which contains `manifest.json`.
+This builds the source .js files to `dist/javascript/`.
+
+## Testing
+This project currently uses `jest` for unit tests of non-vue js scripts, along with `jest-chrome` to mock Chrome's API.
+
+Run by executing:
+
+`npm run test`
+
+Vue component tests and end-to-end tests are planned.
 
 ## Current Progress
 See changelog.md for additional details
