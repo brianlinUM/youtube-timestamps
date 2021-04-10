@@ -6,7 +6,7 @@
                 d-flex justify-content-between align-items-center
             "
     >
-        <div id="timestamp-form" class="input-group">
+        <form v-on:submit.prevent="sendTimestampRequest" id="timestamp-form" class="input-group">
             <input
                 type="text" class="form-control"
                 :placeholder="inputPlaceholderText" v-model="timestampLabel"
@@ -20,7 +20,7 @@
             >
                 {{ buttonText }}
             </button>
-        </div>
+        </form>
 
         <button
             id="help-btn"
@@ -86,7 +86,8 @@ export default {
             // let parent handle both storage and instance updates.
             // This focus on retrieving timestamp only
             sendObtainTimestampRequest((timestampData) => {
-                this.$emit('new-timestamp', timestampData)
+                this.timestampLabel = "";
+                this.$emit('new-timestamp', timestampData);
             });
         }
     }
