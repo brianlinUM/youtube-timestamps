@@ -16,7 +16,7 @@
 
 <style scoped>
 #popup {
-    width: 350px;
+    width: 360px;
     height: 600px;
 }
 </style>
