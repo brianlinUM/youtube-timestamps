@@ -1,13 +1,11 @@
 <template>
-    <div id="videos-list">
-        <ul>
-            <li v-for="(meta, videoId) in videosProp" :key="videoId">
-                <VideoMeta :metaProp="meta" :videoIdProp="videoId"/>
-            </li>
-        </ul>
+    <div class="accordion" id="videos-list">
+        <VideoMeta
+            v-for="(meta, videoId) in videosProp" :key="videoId"
+            :metaProp="meta" :videoIdProp="videoId"
+        />
     </div>
 </template>
-
 
 <script>
 import VideoMeta from "./VideoMeta.vue";

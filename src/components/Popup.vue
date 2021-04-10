@@ -2,7 +2,7 @@
     <div id="popup" class="card">
         <PopupHeader @new-timestamp="addNewTimestamp"/>
 
-        <div id="popup-body" class="card-body overflow-auto">
+        <div id="popup-body" class="card-body p-0">
             <VideoList
                 :videosProp="videos"
                 @remove-timestamp="removeTimestamp"
@@ -18,6 +18,10 @@
 #popup {
     width: 360px;
     height: 600px;
+}
+/* https://stackoverflow.com/questions/1417934/how-to-prevent-scrollbar-from-repositioning-web-page */
+#popup-body {
+    overflow-y: scroll;
 }
 </style>
 
