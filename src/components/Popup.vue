@@ -1,15 +1,6 @@
 <template>
     <div id="popup" class="card">
-        <div id="popup-header" class="card-header position-sticky top-0">
-            <button 
-                type="button" class="btn btn-primary shadow-none"
-                id="add-timestamp-btn"
-                v-show="isYoutubeVideoTab" 
-                @click="sendTimestampRequest"
-            >
-                Add Timestamp
-            </button>
-        </div>
+        <PopupHeader @new-timestamp="addNewTimestamp"/>
 
         <div id="popup-body" class="card-body overflow-auto">
             <VideoList
@@ -19,7 +10,7 @@
             />
         </div>
 
-        <Footer @remove-all="removeAllTimestamps"/>
+        <PopupFooter @remove-all="removeAllTimestamps"/>
     </div>
 </template>
 
@@ -31,27 +22,19 @@
 </style>
 
 <script>
+import PopupHeader from "./Header.vue";
 import VideoList from "./VideoList.vue";
-import Footer from "./Footer.vue";
+import PopupFooter from "./Footer.vue";
 import * as Storage from "../common/chromeStorageAPI.js";
-import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
-import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
-    components: {VideoList, Footer},
+    components: {PopupHeader, VideoList, PopupFooter},
     data () {
         return {
             videos: {},
-            isYoutubeVideoTab: false,
         }
     },
     mounted () {
-        // check if the active tab is a youtube video and hide
-        // add timestamp btn if not.
-        queryCurrentTab( (tabs) => {
-            this.isYoutubeVideoTab = tabs.length > 0;
-        }, "https://www.youtube.com/watch?v=*");
-
         // retrieve data from local Chrome storage
         Storage.getAllData((data) => {this.videos = data;});
 
@@ -65,13 +48,10 @@ export default {
     },
 
     methods: {
-        // Send a request to the active youtube page to retrieve its timestamp.
-        // https://developer.chrome.com/docs/extensions/mv2/messaging/
-        sendTimestampRequest() {
-            sendObtainTimestampRequest((response) => {
-                Storage.addTimestampToStorage(response, Storage.printAllData);
-                this.addInstanceTimestamp(response);
-            });
+        // add new timestamp to both storage and popup instance
+        addNewTimestamp(timestampData) {
+            Storage.addTimestampToStorage(timestampData, Storage.printAllData);
+            this.addInstanceTimestamp(timestampData);
         },
         // add new timestamp to popup instance
         addInstanceTimestamp(timestampData) {
