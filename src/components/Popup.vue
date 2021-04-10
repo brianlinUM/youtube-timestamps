@@ -2,7 +2,8 @@
     <div id="popup" class="card">
         <div id="popup-header" class="card-header position-sticky top-0">
             <button 
-                type="button" class="btn-primary" id="add-timestamp-btn"
+                type="button" class="btn btn-primary shadow-none"
+                id="add-timestamp-btn"
                 v-show="isYoutubeVideoTab" 
                 @click="sendTimestampRequest"
             >
@@ -18,38 +19,26 @@
             />
         </div>
 
-        <div id="popup-footer" class="card-footer position-sticky bottom-0">
-            <button
-                type="button" class="btn-danger" id="remove-all-btn"
-                @click="clearAllTimestamps"
-            >
-                Remove All
-            </button>
-        </div>
+        <Footer @remove-all="removeAllTimestamps"/>
     </div>
 </template>
-
 
 <style scoped>
 #popup {
     width: 350px;
     height: 600px;
 }
-button {
-    height: 30px;
-    width: 200px;
-}
 </style>
-
 
 <script>
 import VideoList from "./VideoList.vue";
+import Footer from "./Footer.vue";
 import * as Storage from "../common/chromeStorageAPI.js";
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
 import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
-    components: {VideoList},
+    components: {VideoList, Footer},
     data () {
         return {
             videos: {},
@@ -99,7 +88,7 @@ export default {
             }
         },
         // remove all timestamps from local storage then from popup instance
-        clearAllTimestamps() {
+        removeAllTimestamps() {
             Storage.removeAllData();
             this.videos = {};
         },
