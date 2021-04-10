@@ -1,25 +1,45 @@
 <template>
-    <div id="popup">
-        <button 
-            type="button" id="add-timestamp-btn" v-show="isYoutubeVideoTab" 
-            @click="sendTimestampRequest"
-        >
-            Add Timestamp
-        </button>
+    <div id="popup" class="card">
+        <div id="popup-header" class="card-header position-sticky top-0">
+            <button 
+                type="button" class="btn-primary" id="add-timestamp-btn"
+                v-show="isYoutubeVideoTab" 
+                @click="sendTimestampRequest"
+            >
+                Add Timestamp
+            </button>
+        </div>
 
-        <button
-            type="button" id="remove-all-btn"
-            @click="clearAllTimestamps"
-        >
-            Clear All Timestamps
-        </button>
+        <div id="popup-body" class="card-body overflow-auto">
+            <VideoList
+                :videosProp="videos"
+                @remove-timestamp="removeTimestamp"
+                @remove-video="removeVideo"
+            />
+        </div>
 
-        <VideoList :videosProp="videos" 
-            @remove-timestamp="removeTimestamp"
-            @remove-video="removeVideo"
-        />
+        <div id="popup-footer" class="card-footer position-sticky bottom-0">
+            <button
+                type="button" class="btn-danger" id="remove-all-btn"
+                @click="clearAllTimestamps"
+            >
+                Remove All
+            </button>
+        </div>
     </div>
 </template>
+
+
+<style scoped>
+#popup {
+    width: 350px;
+    height: 600px;
+}
+button {
+    height: 30px;
+    width: 200px;
+}
+</style>
 
 
 <script>
@@ -109,17 +129,3 @@ export default {
     },
 }
 </script>
-
-
-<style scoped>
-button {
-    height: 30px;
-    width: 200px;
-}
-#add-timestamp-btn {
-    background-color: aqua;
-}
-#remove-all-btn {
-    background-color: red;
-}
-</style>
