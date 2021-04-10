@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Youtube Timestamps",
     "short_name": "YT Timestamps",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "author": "Brian Lin",
     "description": "A Chrome Extension for saving timestamps of YouTube videos",
   
@@ -15,7 +15,7 @@
     "content_scripts": [{
         "run_at": "document_idle",
         "js": [
-            "/javascript/content.bundle.js"
+            "/js/content.bundle.js"
         ],
         "matches": [
             "https://www.youtube.com/*"

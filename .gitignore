@@ -1,3 +1,4 @@
 node_modules/
-dist/javascript/
+dist/js/
 *.zip
+local_thirdparty/
