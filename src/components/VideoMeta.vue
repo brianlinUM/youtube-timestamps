@@ -12,9 +12,9 @@
         </button>
 
         <ul>
-            <li v-for="timestamp in metaProp.timestamps" :key="timestamp">
+            <li v-for="(label, timestamp) in metaProp.timestamps" :key="timestamp">
                 <a class="videoTimestamp" href="#" @click="changeTime(timestamp)">{{timestamp}}</a>
-
+                <h5>{{label}}</h5>
                 <!-- emit event to grandparent as it handles the data -->
                 <button type="button" class="remove-timestamp-btn"
                     @click="$parent.$emit('remove-timestamp', {

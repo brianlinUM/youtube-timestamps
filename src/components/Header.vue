@@ -86,6 +86,7 @@ export default {
             // let parent handle both storage and instance updates.
             // This focus on retrieving timestamp only
             sendObtainTimestampRequest((timestampData) => {
+                timestampData.label = this.timestampLabel;
                 this.timestampLabel = "";
                 this.$emit('new-timestamp', timestampData);
             });

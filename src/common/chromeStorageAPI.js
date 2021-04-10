@@ -1,6 +1,9 @@
 // We use Chrome local storage for persistance of data.
 // Chrome local Storage is organized as:
-// {videoId: {title, timestamps:[timestamp,...]}}
+// {videoId: {title, timestamps:{timestamp: label}}}
+// Each videoId corresponds to a videoMeta.
+// This structure is also followed by popup instance data.
+// This format enforces that each timestamp for a given video is unique.
 
 // Change the meta data for a single video, using its current value.
 export function updateSingleVideo(videoId, getCallback, setCallback=null) { 
@@ -25,13 +28,14 @@ export function addTimestampToStorage(timestampData, setCallback=null) {
         videoId, 
         // get timestamps for given videoId then update it
         (data) => {
-            // data format: {videoId: {title, timestamps:[timestamp,...]}}
-            let videoMeta = {title, timestamps: []};
-            // find out if we need to append to existing data for given videoId
+            // it is possible that label is not provided e.g. add by hotkey
+            const newLabel = 'label' in timestampData ? timestampData.label : "";
+            let videoMeta = {title, timestamps: {}};
+            // find out if we need to add to existing data for given videoId
             if (videoId in data) {
                 videoMeta = data[videoId];
             }
-            videoMeta.timestamps.push(timestamp);
+            videoMeta.timestamps[timestamp] = newLabel
             return videoMeta;
         },
         // simply pass on

@@ -56,15 +56,24 @@ export default {
         // add new timestamp to popup instance
         addInstanceTimestamp(timestampData) {
             const {videoId, title, timestamp} = timestampData;
+            // it is possible that label is not provided e.g. add by hotkey
+            const newLabel = 'label' in timestampData ? timestampData.label : "";
             if (!(videoId in this.videos)) {
                 // need to add new video using set to make added object reactive
                 this.$set(this.videos, videoId, {
                     title: title,
-                    timestamps: [timestamp],
+                    timestamps: {[timestamp]: newLabel},
                 });
             } else {
-                // push to existing video
-                this.videos[videoId].timestamps.push(timestamp);
+                // push to existing video. Need to set new object for reactivity
+                // to work. Vue has difficulty updating nested objects otherwise.
+                // https://forum.vuejs.org/t/nested-objects-and-reactivity-a-question/20535
+                const {title, timestamps} = this.videos[videoId];
+                timestamps[timestamp] = newLabel;
+                this.$set(this.videos, videoId, {
+                    title: title,
+                    timestamps,
+                });
             }
         },
         // remove all timestamps from local storage then from popup instance
@@ -80,16 +89,13 @@ export default {
             this.$delete(this.videos, videoId);
         },
         // remove single timestamp of a video
-        removeTimestamp(videoToRemove) {
-            const {videoId, timestamp} = videoToRemove;
+        removeTimestamp(timestampToRemove) {
+            const {videoId, timestamp} = timestampToRemove;
             Storage.updateSingleVideo(
                 videoId,
                 (data) => {
                     let videoStorageMeta = data[videoId];
-                    const indexToRemove = videoStorageMeta.timestamps.indexOf(timestamp);
-                    // remove single timestamp
-                    videoStorageMeta.timestamps.splice(indexToRemove, 1);
-                    // update current instance
+                    delete videoStorageMeta.timestamps[timestamp];
                     this.videos[videoId] = videoStorageMeta;
                     return videoStorageMeta;
                 }
