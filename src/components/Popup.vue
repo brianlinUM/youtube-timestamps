@@ -8,6 +8,7 @@
                 @remove-timestamp="removeTimestamp"
                 @remove-video="removeVideo"
                 @changed-video="()=>{isYouTubeVideo = true}"
+                @update-title="updateTitle"
             />
         </div>
 
@@ -17,7 +18,7 @@
 
 <style scoped>
 #popup {
-    width: 360px;
+    width: 380px;
     height: 600px;
 }
 /* https://stackoverflow.com/questions/1417934/how-to-prevent-scrollbar-from-repositioning-web-page */
@@ -79,7 +80,7 @@ export default {
             if (!(videoId in this.videos)) {
                 // need to add new video using set to make added object reactive
                 this.$set(this.videos, videoId, {
-                    title: title,
+                    title,
                     timestamps: {[timestamp]: newLabel},
                 });
             } else {
@@ -89,7 +90,7 @@ export default {
                 const {title, timestamps} = this.videos[videoId];
                 timestamps[timestamp] = newLabel;
                 this.$set(this.videos, videoId, {
-                    title: title,
+                    title,
                     timestamps,
                 });
             }
@@ -119,7 +120,16 @@ export default {
                 }
             );
         },
-
+        // update a video's title with the given new one, in storage and instance
+        updateTitle(changeData) {
+            const {videoId, title} = changeData;
+            let {timestamps} = this.videos[videoId];
+            const newVideoMeta = {title, timestamps}
+            Storage.updateSingleVideo(videoId, (data) => {
+                return newVideoMeta;
+            });
+            this.$set(this.videos, videoId, newVideoMeta);
+        }
     },
 }
 </script>

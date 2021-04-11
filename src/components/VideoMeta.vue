@@ -17,7 +17,7 @@
             <div class="accordion-body p-0">
                 <ul class="list-group list-group-flush p-0">
                     <li class="list-group-item p-0">
-                        <VideoNav :videoIdProp="videoIdProp" @play-video="changeVideo(0)"/>
+                        <VideoNav :videoIdProp="videoIdProp" :titleProp="metaProp.title"  @play-video="changeVideo(0)"/>
                     </li>
                     <li
                         v-for="(label, timestamp) in metaProp.timestamps" :key="timestamp"
