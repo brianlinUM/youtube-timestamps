@@ -9,6 +9,7 @@
                 @remove-video="removeVideo"
                 @changed-video="()=>{isYouTubeVideo = true}"
                 @update-title="updateTitle"
+                @update-timestamp-label="updateTimestampLabel"
             />
         </div>
 
@@ -134,6 +135,16 @@ export default {
                 return newVideoMeta;
             });
             this.$set(this.videos, videoId, newVideoMeta);
+        },
+        // update the label of a timestamp for given video
+        updateTimestampLabel(changeData) {
+            const {videoId, timestamp, label} = changeData;
+            const {title} = this.videos[videoId];
+
+            const timestampData = {videoId, title, timestamp, label}
+            // These methods actually updates existing timestamp data
+            Storage.addTimestampToStorage(timestampData);
+            this.addInstanceTimestamp(timestampData);
         }
     },
 }

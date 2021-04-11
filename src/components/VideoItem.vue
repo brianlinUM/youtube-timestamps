@@ -21,12 +21,13 @@
                     </li>
                     <li
                         v-for="(label, timestamp) in metaProp.timestamps" :key="timestamp"
-                        class="list-group-item"
+                        class="list-group-item p-2"
                     >
                         <TimestampItem
                             :timestamp="timestamp" :label="label" :videoId="videoIdProp"
                             @remove-timestamp="removeTimestamp"
                             @change-video-and-time="changeVideoAndTime"
+                            @update-timestamp-label="updateTimestampLabel"
                         />
                     </li>
                 </ul>
@@ -67,6 +68,10 @@ export default {
         removeTimestamp(timestampData) {
             // emit event to grandparent as it handles the data
             this.$parent.$emit('remove-timestamp', timestampData);
+        },
+        // Relay timestamp label update event
+        updateTimestampLabel(timestampData) {
+            this.$parent.$emit('update-timestamp-label', timestampData);
         }
     }
 }
