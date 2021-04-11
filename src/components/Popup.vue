@@ -1,12 +1,13 @@
 <template>
     <div id="popup" class="card">
-        <PopupHeader @new-timestamp="addNewTimestamp"/>
+        <PopupHeader @new-timestamp="addNewTimestamp" :disableAddTimestamp="disableAddTimestamp"/>
 
         <div id="popup-body" class="card-body p-0">
             <VideoList
                 :videosProp="videos"
                 @remove-timestamp="removeTimestamp"
                 @remove-video="removeVideo"
+                @changed-video="()=>{isYouTubeVideo = true}"
             />
         </div>
 
@@ -30,12 +31,19 @@ import PopupHeader from "./Header.vue";
 import VideoList from "./VideoList.vue";
 import PopupFooter from "./Footer.vue";
 import * as Storage from "../common/chromeStorageAPI.js";
+import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
     components: {PopupHeader, VideoList, PopupFooter},
     data () {
         return {
             videos: {},
+            isYouTubeVideo: false,
+        }
+    },
+    computed: {
+        disableAddTimestamp() {
+            return !this.isYouTubeVideo
         }
     },
     mounted () {
@@ -49,6 +57,12 @@ export default {
                 this.addInstanceTimestamp(request.timestampData);
             }
         });
+
+        // we only enable add timestamp button in header if
+        // the current tab is a YouTube video
+        queryCurrentTab( (tabs) => {
+            this.isYouTubeVideo = tabs.length > 0;
+        }, "https://www.youtube.com/watch?v=*");
     },
 
     methods: {
@@ -104,7 +118,8 @@ export default {
                     return videoStorageMeta;
                 }
             );
-        }
+        },
+
     },
 }
 </script>

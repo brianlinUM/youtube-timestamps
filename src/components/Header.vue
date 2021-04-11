@@ -45,20 +45,12 @@
 
 <script>
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
-import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
+    props: ["disableAddTimestamp"],
     emits: ['new-timestamp'],
-    mounted () {
-        // we only enable add timestamp button if
-        // the current tab is a YouTube video
-        queryCurrentTab( (tabs) => {
-            this.disableAddTimestamp = tabs.length == 0;
-        }, "https://www.youtube.com/watch?v=*");
-    },
     data () {
         return {
-            disableAddTimestamp: true,
             timestampLabel: ""
         }
     },

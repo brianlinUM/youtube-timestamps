@@ -17,7 +17,7 @@
             <div class="accordion-body p-0">
                 <ul class="list-group list-group-flush p-0">
                     <li class="list-group-item p-0">
-                        <VideoNav :videoIdProp="videoIdProp"/>
+                        <VideoNav :videoIdProp="videoIdProp" @play-video="changeVideo(0)"/>
                     </li>
                     <li
                         v-for="(label, timestamp) in metaProp.timestamps" :key="timestamp"
@@ -51,6 +51,18 @@ export default {
     components: {VideoNav},
     emits: ['remove-timestamp'],
     methods: {
+        // change current tab to new YouTube Video
+        changeVideo(newTime) {
+            const newUrl = "https://www.youtube.com/watch?v=" + this.videoIdProp + "&t=" + newTime;
+            queryCurrentTab((tabs) => {
+                chrome.tabs.update(tabs[0].id, {url: newUrl});
+            });
+            // emit by videoList to Popup
+            // need to tell popup that we have changed to a youtube video
+            // so that header can update its button/form state.
+            this.$parent.$emit('changed-video');
+        },
+
         // sends request to content listener to change current video time
         changeTime (newTime) {
             queryCurrentTab((tabs) => {
