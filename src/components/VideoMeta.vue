@@ -23,7 +23,7 @@
                         v-for="(label, timestamp) in metaProp.timestamps" :key="timestamp"
                         class="list-group-item"
                     >
-                        <a class="videoTimestamp" href="#" @click="changeTime(timestamp)">{{timestamp}}</a>
+                        <a class="videoTimestamp" href="#" @click="changeTime(timestamp)">{{convertTimeFormat(timestamp)}}</a>
                         <h5>{{label}}</h5>
                         <!-- emit event to grandparent as it handles the data -->
                         <button type="button" class="remove-timestamp-btn"
@@ -75,6 +75,13 @@ export default {
                 }
             }, "https://www.youtube.com/watch?v=" + this.videoIdProp + "*");
         },
+        // converts from seconds to HH:MM:SS
+        // https://stackoverflow.com/questions/6312993/javascript-seconds-to-time-string-with-format-hhmmss
+        convertTimeFormat(seconds) {
+            let dateObj = new Date(0);
+            dateObj.setSeconds(seconds);
+            return dateObj.toISOString().substr(11, 8);
+        }
     }
 }
 </script>
