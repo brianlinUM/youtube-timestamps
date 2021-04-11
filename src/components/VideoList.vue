@@ -1,6 +1,6 @@
 <template>
     <div class="accordion" id="videos-list">
-        <VideoMeta
+        <VideoItem
             v-for="(meta, videoId) in videosProp" :key="videoId"
             :metaProp="meta" :videoIdProp="videoId"
         />
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import VideoMeta from "./VideoMeta.vue";
+import VideoItem from "./VideoItem.vue";
 
 export default {
     props: ["videosProp"],
-    components: {VideoMeta},
+    components: {VideoItem},
 }
 </script>
 
