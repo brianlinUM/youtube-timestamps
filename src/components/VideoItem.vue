@@ -23,17 +23,11 @@
                         v-for="(label, timestamp) in metaProp.timestamps" :key="timestamp"
                         class="list-group-item"
                     >
-                        <a class="videoTimestamp" href="#" @click="changeTime(timestamp)">{{convertTimeFormat(timestamp)}}</a>
-                        <h5>{{label}}</h5>
-                        <!-- emit event to grandparent as it handles the data -->
-                        <button type="button" class="remove-timestamp-btn"
-                            @click="$parent.$emit('remove-timestamp', {
-                                videoId: videoIdProp,
-                                timestamp: timestamp
-                            })"
-                        >
-                            Remove
-                        </button>
+                        <TimestampItem
+                            :timestamp="timestamp" :label="label" :videoId="videoIdProp"
+                            @remove-timestamp="removeTimestamp"
+                            @change-video-and-time="changeVideoAndTime"
+                        />
                     </li>
                 </ul>
             </div>
@@ -44,11 +38,12 @@
 
 <script>
 import VideoNav from "./VideoNav.vue";
+import TimestampItem from "./TimestampItem.vue";
 import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
     props: ["metaProp", "videoIdProp"],
-    components: {VideoNav},
+    components: {VideoNav, TimestampItem},
     emits: ['remove-timestamp'],
     methods: {
         // change current tab to new YouTube Video
@@ -62,25 +57,16 @@ export default {
             // so that header can update its button/form state.
             this.$parent.$emit('changed-video');
         },
-
-        // sends request to content listener to change current video time
-        changeTime (newTime) {
-            queryCurrentTab((tabs) => {
-                if (tabs.length > 0) {
-                    chrome.tabs.sendMessage(
-                        tabs[0].id, {msg: "change-time", timestamp: newTime}
-                    );
-                } else {
-                    this.changeVideo(newTime);
-                }
-            }, "https://www.youtube.com/watch?v=" + this.videoIdProp + "*");
+        // Called when a timestamp is clicked and current tab
+        // is not the matching video.
+        changeVideoAndTime(newTimeMsg) {
+            const {newTime} = newTimeMsg;
+            this.changeVideo(newTime);
         },
-        // converts from seconds to HH:MM:SS
-        // https://stackoverflow.com/questions/6312993/javascript-seconds-to-time-string-with-format-hhmmss
-        convertTimeFormat(seconds) {
-            let dateObj = new Date(0);
-            dateObj.setSeconds(seconds);
-            return dateObj.toISOString().substr(11, 8);
+        // Relay timestamp removal event
+        removeTimestamp(timestampData) {
+            // emit event to grandparent as it handles the data
+            this.$parent.$emit('remove-timestamp', timestampData);
         }
     }
 }
@@ -93,10 +79,5 @@ export default {
 }
 .videoTimestamp {
     font-size: 12px;
-}
-.remove-timestamp-btn {
-    height: 30px;
-    width: 100px;
-    background-color: red;
 }
 </style>
