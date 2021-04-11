@@ -5,6 +5,7 @@
                 <button
                     class="accordion-button shadow-none collapsed" type="button"
                     data-bs-toggle="collapse" :data-bs-target="'#body'+videoIdProp"
+                    title="Toggle Video"
                 >
                     {{metaProp.title}}
                 </button>

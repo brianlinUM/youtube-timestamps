@@ -3,6 +3,7 @@
     <button type="button" :class="removeBtnClass"
         @click="updateClickState"
         :disabled='disableBtn'
+        :title='tooltip'
     >
         <!-- normal bin icon -->
         <svg v-show="!removeClicked && !fillIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -23,7 +24,7 @@
 
 <script>
 export default {
-    props: ['btnText', 'btnTextConfirm', 'disableBtn', 'fillIcon'],
+    props: ['btnText', 'btnTextConfirm', 'disableBtn', 'fillIcon', 'tooltip'],
     emits: ['remove-confirmed'],
     data () {
         return {

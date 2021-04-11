@@ -28,8 +28,9 @@
                     btn btn-sm btn-outline-secondary
                     d-flex justify-content-center align-items-center
                     "
+            title="About"
         >
-            ?
+            <em>i</em>
         </button>
     </div>
 </template>

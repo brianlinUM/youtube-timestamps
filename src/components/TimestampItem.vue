@@ -1,7 +1,9 @@
 <template>
     <div class="card">
         <div class="card-header d-flex justify-content-between">
-            <a class="videoTimestamp" href="#" @click="changeTime(timestamp)">{{convertTimeFormat(timestamp)}}</a>
+            <a class="videoTimestamp" href="#" @click="changeTime(timestamp)" title="Go to Timestamp">
+                {{convertTimeFormat(timestamp)}}
+            </a>
             <button type="button" :class="editLabelBtnClass" @click="editLabel">
                 <!-- edit pen icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -9,14 +11,16 @@
                 </svg>
                 {{ isLabelEditing ? "Cancel Edit" : "Edit Label"}}
             </button>
-            <RemoveButton @remove-confirmed="removeTimestamp"/>
+            <RemoveButton @remove-confirmed="removeTimestamp" :tooltip="`Remove Timestamp`"/>
         </div>
         <div class="card-body p-2">
             <p v-show="!isLabelEditing" class="m-0 p-0"> {{ label === "" ? "Add a Label" : label }} </p>
             <div v-show="isLabelEditing">
                 <textarea
                     class="form-control p-2" id="edit-label-area" rows="2"
-                    v-model='labelEditInput' placeholder="Add a Label">
+                    v-model='labelEditInput' placeholder="Add a Label"
+                    title="Edit Timestamp Label"
+                >
                 </textarea>
                 <button
                     type='button'
