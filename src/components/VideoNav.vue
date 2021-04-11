@@ -25,7 +25,7 @@
                 </svg>
             </button>
 
-            <RemoveButton @remove-confirmed="removeVideo"/>
+            <RemoveButton @remove-confirmed="removeVideo" :fillIcon="true"/>
         </div>
     </nav>
 </template>

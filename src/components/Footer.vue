@@ -10,6 +10,7 @@
             :btnText="`Remove All`" :btnTextConfirm="`Confirm`"
             @remove-confirmed="removeAllTimestamps"
             :disableBtn='isNoVideos'
+            :fillIcon="true"
         />
     </div>
 </template>
