@@ -26,6 +26,8 @@ Tools used in this project includes NPM and webpack.
 ## Installation
 To install the chrome extension to the browser *without* building, find the latest release on github: https://github.com/brianlinUM/youtube-timestamps/releases, and from assets download and unzip the `dist-v*.zip`. Then, enable *Developer Mode* in `chrome://extensions/`. "Load unpacked" from `dist-v*/`, which contains `manifest.json`.
 
+If you have any Youtube tabs open, make sure to refresh them before using the extension.
+
 ## Building
 Before beginning, make sure to have Node.js and NPM installed.
 
