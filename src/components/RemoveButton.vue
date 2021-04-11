@@ -22,7 +22,8 @@ export default {
     emits: ['remove-confirmed'],
     data () {
         return {
-            removeClicked: false
+            removeClicked: false,
+            timeoutHandle: null
         }
     },
     computed: {
@@ -38,13 +39,20 @@ export default {
     },
     methods: {
         updateClickState() {
+            if (this.timeoutHandle) {
+                clearTimeout(this.timeoutHandle);
+                this.timeoutHandle = null;
+            }
+
             if ( this.removeClicked ) {
                 // emit by videoList to Popup
                 this.$emit('remove-confirmed');
                 this.removeClicked = false; // reset
             } else {
                 this.removeClicked = true;
-                setTimeout(() => {this.removeClicked = false}, 1000);
+                this.timeoutHandle = setTimeout(() => {
+                    this.removeClicked = false
+                }, 1000);
             }
         }
     }
