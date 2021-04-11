@@ -59,7 +59,7 @@ export default {
             return this.disableAddTimestamp ? "Open a video first" : "Timestamp Label";
         },
         buttonText() {
-            return this.disableAddTimestamp ? "Not a Video" : "Add Timestamp";
+            return this.disableAddTimestamp ? "Not a Video" : "+ Add";
         },
         buttonColor() {
             return [
