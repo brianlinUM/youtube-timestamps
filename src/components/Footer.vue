@@ -9,6 +9,7 @@
         <RemoveButton
             :btnText="`Remove All`" :btnTextConfirm="`Confirm`"
             @remove-confirmed="removeAllTimestamps"
+            :disableBtn='isNoVideos'
         />
     </div>
 </template>
@@ -17,6 +18,7 @@
 import RemoveButton from "./RemoveButton.vue";
 
 export default {
+    props: ['isNoVideos'],
     emits: ['remove-all'],
     components: {RemoveButton},
     methods: {

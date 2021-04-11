@@ -2,6 +2,7 @@
     <!-- emit event to grandparent as it handles the data -->
     <button type="button" :class="removeBtnClass"
         @click="updateClickState"
+        :disabled='disableBtn'
     >
         <svg v-show="!removeClicked" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -17,7 +18,7 @@
 
 <script>
 export default {
-    props: ['btnText', 'btnTextConfirm'],
+    props: ['btnText', 'btnTextConfirm', 'disableBtn'],
     emits: ['remove-confirmed'],
     data () {
         return {
@@ -39,7 +40,8 @@ export default {
         updateClickState() {
             if ( this.removeClicked ) {
                 // emit by videoList to Popup
-                this.$emit('remove-confirmed')
+                this.$emit('remove-confirmed');
+                this.removeClicked = false; // reset
             } else {
                 this.removeClicked = true;
                 setTimeout(() => {this.removeClicked = false}, 1000);

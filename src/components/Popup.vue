@@ -12,7 +12,9 @@
             />
         </div>
 
-        <PopupFooter @remove-all="removeAllTimestamps"/>
+        <PopupFooter
+            @remove-all="removeAllTimestamps" :isNoVideos="isNoVideos"
+        />
     </div>
 </template>
 
@@ -45,6 +47,9 @@ export default {
     computed: {
         disableAddTimestamp() {
             return !this.isYouTubeVideo
+        },
+        isNoVideos() {
+            return Object.keys(this.videos).length == 0;
         }
     },
     mounted () {
