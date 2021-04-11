@@ -1,13 +1,16 @@
 # Youtube Timestamps🕔🔖
 This chrome extension allows a YouTube user to 'bookmark' different parts of a video so that they could come back to it later.
 
-When you click on an added timestamp on the extension popup, the current time of the video is changed to the timestamp of the corresponding video.
+<img src="./github_images/video_overview.jpg" width="250">
+<img src="./github_images/Video_timestamps.jpg" width="250">
+
+Each video can be expanded to show its timestamps. When you click on an added timestamp on the extension popup, the current tab is changed to the video, starting at the timestamp. You can add a custom label to each timestamp as notes or to remember the timestamp's contents. The title for each video can also be changed.
 
 ### Shortcut Keys
 `CTRL+Q` (`⌘+⇧+E` on Macs): record current timestamp and add to extension.
 
 ## Project Details
-The project is currently implemented using Javascript and Vue, and makes extensive use of the Chrome Browser API.
+The project is currently implemented using Javascript, Vue and Bootstrap. It makes use of the Chrome Browser API.
 Tools used in this project includes NPM and webpack.
 
 ### Organization
@@ -46,7 +49,7 @@ Run by executing:
 Vue component tests and end-to-end tests are planned.
 
 ## Current Progress
-See changelog.md for additional details
+See `changelog.md` for additional details, and `Plans.md` for ideas.
 - **v0.1.0**: released April 3rd, 2021. This version focuses on basic functionality rather than UI / Aesthetics.
 - **v0.1.1**: released April 4th, 2021. Fixes a content script issue.
-- **v0.2.0**: This version is in development - see Plans.md for details. Focuses on improving graphics / UI.
+- **v0.2.0**: released April 11th, 2021. Improves UI and supports custom labels for timestamps.

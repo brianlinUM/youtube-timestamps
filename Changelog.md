@@ -10,3 +10,10 @@
 - Display added timestamps for all videos.
 - Button to remove timestamps / videos.
 - Clicking on popup timestamp moves the video progress to the timestamp.
+
+### v0.2.0:
+*April 11th, 2021*
+- Improved graphics and UI features.
+- Allow users to write label when they add a timestamp.
+- Allow users to edit label after they have already added the timestamp.
+- Allow users to edit the displayed title of the video in the extension.

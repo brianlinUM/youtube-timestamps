@@ -1,6 +1,7 @@
-# Current plans for v0.2.0:
-- Improve graphics and UI features.
+# Current plans:
 - Improve responsiveness by alerting user when timestamp is added successsfully.
-- Allow users to write comments/label when they add a timestamp.
-- Allow users to edit comments/label after they have already added the timestamp.
-- Allow users to edit the displayed title of the video in the extension.
+- Implement 'About' information popup.
+- Sort videos and timestamps.
+- Implement filter searching for videos.
+- Add a time slider selector so that user can add a timestamp manually.
+- Fix known issue: Adding timestamp through the popup while video hasn't finished loading will throw an error in console.
