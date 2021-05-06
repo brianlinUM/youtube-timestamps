@@ -11,7 +11,7 @@
                 :videosProp="videos"
                 @remove-timestamp="removeTimestamp"
                 @remove-video="removeVideo"
-                @changed-video="()=>{isYouTubeVideo = true}"
+                @changed-video="()=>{isYouTubeVideo = true; contentScriptReady = false;}"
                 @update-title="updateTitle"
                 @update-timestamp-label="updateTimestampLabel"
             />

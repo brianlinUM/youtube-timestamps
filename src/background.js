@@ -15,9 +15,12 @@ function listenHotkeys() {
     chrome.commands.onCommand.addListener((command) => {
         if (command === "add-timestamp") {
             sendObtainTimestampRequest((response) => {
-                // we call storage here instead of in popup since popup may not be open
-                addTimestampToStorage(response);
-                sendUpdatePopupInstance(response);
+                if (chrome.runtime.lastError || !response) {}
+                else {
+                    // we call storage here instead of in popup since popup may not be open
+                    addTimestampToStorage(response);
+                    sendUpdatePopupInstance(response);
+                }
             });
         }
     });
