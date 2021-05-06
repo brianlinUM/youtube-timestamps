@@ -55,3 +55,4 @@ See `changelog.md` for additional details, and `Plans.md` for ideas.
 - **v0.1.0**: released April 3rd, 2021. This version focuses on basic functionality rather than UI / Aesthetics.
 - **v0.1.1**: released April 4th, 2021. Fixes a content script issue.
 - **v0.2.0**: released April 11th, 2021. Improves UI and supports custom labels for timestamps.
+- **v0.2.1**: released May 6th, 2021. Fixes issue when adding timestamp if content script is not loaded.

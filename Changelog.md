@@ -17,3 +17,7 @@
 - Allow users to write label when they add a timestamp.
 - Allow users to edit label after they have already added the timestamp.
 - Allow users to edit the displayed title of the video in the extension.
+
+### v0.2.1:
+*May 6th, 2021*
+- Fix known issue: Adding timestamp through the popup while content script hasn't finished loading, e.g. right after refreshing page, will throw an error in console. Fixed by disabling the add button until content script is loaded fully. Also add "loading" text in button while waiting.

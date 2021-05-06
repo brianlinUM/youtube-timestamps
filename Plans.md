@@ -4,4 +4,3 @@
 - Sort videos and timestamps.
 - Implement filter searching for videos.
 - Add a time slider selector so that user can add a timestamp manually.
-- Fix known issue: Adding timestamp through the popup while video hasn't finished loading will throw an error in console.
