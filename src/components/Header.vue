@@ -48,7 +48,7 @@
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
 
 export default {
-    props: ["disableAddTimestamp"],
+    props: ["disableAddTimestamp", "contentScriptReady"],
     emits: ['new-timestamp'],
     data () {
         return {
@@ -57,9 +57,15 @@ export default {
     },
     computed: {
         inputPlaceholderText() {
+            if (!this.contentScriptReady) {
+                return "Please wait";
+            }
             return this.disableAddTimestamp ? "Open a video first" : "Timestamp Label";
         },
         buttonText() {
+            if (!this.contentScriptReady) {
+                return "Loading...";
+            }
             return this.disableAddTimestamp ? "Not a Video" : "+ Add";
         },
         buttonColor() {

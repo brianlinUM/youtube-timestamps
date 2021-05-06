@@ -1,6 +1,10 @@
 <template>
     <div id="popup" class="card">
-        <PopupHeader @new-timestamp="addNewTimestamp" :disableAddTimestamp="disableAddTimestamp"/>
+        <PopupHeader
+            @new-timestamp="addNewTimestamp"
+            :disableAddTimestamp="disableAddTimestamp"
+            :contentScriptReady="contentScriptReady"
+        />
 
         <div id="popup-body" class="card-body p-0">
             <VideoList
@@ -43,11 +47,12 @@ export default {
         return {
             videos: {},
             isYouTubeVideo: false,
+            contentScriptReady: false
         }
     },
     computed: {
         disableAddTimestamp() {
-            return !this.isYouTubeVideo
+            return !this.isYouTubeVideo || !this.contentScriptReady;
         },
         isNoVideos() {
             return Object.keys(this.videos).length == 0;
@@ -62,6 +67,8 @@ export default {
         chrome.runtime.onMessage.addListener((request) => {
             if (request.msg === "update-timestamp") {
                 this.addInstanceTimestamp(request.timestampData);
+            } else if (request.msg === "content-script-loaded") {
+                this.contentScriptReady = true;
             }
         });
 
@@ -69,6 +76,17 @@ export default {
         // the current tab is a YouTube video
         queryCurrentTab( (tabs) => {
             this.isYouTubeVideo = tabs.length > 0;
+            if (this.isYouTubeVideo) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id, {msg: "check-content-script-loaded"},
+                    (response) => {
+                        if (chrome.runtime.lastError || !response) {}
+                        else if (response.msg === "content-script-loaded") {
+                            this.contentScriptReady = true;
+                        }
+                    }
+                );
+            }
         }, "https://www.youtube.com/watch?v=*");
     },
 

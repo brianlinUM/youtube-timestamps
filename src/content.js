@@ -1,3 +1,7 @@
+console.log("Content Script Running")
+
+chrome.runtime.sendMessage({msg: "content-script-loaded"});
+
 // Parse the current page URL for the video ID and returns the ID.
 // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 function getVideoId() {
@@ -41,6 +45,8 @@ function listenMessages() {
             response(timestampData);
         } else if (request.msg === "change-time") {
             changeTime(request.timestamp);
+        } else if (request.msg === "check-content-script-loaded") {
+            response({msg: "content-script-loaded"});
         }
     });
 }
