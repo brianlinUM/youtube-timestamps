@@ -48,7 +48,7 @@
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
 
 export default {
-    props: ["disableAddTimestamp", "contentScriptReady"],
+    props: ["isYouTubeVideo", "contentScriptReady"],
     emits: ['new-timestamp'],
     data () {
         return {
@@ -56,17 +56,20 @@ export default {
         }
     },
     computed: {
+        disableAddTimestamp() {
+            return !this.isYouTubeVideo || !this.contentScriptReady;
+        },
         inputPlaceholderText() {
-            if (!this.contentScriptReady) {
-                return "Please wait";
+            if (!this.isYouTubeVideo) {
+                return "Open a video first";
             }
-            return this.disableAddTimestamp ? "Open a video first" : "Timestamp Label";
+            return !this.contentScriptReady ? "Please wait" : "Timestamp Label";
         },
         buttonText() {
-            if (!this.contentScriptReady) {
-                return "Loading...";
+            if (!this.isYouTubeVideo) {
+                return "Not a Video";
             }
-            return this.disableAddTimestamp ? "Not a Video" : "+ Add";
+            return !this.contentScriptReady ? "Loading..." : "+ Add";
         },
         buttonColor() {
             return [

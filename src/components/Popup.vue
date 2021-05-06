@@ -2,7 +2,7 @@
     <div id="popup" class="card">
         <PopupHeader
             @new-timestamp="addNewTimestamp"
-            :disableAddTimestamp="disableAddTimestamp"
+            :isYouTubeVideo="isYouTubeVideo"
             :contentScriptReady="contentScriptReady"
         />
 
@@ -51,9 +51,6 @@ export default {
         }
     },
     computed: {
-        disableAddTimestamp() {
-            return !this.isYouTubeVideo || !this.contentScriptReady;
-        },
         isNoVideos() {
             return Object.keys(this.videos).length == 0;
         }
