@@ -7,10 +7,10 @@ This chrome extension allows a YouTube user to 'bookmark' different parts of a v
 Each video can be expanded to show its timestamps. When you click on an added timestamp on the extension popup, the current tab is changed to the video, starting at the timestamp. You can add a custom label to each timestamp as notes or to remember the timestamp's contents. The title for each video can also be changed.
 
 ### Shortcut Keys
-`CTRL+Q` (`⌘+⇧+E` on Macs): record current timestamp and add to extension.
+`CTRL+SHIFT+Q` (`⌘+⇧+E` on Macs): record current timestamp and add to extension.
 
 ## Project Details
-The project is currently implemented using Javascript, Vue and Bootstrap. It makes use of the Chrome Browser API.
+The project is currently implemented using Javascript, Vue (with Vuex for centralized state management) and Bootstrap. It makes use of the Chrome Browser API for persistent storage, inter-service communication, and hotkeys.
 Tools used in this project includes NPM and webpack.
 
 ### Organization
@@ -18,6 +18,7 @@ Tools used in this project includes NPM and webpack.
 - `./src/`: source code that needs to be webpacked.
   - `./src/common/`: source code that is reused in multiple places.
   - `./src/components/`: Vue Single File Components.
+  - `./src/store/`: Vuex centralized store definition and factory function.
 - `./tests/`: contains unit tests for the project.
 - `./scripts`: contains shell utility scripts.
 - `./Changelog.md`: Lists history of versions.
@@ -56,3 +57,4 @@ See `changelog.md` for additional details, and `Plans.md` for ideas.
 - **v0.1.1**: released April 4th, 2021. Fixes a content script issue.
 - **v0.2.0**: released April 11th, 2021. Improves UI and supports custom labels for timestamps.
 - **v0.2.1**: released May 6th, 2021. Fixes issue when adding timestamp if content script is not loaded.
+- **v0.3.0**: Work in progress. Refactors popup instance (non-persistent) data store to Vuex for more maintainable code.

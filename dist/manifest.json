@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Youtube Timestamps",
     "short_name": "YT Timestamps",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "author": "Brian Lin",
     "description": "A Chrome Extension for saving timestamps of YouTube videos",
   
@@ -29,7 +29,7 @@
     "commands": {
         "add-timestamp": {
             "suggested_key": {
-                "default": "Ctrl+Q",
+                "default": "Ctrl+Shift+Q",
                 "mac": "Command+Shift+E"
             },
             "description": "Record current timestamp"

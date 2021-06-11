@@ -1,6 +1,6 @@
 {
   "name": "youtube-timestamps",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A Chrome Extension for saving timestamps of YouTube videos",
   "author": "Brian Lin <brianlin@umich.edu>",
   "homepage": "https://github.com/brianlinUM/youtube-timestamps#readme",
@@ -46,7 +46,8 @@
     }
   },
   "dependencies": {
-    "vue": "^2.6.12"
+    "vue": "^2.6.12",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
