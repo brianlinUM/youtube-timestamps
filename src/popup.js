@@ -1,14 +1,12 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
-import storeFactory from './store/storeFactory.js';
+import store from './store/initializeStore.js';
 import Popup from "./components/Popup.vue";
 import css from "./css/popup.css";
 
-Vue.use(Vuex);
 
 new Vue({
     el: "#popup",
-    store: storeFactory(),
+    store,
     components: { Popup },
     render (createElement) {
         return createElement(
