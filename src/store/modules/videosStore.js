@@ -18,6 +18,7 @@ const getters = {
 
 const mutations = {
     addVideo (state, {videoId, title}) {
+        // needs to use Vue.set to be reactive
         Vue.set(state.videos, videoId, {title, timestamps: {}});
     },
     // it is possible that label is not provided e.g. add by hotkey
@@ -27,8 +28,8 @@ const mutations = {
     setTitle (state, {videoId, title: newTitle}) {
         state.videos[videoId].title = newTitle;
     },
-    setTimestampLabel (state, {videoId, timestamp, label: newLabel}) {
-        state.videos[videoId].timestamps[timestamp].label = newLabel;
+    setTimestampLabel (state, {videoId, timestamp, label}) {
+        state.videos[videoId].timestamps[timestamp] = label;
     },
     removeAllTimestamps (state) {
         state.videos = {};
