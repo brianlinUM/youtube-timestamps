@@ -44,7 +44,15 @@ const mutations = {
 }
 
 const actions = {
-    
+    // Adds a timestamp to a video, creating a new video record if it isn't
+    // already recorded.
+    // timestampData: {videoId, title, timestamp, label?}
+    addVideoTimestamp ({state, commit}, timestampData) {
+        if (!(timestampData.videoId in state.videos)) {
+            commit('addVideo', timestampData);
+        }
+        commit('addTimestamp', timestampData);
+    },
 }
 
 export default {
