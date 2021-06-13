@@ -1,14 +1,14 @@
 // Instance storage needs to be consistent with persistent storage:
 // i.e. update in instance <--> update in chrome.storage
 import Vue from "vue";
-import * as Storage from "../../common/chromeStorageAPI.js";
+import * as PersistStore from "../../common/chromeStorageAPI.js";
 
 // initialize state by pulling from persistent store
 // {videoId: {title, timestamps:{timestamp: label}}}
 const state = () => {
     let videos = {};
     // retrieve data from local Chrome storage
-    Storage.getAllData((data) => {videos = data;});
+    PersistStore.getAllData((data) => {videos = data;});
     return {videos};
 }
 
@@ -25,16 +25,16 @@ const mutations = {
     addTimestamp (state, {videoId, timestamp, label=""}) {
         Vue.set(state.videos[videoId].timestamps, timestamp, label);
     },
-    setTitle (state, {videoId, title: newTitle}) {
+    updateTitle (state, {videoId, title: newTitle}) {
         state.videos[videoId].title = newTitle;
     },
-    setTimestampLabel (state, {videoId, timestamp, label}) {
+    updateTimestampLabel (state, {videoId, timestamp, label}) {
         state.videos[videoId].timestamps[timestamp] = label;
     },
-    removeAllTimestamps (state) {
+    removeAllData (state) {
         state.videos = {};
     },
-    removeVideo (state, {videoId}) {
+    removeVideo (state, videoId) {
         // needs to use Vue.delete to be reactive
         Vue.delete(state.videos, videoId);
     },
@@ -47,12 +47,33 @@ const actions = {
     // Adds a timestamp to a video, creating a new video record if it isn't
     // already recorded.
     // timestampData: {videoId, title, timestamp, label?}
-    addVideoTimestamp ({state, commit}, timestampData) {
+    addVideoTimestampSynced ({state, commit}, timestampData) {
+        PersistStore.setVideoTimestamp(timestampData, PersistStore.printAllData);
         if (!(timestampData.videoId in state.videos)) {
             commit('addVideo', timestampData);
         }
         commit('addTimestamp', timestampData);
     },
+    updateTitleSynced ({commit}, updateData) {
+        PersistStore.updateVideoTitle(updateData);
+        commit('updateTitle', updateData);
+    },
+    updateTimestampLabelSynced ({commit}, updateData) {
+        PersistStore.updateTimestampLabel(updateData);
+        commit('updateTimestamplabel', updateData);
+    },
+    removeAllDataSynced ({commit}) {
+        PersistStore.removeAllData();
+        commit('removeAllData');
+    },
+    removeVideoSynced({commit}, videoId) {
+        PersistStore.removeVideo(videoId);
+        commit('removeVideo', videoId);
+    },
+    removeTimestampSynced({commit}, removeData) {
+        PersistStore.removeVideoTimestamp(removeData);
+        commit('removeTimestamp', removeData);
+    }
 }
 
 export default {

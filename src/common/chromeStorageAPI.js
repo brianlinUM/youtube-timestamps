@@ -2,45 +2,63 @@
 // Chrome local Storage is organized as:
 // {videoId: {title, timestamps:{timestamp: label}}}
 // Each videoId corresponds to a videoMeta.
-// This structure is also followed by popup instance data.
 // This format enforces that each timestamp for a given video is unique.
 
-// Change the meta data for a single video, using its current value.
-export function updateSingleVideo(videoId, getCallback, setCallback=null) { 
+// set/get: data may or may not exist already
+// update: data must exist already
+
+function getVideo(videoId, getCallback) {
     chrome.storage.local.get(videoId, (data) => {
-        const updatedVideoMeta = getCallback(data);
-        chrome.storage.local.set(
-            {
-                [videoId]: updatedVideoMeta
-            }, () => {
-                if (setCallback !== null) {
-                    setCallback(); // for debugging
-                }
+        getCallback(data);
+    })
+}
+
+// Change the meta data for a video.
+function setVideo(videoId, videoMeta, setCallback=null) {
+    chrome.storage.local.set(
+        {
+            [videoId]: videoMeta
+        }, () => {
+            if (setCallback !== null) {
+                setCallback(); // for debugging
             }
-        );
-    });
+        }
+    );
 }
 
 // Add new timestamp for a video into local storage.
-export function addTimestampToStorage(timestampData, setCallback=null) {
-    const {videoId, title, timestamp} = timestampData;
-    updateSingleVideo(
-        videoId, 
-        // get timestamps for given videoId then update it
-        (data) => {
-            // it is possible that label is not provided e.g. add by hotkey
-            const newLabel = 'label' in timestampData ? timestampData.label : "";
-            let videoMeta = {title, timestamps: {}};
-            // find out if we need to add to existing data for given videoId
-            if (videoId in data) {
-                videoMeta = data[videoId];
-            }
-            videoMeta.timestamps[timestamp] = newLabel
-            return videoMeta;
-        },
-        // simply pass on
-        setCallback
-    );
+// it is possible that label is not provided e.g. add by hotkey
+export function setVideoTimestamp({videoId, title, timestamp, label=""}, setCallback=null) {
+    getVideo(videoId, (data) => {
+        let videoMeta = {title, timestamps: {}};
+        // find out if we need to add to existing data for given videoId
+        if (videoId in data) {
+            videoMeta = data[videoId];
+        }
+        videoMeta.timestamps[timestamp] = label;
+        setVideo(videoId, videoMeta, setCallback);
+    });
+}
+
+export function updateVideoTitle({videoId, title: newTitle}, setCallback=null) {
+    getVideo(videoId, ({[videoId]: videoMeta}) => {
+        videoMeta.title = newTitle;
+        setVideo(videoId, videoMeta, setCallback);
+    });
+}
+
+export function updateTimestampLabel({videoId, timestamp, label}, setCallback=null) {
+    getVideo(videoId, ({[videoId]: videoMeta}) => {
+        videoMeta.timestamps[timestamp] = label;
+        setVideo(videoId, videoMeta, setCallback);
+    });
+}
+
+export function removeVideoTimestamp({videoId, timestamp}, setCallback=null) {
+    getVideo(videoId, ({[videoId]: videoMeta}) => {
+        delete videoMeta.timestamps[timestamp];
+        setVideo(videoId, videoMeta, setCallback);
+    });
 }
 
 export function removeVideo(videoId) {
