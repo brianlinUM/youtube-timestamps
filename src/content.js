@@ -1,3 +1,5 @@
+// Content script runs after matching page (specified in manifest.json) loads.
+// For functions that need access to webpage DOM.
 console.log("Content Script Running")
 
 chrome.runtime.sendMessage({msg: "content-script-loaded"});

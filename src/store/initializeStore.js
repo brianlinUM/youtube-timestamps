@@ -1,3 +1,4 @@
+// entry point for vuex store
 import Vue from 'vue';
 import Vuex from 'vuex';
 import videosStore from './modules/videos.js';

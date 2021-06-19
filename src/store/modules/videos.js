@@ -1,5 +1,7 @@
+// Module for video data.
 // Instance storage needs to be consistent with persistent storage:
 // i.e. update in instance <--> update in chrome.storage
+
 import Vue from "vue";
 import * as PersistStore from "../../common/chromeStorageAPI.js";
 

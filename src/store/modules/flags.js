@@ -1,3 +1,5 @@
+// Module for flags
+
 const state = () => {
     const isYouTubeVideo = false;
     const contentScriptReady = false;

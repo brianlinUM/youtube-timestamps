@@ -1,0 +1,14 @@
+initializeStore.js (vuex store)
+    - videos.js (module)
+    - flags.js (module)
+
+popup.js (vue root & popup entry)
+    - popup.vue (component)
+        - Header.vue
+        - VideoList.vue
+            - VideoItem.vue (for each video)
+                - VideoNav.vue
+                - TimestampItem.vue (for each timestamp)
+                    - RemoveButton.vue
+        - Footer.vue
+            - RemoveButton.vue
