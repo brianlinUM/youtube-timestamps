@@ -1,14 +1,9 @@
 <template>
     <div id="popup" class="card">
-        <PopupHeader
-            :isYouTubeVideo="isYouTubeVideo"
-            :contentScriptReady="contentScriptReady"
-        />
+        <PopupHeader/>
 
         <div id="popup-body" class="card-body p-0">
-            <VideoList
-                @changed-video="()=>{isYouTubeVideo = true; contentScriptReady = false;}"
-            />
+            <VideoList/>
         </div>
 
         <PopupFooter />
@@ -27,7 +22,7 @@
 </style>
 
 <script>
-import {mapActions} from 'vuex';
+import {mapActions, mapMutations} from 'vuex';
 import PopupHeader from "./Header.vue";
 import VideoList from "./VideoList.vue";
 import PopupFooter from "./Footer.vue";
@@ -35,12 +30,6 @@ import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
     components: {PopupHeader, VideoList, PopupFooter},
-    data () {
-        return {
-            isYouTubeVideo: false,
-            contentScriptReady: false
-        }
-    },
     mounted () {
         // Initialize local data from chrome storage
         this.initializeVideos();
@@ -51,21 +40,27 @@ export default {
             if (request.msg === "update-timestamp") {
                 this.addVideoTimestampSynced(request.timestampData);
             } else if (request.msg === "content-script-loaded") {
-                this.contentScriptReady = true;
+                this.setContentScriptReady(true);
             }
         });
 
         // we only enable add timestamp button in header if
         // the current tab is a YouTube video
         queryCurrentTab( (tabs) => {
-            this.isYouTubeVideo = tabs.length > 0;
-            if (this.isYouTubeVideo) {
+            const localIsYouTubeVideo = tabs.length > 0;
+            this.setIsYouTubeVideo(localIsYouTubeVideo);
+            // contentScriptReady is false by default. Leave as false if not
+            // YT video. If is YT video, then check if content script is loaded.
+            if (localIsYouTubeVideo) {
                 chrome.tabs.sendMessage(
                     tabs[0].id, {msg: "check-content-script-loaded"},
                     (response) => {
+                        // the if statement is required to prevent error in the
+                        // case of content script not running i.e. user is
+                        // not browsing youtube.
                         if (chrome.runtime.lastError || !response) {}
                         else if (response.msg === "content-script-loaded") {
-                            this.contentScriptReady = true;
+                            this.setContentScriptReady(true);
                         }
                     }
                 );
@@ -74,6 +69,7 @@ export default {
     },
     methods: {
         ...mapActions(['initializeVideos', 'addVideoTimestampSynced']),
+        ...mapMutations(['setIsYouTubeVideo', 'setContentScriptReady']),
     },
 }
 </script>

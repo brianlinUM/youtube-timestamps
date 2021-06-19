@@ -1,3 +1,5 @@
+// Popup vue root.
+
 import Vue from 'vue';
 import store from './store/initializeStore.js';
 import Popup from "./components/Popup.vue";

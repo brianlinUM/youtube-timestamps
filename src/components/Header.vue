@@ -12,6 +12,7 @@
                 :placeholder="inputPlaceholderText" v-model="timestampLabel"
                 :disabled="disableAddTimestamp"
             >
+            <!-- add timestamp button -->
             <button
                 type="button" :class="buttonColor"
                 id="add-timestamp-btn"
@@ -45,17 +46,22 @@
 </style>
 
 <script>
-import {mapActions} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
 
 export default {
-    props: ["isYouTubeVideo", "contentScriptReady"],
     data () {
         return {
             timestampLabel: ""
         }
     },
     computed: {
+        ...mapState({
+            isYouTubeVideo: state => state.flagsStore.isYouTubeVideo,
+            contentScriptReady: state => state.flagsStore.contentScriptReady,
+        }),
+        // Only enable adding timestamps if is both YT video page and content script
+        // has loaded.
         disableAddTimestamp() {
             return !this.isYouTubeVideo || !this.contentScriptReady;
         },

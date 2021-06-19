@@ -3,7 +3,7 @@ import sendObtainTimestampRequest from "./common/obtainTimestamp.js";
 
 console.log("Background Script Running");
 
-// send a message to popup instance to update its videos data
+// Message to popup to add timestamp.
 function sendUpdatePopupInstance(timestampData) {
     chrome.runtime.sendMessage(
         {msg: "update-timestamp", timestampData}
@@ -17,7 +17,8 @@ function listenHotkeys() {
             sendObtainTimestampRequest((response) => {
                 if (chrome.runtime.lastError || !response) {}
                 else {
-                    // we call storage here instead of in popup since popup may not be open
+                    // we call to persistent storage here since popup may not be open
+                    // and thus not have vuex initialized.
                     setVideoTimestamp(response);
                     sendUpdatePopupInstance(response);
                 }

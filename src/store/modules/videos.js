@@ -3,15 +3,10 @@
 import Vue from "vue";
 import * as PersistStore from "../../common/chromeStorageAPI.js";
 
-// initialize state by pulling from persistent store
 // {videoId: {title, timestamps:{timestamp: label}}}
 const state = () => {
     let videos = {};
     return {videos};
-}
-
-const getters = {
-
 }
 
 const mutations = {
@@ -44,7 +39,12 @@ const mutations = {
     },
 }
 
+// Each state mutation in actions will be matched by a call to PersistStore
+// to keep vuex state consistent with persistent storage.
 const actions = {
+    // Initialize state by pulling from persistent store.
+    // getAllData has to be called as an action since its async.
+    // Would not work in state()
     initializeVideos ({commit}) {
         // retrieve data from local Chrome storage
         PersistStore.getAllData((data) => {
@@ -86,7 +86,6 @@ const actions = {
 export default {
     namespaced: false,
     state,
-    getters,
     actions,
     mutations
 }

@@ -45,16 +45,22 @@ export default {
     },
     methods: {
         updateClickState() {
+            // Need to clear previous timeout, otherwise previous timeouts will persist
+            // and change the button state.
             if (this.timeoutHandle) {
                 clearTimeout(this.timeoutHandle);
                 this.timeoutHandle = null;
             }
 
             if ( this.removeClicked ) {
-                // emit by videoList to Popup
+                // Reach here if button was clicked past confirm state.
+                // Emit to parent so that parent can handle removal.
+                // This makes the effect of this button customizable.
                 this.$emit('remove-confirmed');
                 this.removeClicked = false; // reset
             } else {
+                // set to confirm state i.e. require an additional click to
+                // emit confirmation
                 this.removeClicked = true;
                 this.timeoutHandle = setTimeout(() => {
                     this.removeClicked = false

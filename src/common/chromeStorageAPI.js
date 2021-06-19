@@ -7,6 +7,7 @@
 // set/get: data may or may not exist already
 // update: data must exist already
 
+// obtain video with corresponding videoId and execute callback with video metadata.
 function getVideo(videoId, getCallback) {
     chrome.storage.local.get(videoId, (data) => {
         getCallback(data);

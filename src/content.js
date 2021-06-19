@@ -18,6 +18,7 @@ function getVideoId() {
 function getCurrentTimestampInfo() {
     const time = document.getElementsByTagName("video")[0].currentTime;
     const videoId = getVideoId();
+    // obtain title by scraping webpage
     const title = document.getElementsByClassName(
         "title style-scope ytd-video-primary-info-renderer"
     )[0].firstChild.innerText;

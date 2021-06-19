@@ -2,6 +2,7 @@
     <div class="accordion-item">
         <div class="accordion-header">
             <h2 class="videoTitle m-0">
+                <!-- video title (and accordion toggle) -->
                 <button
                     class="accordion-button shadow-none collapsed" type="button"
                     data-bs-toggle="collapse" :data-bs-target="'#body'+videoId"
@@ -11,7 +12,7 @@
                 </button>
             </h2>
         </div>
-
+        <!-- collapsible accordion body -->
         <div :id="'body'+videoId" class="accordion-collapse collapse"
             data-bs-parent="#videos-list"
         >
@@ -20,6 +21,7 @@
                     <li class="list-group-item p-0">
                         <VideoNav :videoId="videoId" :videoTitle="videoMeta.title"  @play-video="changeVideo(0)"/>
                     </li>
+                    <!-- list timestamps -->
                     <li
                         v-for="(label, timestamp) in videoMeta.timestamps" :key="timestamp"
                         class="list-group-item p-2"
@@ -37,6 +39,7 @@
 
 
 <script>
+import {mapMutations} from "vuex";
 import VideoNav from "./VideoNav.vue";
 import TimestampItem from "./TimestampItem.vue";
 import queryCurrentTab from "../common/obtainCurrentTab.js";
@@ -45,21 +48,22 @@ export default {
     props: ["videoMeta", "videoId"],
     components: {VideoNav, TimestampItem},
     methods: {
-        // change current tab to new YouTube Video
+        ...mapMutations(['setIsYouTubeVideo', 'setContentScriptReady']),
+        // change current tab to newly loaded YouTube Video (can be same video)
         changeVideo(newTime) {
             const newUrl = "https://www.youtube.com/watch?v=" + this.videoId + "&t=" + newTime;
             queryCurrentTab((tabs) => {
                 chrome.tabs.update(tabs[0].id, {url: newUrl});
             });
-            // emit by videoList to Popup
-            // need to tell popup that we have changed to a youtube video
+
+            // need to tell that we have changed to a youtube video
             // so that header can update its button/form state.
-            this.$parent.$emit('changed-video');
+            this.setIsYouTubeVideo(true);
+            this.setContentScriptReady(false);
         },
         // Called when a timestamp is clicked and current tab
         // is not the matching video.
-        changeVideoAndTime(newTimeMsg) {
-            const {newTime} = newTimeMsg;
+        changeVideoAndTime({newTime}) {
             this.changeVideo(newTime);
         },
     }
