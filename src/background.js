@@ -1,4 +1,4 @@
-import {addTimestampToStorage} from "./common/chromeStorageAPI.js";
+import {setVideoTimestamp} from "./common/chromeStorageAPI.js";
 import sendObtainTimestampRequest from "./common/obtainTimestamp.js";
 
 console.log("Background Script Running");
@@ -18,7 +18,7 @@ function listenHotkeys() {
                 if (chrome.runtime.lastError || !response) {}
                 else {
                     // we call storage here instead of in popup since popup may not be open
-                    addTimestampToStorage(response);
+                    setVideoTimestamp(response);
                     sendUpdatePopupInstance(response);
                 }
             });

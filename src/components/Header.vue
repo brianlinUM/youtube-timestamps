@@ -45,11 +45,11 @@
 </style>
 
 <script>
+import {mapActions} from 'vuex';
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
 
 export default {
     props: ["isYouTubeVideo", "contentScriptReady"],
-    emits: ['new-timestamp'],
     data () {
         return {
             timestampLabel: ""
@@ -82,6 +82,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['addVideoTimestampSynced']),
         // Send a request to the active youtube page to retrieve its timestamp.
         // https://developer.chrome.com/docs/extensions/mv2/messaging/
         sendTimestampRequest() {
@@ -90,7 +91,7 @@ export default {
             sendObtainTimestampRequest((timestampData) => {
                 timestampData.label = this.timestampLabel;
                 this.timestampLabel = "";
-                this.$emit('new-timestamp', timestampData);
+                this.addVideoTimestampSynced(timestampData);
             });
         }
     }

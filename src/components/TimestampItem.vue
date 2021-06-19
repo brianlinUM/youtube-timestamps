@@ -11,7 +11,10 @@
                 </svg>
                 {{ isLabelEditing ? "Cancel Edit" : "Edit Label"}}
             </button>
-            <RemoveButton @remove-confirmed="removeTimestamp" :tooltip="`Remove Timestamp`"/>
+            <RemoveButton
+                @remove-confirmed="removeTimestampSynced({videoId, timestamp})"
+                :tooltip="`Remove Timestamp`"
+            />
         </div>
         <div class="card-body p-2">
             <p v-show="!isLabelEditing" class="m-0 p-0"> {{ label === "" ? "Add a Label" : label }} </p>
@@ -42,12 +45,13 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
 import RemoveButton from './RemoveButton.vue';
 import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
     props: ['videoId', 'timestamp', 'label'],
-    emits: ['remove-timestamp', 'change-video-and-time'],
+    emits: ['change-video-and-time'],
     components: {RemoveButton},
     data () {
         return {
@@ -64,6 +68,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['removeTimestampSynced', 'updateTimestampLabelSynced']),
         // converts from seconds to HH:MM:SS
         // https://stackoverflow.com/questions/6312993/javascript-seconds-to-time-string-with-format-hhmmss
         convertTimeFormat(seconds) {
@@ -83,12 +88,6 @@ export default {
                 }
             }, "https://www.youtube.com/watch?v=" + this.videoId + "*");
         },
-        removeTimestamp() {
-            this.$emit('remove-timestamp', {
-                videoId: this.videoId,
-                timestamp: this.timestamp
-            });
-        },
         editLabel() {
             if (this.isLabelEditing) {
                 // reset input when cancelled
@@ -97,7 +96,7 @@ export default {
             this.isLabelEditing = !this.isLabelEditing;
         },
         saveLabelEdit() {
-            this.$emit('update-timestamp-label', {
+            this.updateTimestampLabelSynced({
                 videoId: this.videoId,
                 timestamp: this.timestamp,
                 label: this.labelEditInput

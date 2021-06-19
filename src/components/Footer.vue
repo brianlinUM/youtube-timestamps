@@ -8,7 +8,7 @@
         <h6 class="text-muted">YouTube Timestamps</h6>
         <RemoveButton
             :btnText="`Remove All`" :btnTextConfirm="`Confirm`"
-            @remove-confirmed="removeAllTimestamps"
+            @remove-confirmed="removeAllDataSynced"
             :disableBtn='isNoVideos'
             :fillIcon="true"
         />
@@ -16,17 +16,21 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
 import RemoveButton from "./RemoveButton.vue";
 
 export default {
-    props: ['isNoVideos'],
-    emits: ['remove-all'],
+    computed: {
+        isNoVideos () {
+            return Object.keys(this.videos).length == 0;
+        },
+        ...mapState({
+            videos: state => state.videosStore.videos
+        }),
+    },
     components: {RemoveButton},
     methods: {
-        removeAllTimestamps() {
-            // parent needs to handle removal since it holds the data
-            this.$emit('remove-all');
-        }
+        ...mapActions(['removeAllDataSynced']),
     }
 }
 </script>

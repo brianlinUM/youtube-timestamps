@@ -4,31 +4,29 @@
             <h2 class="videoTitle m-0">
                 <button
                     class="accordion-button shadow-none collapsed" type="button"
-                    data-bs-toggle="collapse" :data-bs-target="'#body'+videoIdProp"
+                    data-bs-toggle="collapse" :data-bs-target="'#body'+videoId"
                     title="Toggle Video"
                 >
-                    {{metaProp.title}}
+                    {{videoMeta.title}}
                 </button>
             </h2>
         </div>
 
-        <div :id="'body'+videoIdProp" class="accordion-collapse collapse"
+        <div :id="'body'+videoId" class="accordion-collapse collapse"
             data-bs-parent="#videos-list"
         >
             <div class="accordion-body p-0">
                 <ul class="list-group list-group-flush p-0">
                     <li class="list-group-item p-0">
-                        <VideoNav :videoIdProp="videoIdProp" :titleProp="metaProp.title"  @play-video="changeVideo(0)"/>
+                        <VideoNav :videoId="videoId" :videoTitle="videoMeta.title"  @play-video="changeVideo(0)"/>
                     </li>
                     <li
-                        v-for="(label, timestamp) in metaProp.timestamps" :key="timestamp"
+                        v-for="(label, timestamp) in videoMeta.timestamps" :key="timestamp"
                         class="list-group-item p-2"
                     >
                         <TimestampItem
-                            :timestamp="timestamp" :label="label" :videoId="videoIdProp"
-                            @remove-timestamp="removeTimestamp"
+                            :timestamp="timestamp" :label="label" :videoId="videoId"
                             @change-video-and-time="changeVideoAndTime"
-                            @update-timestamp-label="updateTimestampLabel"
                         />
                     </li>
                 </ul>
@@ -44,13 +42,12 @@ import TimestampItem from "./TimestampItem.vue";
 import queryCurrentTab from "../common/obtainCurrentTab.js";
 
 export default {
-    props: ["metaProp", "videoIdProp"],
+    props: ["videoMeta", "videoId"],
     components: {VideoNav, TimestampItem},
-    emits: ['remove-timestamp'],
     methods: {
         // change current tab to new YouTube Video
         changeVideo(newTime) {
-            const newUrl = "https://www.youtube.com/watch?v=" + this.videoIdProp + "&t=" + newTime;
+            const newUrl = "https://www.youtube.com/watch?v=" + this.videoId + "&t=" + newTime;
             queryCurrentTab((tabs) => {
                 chrome.tabs.update(tabs[0].id, {url: newUrl});
             });
@@ -65,15 +62,6 @@ export default {
             const {newTime} = newTimeMsg;
             this.changeVideo(newTime);
         },
-        // Relay timestamp removal event
-        removeTimestamp(timestampData) {
-            // emit event to grandparent as it handles the data
-            this.$parent.$emit('remove-timestamp', timestampData);
-        },
-        // Relay timestamp label update event
-        updateTimestampLabel(timestampData) {
-            this.$parent.$emit('update-timestamp-label', timestampData);
-        }
     }
 }
 </script>

@@ -26,7 +26,7 @@
                 </svg>
             </button>
 
-            <RemoveButton @remove-confirmed="removeVideo" :fillIcon="true" :tooltip="`Remove Video`"/>
+            <RemoveButton @remove-confirmed="removeVideoSynced(videoId)" :fillIcon="true" :tooltip="`Remove Video`"/>
         </div>
     </nav>
 </template>
@@ -38,20 +38,21 @@
 </style>
 
 <script>
+import {mapActions} from "vuex";
 import RemoveButton from "./RemoveButton.vue";
 
 export default {
-    props: ['videoIdProp', 'titleProp'],
-    emits: ['remove-video', 'play-video'],
+    props: ['videoId', 'videoTitle'],
+    emits: ['play-video'],
     components: {RemoveButton},
     data () {
         return {
-            titleEditInput: this.titleProp
+            titleEditInput: this.videoTitle
         }
     },
     computed: {
         isTitleEditing() {
-            return this.titleProp !== this.titleEditInput;
+            return this.videoTitle !== this.titleEditInput;
         },
         editTitleBtnClass ()  {
             return ['btn', {
@@ -61,22 +62,16 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['removeVideoSynced', 'updateTitleSynced']),
         playVideo() {
             this.$emit('play-video');
-        },
-        removeVideo() {
-            // emit by videoList to Popup
-            this.$parent.$parent.$emit('remove-video', {
-                videoId: this.videoIdProp
-            });
         },
         changeTitle() {
             // Only send update even if there's a change.
             // Need this check in case user presses enter key on form
             if (this.isTitleEditing) {
-                // emit by videoList to Popup
-                this.$parent.$parent.$emit('update-title', {
-                    videoId: this.videoIdProp,
+                this.updateTitleSynced({
+                    videoId: this.videoId,
                     title: this.titleEditInput
                 });
             }

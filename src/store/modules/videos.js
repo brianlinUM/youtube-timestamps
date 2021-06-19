@@ -7,8 +7,6 @@ import * as PersistStore from "../../common/chromeStorageAPI.js";
 // {videoId: {title, timestamps:{timestamp: label}}}
 const state = () => {
     let videos = {};
-    // retrieve data from local Chrome storage
-    PersistStore.getAllData((data) => {videos = data;});
     return {videos};
 }
 
@@ -17,6 +15,9 @@ const getters = {
 }
 
 const mutations = {
+    overwriteVideos (state, videos) {
+        state.videos = videos;
+    },
     addVideo (state, {videoId, title}) {
         // needs to use Vue.set to be reactive
         Vue.set(state.videos, videoId, {title, timestamps: {}});
@@ -28,7 +29,7 @@ const mutations = {
     updateTitle (state, {videoId, title: newTitle}) {
         state.videos[videoId].title = newTitle;
     },
-    updateTimestampLabel (state, {videoId, timestamp, label}) {
+    updateLabel (state, {videoId, timestamp, label}) {
         state.videos[videoId].timestamps[timestamp] = label;
     },
     removeAllData (state) {
@@ -44,6 +45,12 @@ const mutations = {
 }
 
 const actions = {
+    initializeVideos ({commit}) {
+        // retrieve data from local Chrome storage
+        PersistStore.getAllData((data) => {
+            commit('overwriteVideos', data);
+        });
+    },
     // Adds a timestamp to a video, creating a new video record if it isn't
     // already recorded.
     // timestampData: {videoId, title, timestamp, label?}
@@ -60,7 +67,7 @@ const actions = {
     },
     updateTimestampLabelSynced ({commit}, updateData) {
         PersistStore.updateTimestampLabel(updateData);
-        commit('updateTimestamplabel', updateData);
+        commit('updateLabel', updateData);
     },
     removeAllDataSynced ({commit}) {
         PersistStore.removeAllData();
@@ -77,7 +84,7 @@ const actions = {
 }
 
 export default {
-    namespaced: true,
+    namespaced: false,
     state,
     getters,
     actions,
