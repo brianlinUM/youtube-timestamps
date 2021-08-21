@@ -32,7 +32,7 @@ If you have any Youtube tabs open, make sure to refresh them before using the ex
 ## Building
 Before beginning, make sure to have Node.js and NPM installed.
 
-Install all Node dependencies by running from root `/`:
+Install all Node dependencies by running from project root `/`:
 
 `npm install`
 
@@ -40,7 +40,7 @@ Then, build the .js bundles by running:
 
 `npm run build`
 
-This builds the source .js files to `dist/javascript/`.
+This builds the source .js files to `dist/js/`.
 
 ## Testing
 This project currently uses `jest` for unit tests of non-vue js scripts, along with `jest-chrome` to mock Chrome's API.
