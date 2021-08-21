@@ -11,9 +11,6 @@ new Vue({
     store,
     components: { Popup },
     render (createElement) {
-        return createElement(
-            'popup',
-            {}
-        )
+        return createElement('popup')
     },
 })

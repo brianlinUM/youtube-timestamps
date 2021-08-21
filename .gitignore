@@ -1,4 +1,4 @@
 node_modules/
-dist/js/*bundle.js
+dist/js/*bundle.js*
 *.zip
 local_thirdparty/

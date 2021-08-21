@@ -11,7 +11,13 @@ module.exports = {
         path: path.resolve(__dirname, 'dist/js'),
         filename: '[name].bundle.js',
     },
-    mode: 'production',
+    mode: 'development',
+    // fix webpack using unsafe eval, violating chrome CSP.
+    // https://stackoverflow.com/questions/48047150/chrome-extension-compiled-by-webpack-throws-unsafe-eval-error
+    // needs to be inline since chrome extension won't load
+    // file source map.
+    // https://stackoverflow.com/questions/61462586/can-i-enable-sourcemaps-in-a-chrome-extension
+    devtool: 'inline-source-map',
     module: {
         rules: [
             {
