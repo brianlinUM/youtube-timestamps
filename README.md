@@ -18,7 +18,7 @@ Tools used in this project includes NPM and webpack.
 - `./src/`: source code that needs to be webpacked.
   - `./src/common/`: source code that is reused in multiple places.
   - `./src/components/`: Vue Single File Components.
-  - `./src/store/`: Vuex centralized store definition and factory function.
+  - `./src/store/`: Vuex centralized store definition and initialization.
 - `./tests/`: contains unit tests for the project.
 - `./scripts`: contains shell utility scripts.
 - `./Changelog.md`: Lists history of versions.
