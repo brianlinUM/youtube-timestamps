@@ -3,36 +3,38 @@
         id="popup-header"
         class="
                 card-header position-sticky top-0
-                d-flex justify-content-between align-items-center
+                d-flex flex-column
             "
     >
-        <form v-on:submit.prevent="sendTimestampRequest" id="timestamp-form" class="input-group">
-            <input
-                type="text" class="form-control"
-                :placeholder="inputPlaceholderText" v-model="timestampLabel"
-                :disabled="disableAddTimestamp"
-            >
-            <!-- add timestamp button -->
-            <button
-                type="button" :class="buttonColor"
-                id="add-timestamp-btn"
-                :disabled="disableAddTimestamp"
-                @click="sendTimestampRequest"
-            >
-                {{ buttonText }}
-            </button>
-        </form>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <form v-on:submit.prevent="sendTimestampRequest" id="timestamp-form" class="input-group">
+                <input
+                    type="text" class="form-control"
+                    :placeholder="inputPlaceholderText" v-model="timestampLabel"
+                    :disabled="disableAddTimestamp"
+                >
+                <!-- add timestamp button -->
+                <button
+                    type="button" :class="buttonColor"
+                    id="add-timestamp-btn"
+                    :disabled="disableAddTimestamp"
+                    @click="sendTimestampRequest"
+                >
+                    {{ buttonText }}
+                </button>
+            </form>
 
-        <button
-            id="help-btn"
-            class="
-                    btn btn-sm btn-outline-secondary
-                    d-flex justify-content-center align-items-center
-                    "
-            title="About"
-        >
-            <em>i</em>
-        </button>
+            <button
+                id="help-btn"
+                class="
+                        btn btn-sm btn-outline-secondary
+                        d-flex justify-content-center align-items-center
+                        "
+                title="About"
+            >
+                <em>i</em>
+            </button>
+        </div>
 
         <Searchbar/>
     </div>
