@@ -1,22 +1,21 @@
 <template>
     <div class="accordion" id="videos-list">
         <VideoItem
-            v-for="(videoMeta, videoId) in videos" :key="videoId"
-            :videoMeta="videoMeta" :videoId="videoId"
+            v-for="video in videos" :key="video[0]"
+            :videoMeta="video[1]" :videoId="video[0]"
         />
     </div>
 </template>
 
 <script>
-import {mapState} from 'vuex';
 import VideoItem from "./VideoItem.vue";
 
 export default {
     computed: {
-        // mapState is module namespaced despite namespace flag being false
-        ...mapState({
-            videos: state => state.videosStore.videos
-        })
+        // format: [[videoId, videoMeta]...]
+        videos () {
+            return this.$store.getters.filteredVideos;
+        }
     },
     components: {VideoItem},
 }

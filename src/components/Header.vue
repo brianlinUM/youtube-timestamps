@@ -33,6 +33,8 @@
         >
             <em>i</em>
         </button>
+
+        <Searchbar/>
     </div>
 </template>
 
@@ -47,9 +49,11 @@
 
 <script>
 import {mapState, mapActions} from 'vuex';
+import Searchbar from './Searchbar.vue';
 import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
 
 export default {
+    components: {Searchbar},
     data () {
         return {
             timestampLabel: ""

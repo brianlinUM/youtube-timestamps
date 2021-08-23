@@ -11,6 +11,37 @@ const state = () => {
     return {videos};
 }
 
+const getters = {
+    orderedVideos: (state) => {
+        let videosList = Object.keys(state.videos).map((videoId) => [videoId, state.videos[videoId]]);
+        // sort videos by title
+        videosList.sort((video1, video2) => {
+            const title1 = video1[1].title.toLowerCase();
+            const title2 = video2[1].title.toLowerCase();
+            if (title1 < title2) {
+                return -1;
+            }
+            if (title1 > title2) {
+                return 1;
+            }
+            // same titles
+            return 0;
+        });
+        return videosList;
+    },
+    filteredVideos: (state, getters) => {
+        const queryString = getters.queryString;
+        // return all videos if there is no query
+        if (queryString == "") return getters.orderedVideos;
+    
+        // return videos with titles that match the query
+        return getters.orderedVideos.filter(video => {
+            const videoTitle = video[1].title.toLowerCase();
+            return videoTitle.includes(queryString);
+        });
+    }
+}
+
 const mutations = {
     overwriteVideos (state, videos) {
         state.videos = videos;
@@ -88,6 +119,7 @@ const actions = {
 export default {
     namespaced: false,
     state,
+    getters,
     actions,
     mutations
 }
