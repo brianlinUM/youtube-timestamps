@@ -10,7 +10,11 @@ const state = () => {
     let videos = {};
     // not tracked in persistent storage:
     let currentVideoId = "";
-    return {videos, currentVideoId};
+    // since we only have one remove video modal component for all videos,
+    // (to prevent duplication) we need to save which video we are targeting
+    // for removal in the modal.
+    let removeTargetVideoId = "";
+    return {videos, currentVideoId, removeTargetVideoId};
 }
 
 const getters = {
@@ -74,7 +78,10 @@ const mutations = {
     },
     setCurrentVideoId (state, newVideoId) {
         state.currentVideoId = newVideoId;
-    }
+    },
+    setRemoveTargetVideoId (state, targetVideoId) {
+        state.removeTargetVideoId = targetVideoId;
+    },
 }
 
 // Each state mutation in actions will be matched by a call to PersistStore

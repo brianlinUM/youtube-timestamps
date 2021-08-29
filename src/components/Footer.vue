@@ -6,18 +6,19 @@
             "
     >
         <h6 class="text-muted">YouTube Timestamps</h6>
-        <RemoveButton
-            :btnText="`Remove All`" :btnTextConfirm="`Confirm`"
-            @remove-confirmed="removeAllDataSynced"
-            :disableBtn='isNoVideos'
-            :fillIcon="true"
-        />
+
+        <button
+            type="button" class="btn btn-sm btn-danger"
+            data-bs-toggle="modal" data-bs-target="#remove-all-modal"
+            :disabled="isNoVideos"
+        >
+            Remove All
+        </button>
     </div>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
-import RemoveButton from "./RemoveButton.vue";
+import {mapState} from 'vuex';
 
 export default {
     computed: {
@@ -28,9 +29,5 @@ export default {
             videos: state => state.videosStore.videos
         }),
     },
-    components: {RemoveButton},
-    methods: {
-        ...mapActions(['removeAllDataSynced']),
-    }
 }
 </script>

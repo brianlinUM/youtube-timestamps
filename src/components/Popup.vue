@@ -6,7 +6,13 @@
             <VideoList/>
         </div>
 
-        <PopupFooter />
+        <PopupFooter/>
+
+        <!-- Bootstrap modal can not have fixed, absolute, or relative positioned parent. -->
+        <!-- Will cause modal component to show underneath fade background -->
+        <!-- https://weblog.west-wind.com/posts/2016/sep/14/bootstrap-modal-dialog-showing-under-modal-background -->
+        <RemoveAllVideosModal/>
+        <RemoveVideoModal/>
     </div>
 </template>
 
@@ -26,10 +32,15 @@ import {mapActions, mapMutations} from 'vuex';
 import PopupHeader from "./Header.vue";
 import VideoList from "./VideoList.vue";
 import PopupFooter from "./Footer.vue";
+import RemoveAllVideosModal from "./RemoveAllVideosModal.vue";
+import RemoveVideoModal from "./RemoveVideoModal.vue";
 import {queryCurrentTab} from "../common/obtainCurrentTab.js";
 
 export default {
-    components: {PopupHeader, VideoList, PopupFooter},
+    components: {
+        PopupHeader, VideoList, PopupFooter,
+        RemoveAllVideosModal, RemoveVideoModal
+    },
     mounted () {
         // Initialize local data from chrome storage
         this.initializeVideos();
