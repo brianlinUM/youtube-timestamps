@@ -1,7 +1,7 @@
 // Background service runs independent from popup, but on the same chrome runtime.
 // For functions that need to run even without popup.
 import {setVideoTimestamp} from "./common/chromeStorageAPI.js";
-import sendObtainTimestampRequest from "./common/obtainTimestamp.js";
+import {sendObtainTimestampRequest} from "./common/obtainTimestamp.js";
 
 console.log("Background Script Running");
 

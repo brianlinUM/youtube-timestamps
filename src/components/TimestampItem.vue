@@ -3,7 +3,7 @@
         <div class="card-header d-flex justify-content-between">
             <!-- time -->
             <a class="videoTimestamp" href="#" @click="changeTime(timestamp)" title="Go to Timestamp">
-                {{convertTimeFormat(timestamp)}}
+                {{ convertTimeFormat(timestamp) }}
             </a>
             <!-- edit button -->
             <button type="button" :class="editLabelBtnClass" @click="editLabel">
@@ -53,6 +53,7 @@
 import {mapActions} from "vuex";
 import RemoveButton from './RemoveButton.vue';
 import {queryCurrentTab} from "../common/obtainCurrentTab.js";
+import {convertTimeFormat} from "../common/obtainTimestamp.js";
 
 export default {
     props: ['videoId', 'timestamp', 'label'],
@@ -74,12 +75,9 @@ export default {
     },
     methods: {
         ...mapActions(['removeTimestampSynced', 'updateTimestampLabelSynced']),
-        // converts from seconds to HH:MM:SS
-        // https://stackoverflow.com/questions/6312993/javascript-seconds-to-time-string-with-format-hhmmss
+        // wrap this imported method for the component to use in its template.
         convertTimeFormat(seconds) {
-            let dateObj = new Date(0);
-            dateObj.setSeconds(seconds);
-            return dateObj.toISOString().substr(11, 8);
+            return convertTimeFormat(seconds)
         },
         // sends request to content listener to change current video time
         changeTime (newTime) {

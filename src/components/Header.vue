@@ -52,7 +52,7 @@
 <script>
 import {mapState, mapActions} from 'vuex';
 import Searchbar from './Searchbar.vue';
-import sendObtainTimestampRequest from "../common/obtainTimestamp.js";
+import {sendObtainTimestampRequest} from "../common/obtainTimestamp.js";
 
 export default {
     components: {Searchbar},
