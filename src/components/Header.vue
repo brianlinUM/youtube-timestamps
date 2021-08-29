@@ -30,6 +30,7 @@
                         btn btn-sm btn-outline-secondary
                         d-flex justify-content-center align-items-center
                         "
+                data-bs-toggle="modal" data-bs-target="#about-modal"
                 title="About"
             >
                 <em>i</em>

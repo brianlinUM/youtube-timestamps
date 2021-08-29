@@ -13,6 +13,7 @@
         <!-- https://weblog.west-wind.com/posts/2016/sep/14/bootstrap-modal-dialog-showing-under-modal-background -->
         <RemoveAllVideosModal/>
         <RemoveVideoModal/>
+        <AboutModal/>
     </div>
 </template>
 
@@ -34,12 +35,14 @@ import VideoList from "./VideoList.vue";
 import PopupFooter from "./Footer.vue";
 import RemoveAllVideosModal from "./RemoveAllVideosModal.vue";
 import RemoveVideoModal from "./RemoveVideoModal.vue";
+import AboutModal from "./AboutModal.vue";
 import {queryCurrentTab} from "../common/obtainCurrentTab.js";
 
 export default {
     components: {
         PopupHeader, VideoList, PopupFooter,
-        RemoveAllVideosModal, RemoveVideoModal
+        RemoveAllVideosModal, RemoveVideoModal,
+        AboutModal
     },
     mounted () {
         // Initialize local data from chrome storage

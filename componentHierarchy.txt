@@ -16,3 +16,4 @@ popup.js (vue root & popup entry)
         - Footer.vue
         - RemoveAllVideosModal.vue
         - RemoveVideoModal.vue
+        - AboutModal.vue

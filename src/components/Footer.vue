@@ -10,7 +10,7 @@
         <button
             type="button" class="btn btn-sm btn-danger"
             data-bs-toggle="modal" data-bs-target="#remove-all-modal"
-            :disabled="isNoVideos"
+            :disabled="isNoVideos" title="Remove all videos"
         >
             Remove All
         </button>
