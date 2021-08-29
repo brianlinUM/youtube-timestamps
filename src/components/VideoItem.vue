@@ -8,7 +8,7 @@
                     data-bs-toggle="collapse" :data-bs-target="'#body'+videoId"
                     title="Toggle Video"
                 >
-                    {{videoMeta.title}}
+                    <span :class="currentVideoClass">{{videoMeta.title}}</span>
                 </button>
             </h2>
         </div>
@@ -42,13 +42,13 @@
 import {mapMutations} from "vuex";
 import VideoNav from "./VideoNav.vue";
 import TimestampItem from "./TimestampItem.vue";
-import queryCurrentTab from "../common/obtainCurrentTab.js";
+import {queryCurrentTab} from "../common/obtainCurrentTab.js";
 
 export default {
-    props: ["videoMeta", "videoId"],
+    props: ["videoMeta", "videoId", "isCurrentVideo"],
     components: {VideoNav, TimestampItem},
     methods: {
-        ...mapMutations(['setIsYouTubeVideo', 'setContentScriptReady']),
+        ...mapMutations(['setIsYouTubeVideo', 'setContentScriptReady', 'setCurrentVideoId']),
         // change current tab to newly loaded YouTube Video (can be same video)
         changeVideo(newTime) {
             const newUrl = "https://www.youtube.com/watch?v=" + this.videoId + "&t=" + newTime;
@@ -60,12 +60,18 @@ export default {
             // so that header can update its button/form state.
             this.setIsYouTubeVideo(true);
             this.setContentScriptReady(false);
+            this.setCurrentVideoId(this.videoId);
         },
         // Called when a timestamp is clicked and current tab
         // is not the matching video.
         changeVideoAndTime({newTime}) {
             this.changeVideo(newTime);
         },
+    },
+    computed: {
+        currentVideoClass() {
+            return {highlightedVideo: this.isCurrentVideo}
+        }
     }
 }
 </script>
@@ -74,6 +80,9 @@ export default {
 <style scoped>
 .videoTitle {
     font-size: 15px;
+}
+.highlightedVideo {
+    color: #198754;
 }
 .videoTimestamp {
     font-size: 12px;

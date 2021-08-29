@@ -26,7 +26,7 @@ import {mapActions, mapMutations} from 'vuex';
 import PopupHeader from "./Header.vue";
 import VideoList from "./VideoList.vue";
 import PopupFooter from "./Footer.vue";
-import queryCurrentTab from "../common/obtainCurrentTab.js";
+import {queryCurrentTab} from "../common/obtainCurrentTab.js";
 
 export default {
     components: {PopupHeader, VideoList, PopupFooter},
@@ -41,6 +41,8 @@ export default {
                 this.addVideoTimestampSynced(request.timestampData);
             } else if (request.msg === "content-script-loaded") {
                 this.setContentScriptReady(true);
+            } else if (request.msg === "update-current-videoId") {
+                this.setCurrentVideoId(request.videoId);
             }
         });
 
@@ -69,7 +71,7 @@ export default {
     },
     methods: {
         ...mapActions(['initializeVideos', 'addVideoTimestampSynced']),
-        ...mapMutations(['setIsYouTubeVideo', 'setContentScriptReady']),
+        ...mapMutations(['setIsYouTubeVideo', 'setContentScriptReady', 'setCurrentVideoId']),
     },
 }
 </script>

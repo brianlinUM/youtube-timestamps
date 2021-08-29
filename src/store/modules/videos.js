@@ -1,5 +1,5 @@
 // Module for video data.
-// Instance storage needs to be consistent with persistent storage:
+// Instance storage needs to be consistent with persistent storage for videos:
 // i.e. update in instance <--> update in chrome.storage
 
 import Vue from "vue";
@@ -8,7 +8,9 @@ import * as PersistStore from "../../common/chromeStorageAPI.js";
 // {videoId: {title, timestamps:{timestamp: label}}}
 const state = () => {
     let videos = {};
-    return {videos};
+    // not tracked in persistent storage:
+    let currentVideoId = "";
+    return {videos, currentVideoId};
 }
 
 const getters = {
@@ -70,6 +72,9 @@ const mutations = {
     removeTimestamp (state, {videoId, timestamp}) {
         Vue.delete(state.videos[videoId].timestamps, timestamp);
     },
+    setCurrentVideoId (state, newVideoId) {
+        state.currentVideoId = newVideoId;
+    }
 }
 
 // Each state mutation in actions will be matched by a call to PersistStore

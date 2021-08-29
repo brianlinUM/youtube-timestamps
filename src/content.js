@@ -7,6 +7,9 @@ chrome.runtime.sendMessage({msg: "content-script-loaded"});
 // Parse the current page URL for the video ID and returns the ID.
 // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 function getVideoId() {
+    if (window.location.search.split('v=')[1] === undefined) {
+        return "";
+    }
     let videoId = window.location.search.split('v=')[1];
     let ampersandPosition = videoId.indexOf('&');
     // filter out irrevelant query part
@@ -50,11 +53,14 @@ function listenMessages() {
             changeTime(request.timestamp);
         } else if (request.msg === "check-content-script-loaded") {
             response({msg: "content-script-loaded"});
+            const videoId = getVideoId();
+            chrome.runtime.sendMessage({msg: "update-current-videoId", videoId});
         }
     });
 }
 
-
+const videoId = getVideoId();
+chrome.runtime.sendMessage({msg: "update-current-videoId", videoId});
 listenMessages();
 
 

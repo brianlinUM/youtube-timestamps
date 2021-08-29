@@ -52,7 +52,7 @@
 <script>
 import {mapActions} from "vuex";
 import RemoveButton from './RemoveButton.vue';
-import queryCurrentTab from "../common/obtainCurrentTab.js";
+import {queryCurrentTab} from "../common/obtainCurrentTab.js";
 
 export default {
     props: ['videoId', 'timestamp', 'label'],
