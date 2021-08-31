@@ -1,14 +1,20 @@
 {
     "manifest_version": 3,
-    "name": "Youtube Timestamps",
-    "short_name": "YT Timestamps",
-    "version": "0.3.0",
+    "name": "Youtube Time Labels",
+    "short_name": "YT Time Labels",
+    "version": "1.0.0",
     "author": "Brian Lin",
-    "description": "A Chrome Extension for saving timestamps of YouTube videos",
+    "description": "A Chrome Extension for saving labelled timestamps of YouTube videos",
+
+    "icons": {
+        "16": "/images/icon16.png",
+        "48": "/images/icon48.png",
+        "128": "/images/icon128.png"
+    },
   
     "permissions": ["storage", "activeTab"],
     "action": {
-        "default_title": "Youtube Timestamps Popup",
+        "default_title": "Youtube Time Labels Popup",
         "default_popup": "/html/popup.html" 
     },
 

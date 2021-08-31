@@ -1,14 +1,15 @@
 {
   "name": "youtube-timestamps",
-  "version": "0.3.0",
-  "description": "A Chrome Extension for saving timestamps of YouTube videos",
-  "author": "Brian Lin <brianlin@umich.edu>",
+  "version": "1.0.0",
+  "description": "A Chrome Extension for saving labelled timestamps of YouTube videos",
+  "author": "Brian Lin <brianlin.software@gmail.com>",
   "homepage": "https://github.com/brianlinUM/youtube-timestamps#readme",
   "bugs": "https://github.com/brianlinUM/youtube-timestamps/issues",
   "keywords": [
     "YouTube",
     "video",
     "timestamp",
+    "label",
     "bookmark"
   ],
   "repository": {

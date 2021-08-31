@@ -1,4 +1,4 @@
-# Youtube Timestamps🕔🔖
+# Youtube Time Labels🕔🔖
 This chrome extension allows a YouTube user to 'bookmark' different parts of a video so that they could come back to it later.
 
 <img src="./github_images/video_overview.jpg" width="250">

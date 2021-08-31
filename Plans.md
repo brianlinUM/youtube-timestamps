@@ -3,7 +3,6 @@
 - Implement 'About' information popup.
 - Sort videos and timestamps.
 - Implement filter searching for videos.
-- Add a time slider selector so that user can add a timestamp manually.
 - Highlight current playing Video
 
 # Known bugs:
