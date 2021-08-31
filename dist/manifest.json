@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Youtube Time Labels",
+    "name": "YouTube Time Labels",
     "short_name": "YT Time Labels",
     "version": "1.0.0",
     "author": "Brian Lin",
@@ -14,7 +14,7 @@
   
     "permissions": ["storage", "activeTab"],
     "action": {
-        "default_title": "Youtube Time Labels Popup",
+        "default_title": "YouTube Time Labels Popup",
         "default_popup": "/html/popup.html" 
     },
 

@@ -1,4 +1,4 @@
-# Youtube Time Labels🕔🔖
+# YouTube Time Labels🕔🔖
 This chrome extension allows a YouTube user to 'bookmark' different parts of a video so that they could come back to it later.
 
 <p align="middle">
@@ -30,7 +30,7 @@ Tools used in this project includes NPM and webpack.
 ## Installation
 To install the chrome extension to the browser *without* building, find the latest release on github: https://github.com/brianlinUM/youtube-timestamps/releases, and from assets download and unzip the `dist-v*.zip`. Then, enable *Developer Mode* in `chrome://extensions/`. "Load unpacked" from `dist-v*/`, which contains `manifest.json`.
 
-If you have any Youtube tabs open, make sure to refresh them before using the extension.
+If you have any YouTube tabs open, make sure to refresh them before using the extension.
 
 ## Building
 Before beginning, make sure to have Node.js and NPM installed.
@@ -65,3 +65,4 @@ See `changelog.md` for additional details, and `Plans.md` for ideas.
 - **v0.2.0**: released April 11th, 2021. Improves UI and supports custom labels for timestamps.
 - **v0.2.1**: released May 6th, 2021. Fixes issue when adding timestamp if content script is not loaded.
 - **v0.3.0**: Work in progress. Refactors popup instance (non-persistent) data store to Vuex for more maintainable code.
+- **v1.0.0**: released August 31st, 2021. First release on chrome store. Added various UX improvements, including search filter, success confirmation popup, and ordering of video list by title. Changed extension name to "YouTube Time Labels".
