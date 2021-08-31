@@ -19,7 +19,8 @@
   "main": "src/popup.js",
   "private": true,
   "scripts": {
-    "build": "npx webpack",
+    "dev": "webpack --config webpack.dev.js",
+    "prod": "webpack --config webpack.prod.js",
     "test": "jest"
   },
   "babel": {
@@ -64,6 +65,7 @@
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
     "webpack": "^5.28.0",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.6.0",
+    "webpack-merge": "^5.8.0"
   }
 }
