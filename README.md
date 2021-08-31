@@ -1,8 +1,10 @@
 # Youtube Time Labels🕔🔖
 This chrome extension allows a YouTube user to 'bookmark' different parts of a video so that they could come back to it later.
 
-<img src="./github_images/video_overview.jpg" width="250">
-<img src="./github_images/Video_timestamps.jpg" width="250">
+<p align="middle">
+<img src="./demo_images/extension_screenshot.png" width="250">
+<img src="./demo_images/extension_screenshot_2.png" width="250">
+</p>
 
 Each video can be expanded to show its timestamps. When you click on an added timestamp on the extension popup, the current tab is changed to the video, starting at the timestamp. You can add a custom label to each timestamp as notes or to remember the timestamp's contents. The title for each video can also be changed.
 
@@ -37,9 +39,11 @@ Install all Node dependencies by running from project root `/`:
 
 `npm install`
 
-Then, build the .js bundles by running:
-
-`npm run build`
+Then, build the .js bundles by running one of:
+- development build
+  - `npm run dev`
+- production build
+  - `npm run prod`
 
 This builds the source .js files to `dist/js/`.
 
