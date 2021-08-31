@@ -6,6 +6,8 @@ This chrome extension allows a YouTube user to 'bookmark' different parts of a v
 <img src="./demo_images/extension_screenshot_2.png" width="250">
 </p>
 
+Take a look at `/demo_images` to find more screenshots of this extension in action.
+
 Each video can be expanded to show its timestamps. When you click on an added timestamp on the extension popup, the current tab is changed to the video, starting at the timestamp. You can add a custom label to each timestamp as notes or to remember the timestamp's contents. The title for each video can also be changed.
 
 ### Shortcut Keys
@@ -64,5 +66,4 @@ See `changelog.md` for additional details, and `Plans.md` for ideas.
 - **v0.1.1**: released April 4th, 2021. Fixes a content script issue.
 - **v0.2.0**: released April 11th, 2021. Improves UI and supports custom labels for timestamps.
 - **v0.2.1**: released May 6th, 2021. Fixes issue when adding timestamp if content script is not loaded.
-- **v0.3.0**: Work in progress. Refactors popup instance (non-persistent) data store to Vuex for more maintainable code.
 - **v1.0.0**: released August 31st, 2021. First release on chrome store. Added various UX improvements, including search filter, success confirmation popup, and ordering of video list by title. Changed extension name to "YouTube Time Labels".

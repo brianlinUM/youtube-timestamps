@@ -8,6 +8,7 @@
 - Highlight current playing Video.
 - Added confirmation popup when deleting videos.
 - Changed extension name to YouTube Time Labels to make it more different from similar extensions on the chrome store.
+- Changed extension to utilize centralized store Vuex. This improves maintainability by centralizing data operations.
 
 ### v0.2.1:
 *May 6th, 2021*
