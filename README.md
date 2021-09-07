@@ -13,6 +13,12 @@ Each video can be expanded to show its timestamps. When you click on an added ti
 ### Shortcut Keys
 `CTRL+SHIFT+Q` (`⌘+⇧+E` on Macs): record current timestamp and add to extension.
 
+### Quick Install
+On a Chrome / Chromium-based browser, download and install the extension from the Chrome Web Store:
+https://chrome.google.com/webstore/detail/youtube-time-labels/nfejcmbipcbnloiekolfklofpdabmmig
+
+Refresh already open YouTube video tabs to get the extension working on these pages.
+
 ## Project Details
 The project is currently implemented using Javascript, Vue (with Vuex for centralized state management) and Bootstrap. It makes use of the Chrome Browser API for persistent storage, inter-service communication, and hotkeys.
 Tools used in this project includes NPM and webpack.
@@ -29,12 +35,12 @@ Tools used in this project includes NPM and webpack.
 - `./Plans.md`: Lists work-in-progress plans for upcoming release.
 - `./componentHierarchy.txt`: Outlines how vue components are arranged in this project.
 
-## Installation
-To install the chrome extension to the browser *without* building, find the latest release on github: https://github.com/brianlinUM/youtube-timestamps/releases, and from assets download and unzip the `dist-v*.zip`. Then, enable *Developer Mode* in `chrome://extensions/`. "Load unpacked" from `dist-v*/`, which contains `manifest.json`.
+## Installation and Building
+Please see **Quick Install** above for instructions on how to download and install easily from the Chrome Web Store.
 
-If you have any YouTube tabs open, make sure to refresh them before using the extension.
+### Building
+Feel free to skip this section if installing directly from the release `dist-v*.zip` (see next section).
 
-## Building
 Before beginning, make sure to have Node.js and NPM installed.
 
 Install all Node dependencies by running from project root `/`:
@@ -48,6 +54,14 @@ Then, build the .js bundles by running one of:
   - `npm run prod`
 
 This builds the source .js files to `dist/js/`.
+
+### Manual Installation
+
+To install the chrome extension to the browser manually, find the latest release on github: https://github.com/brianlinUM/youtube-timestamps/releases.
+
+From assets download and unzip the `dist-v*.zip`. Then, enable *Developer Mode* in `chrome://extensions/`. "Load unpacked" from `dist-v*/`, which contains `manifest.json`.
+
+If you have any YouTube tabs open, make sure to refresh them before using the extension.
 
 ## Testing
 (Tests are currently broken)
