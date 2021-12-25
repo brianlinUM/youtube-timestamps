@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "YouTube Time Labels",
     "short_name": "YT Time Labels",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Brian Lin",
     "description": "A Chrome Extension for saving labelled timestamps of YouTube videos",
 
