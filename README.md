@@ -21,8 +21,7 @@ Refresh already open YouTube video tabs to get the extension working on these pa
 
 ## Project Details
 The project is currently implemented using Javascript, Vue (with Vuex for centralized state management) and Bootstrap. It makes use of the Chrome Browser API for persistent storage, inter-service communication, and hotkeys.
-Tools used in this project includes NPM and webpack.
-ESLint is used, configured to check against the Airbnb style guide.
+Tools used in this project includes NPM, webpack, and ESLint.
 
 ### Organization
 - `./dist/`: contains the installable chrome extension.
@@ -35,6 +34,12 @@ ESLint is used, configured to check against the Airbnb style guide.
 - `./Changelog.md`: Lists history of versions.
 - `./Plans.md`: Lists work-in-progress plans for upcoming release.
 - `./componentHierarchy.txt`: Outlines how vue components are arranged in this project.
+
+### Linting / Style Checking
+This project uses ESLint, configured to check against the Airbnb style guide. To run, use:
+`npm run lint`
+
+See `.eslintrc.json` for the configuration. Files ignored are listed in `.eslintignore`.
 
 ## Installation and Building
 Please see **Quick Install** above for instructions on how to download and install easily from the Chrome Web Store.
@@ -55,6 +60,8 @@ Then, build the .js bundles by running one of:
   - `npm run prod`
 
 This builds the source .js files to `dist/js/`.
+
+Note that the linter is run before these scripts, and build will only continue if linting returns no errors.
 
 ### Manual Installation
 

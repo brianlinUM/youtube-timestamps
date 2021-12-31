@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import store from './store/initializeStore';
-import Popup from './components/Popup.vue';
+import Popup from './components/PopupContainer.vue';
 
 new Vue({ // eslint-disable-line no-new
   el: '#popup',

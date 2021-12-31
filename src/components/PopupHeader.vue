@@ -53,7 +53,7 @@
 <script>
 /* eslint-disable no-param-reassign */
 import { mapState, mapActions } from 'vuex';
-import Searchbar from './Searchbar.vue';
+import Searchbar from './HeaderSearchbar.vue';
 import { sendObtainTimestampRequest } from '../common/obtainTimestamp';
 
 export default {

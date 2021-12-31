@@ -30,9 +30,9 @@
 
 <script>
 import { mapActions, mapMutations } from 'vuex';
-import PopupHeader from './Header.vue';
+import PopupHeader from './PopupHeader.vue';
 import VideoList from './VideoList.vue';
-import PopupFooter from './Footer.vue';
+import PopupFooter from './PopupFooter.vue';
 import RemoveAllVideosModal from './RemoveAllVideosModal.vue';
 import RemoveVideoModal from './RemoveVideoModal.vue';
 import AboutModal from './AboutModal.vue';
