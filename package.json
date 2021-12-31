@@ -19,9 +19,10 @@
   "main": "src/popup.js",
   "private": true,
   "scripts": {
-    "dev": "webpack --config webpack.dev.js",
-    "prod": "webpack --config webpack.prod.js",
-    "test": "jest"
+    "dev": "npm run lint && webpack --config webpack.dev.js",
+    "prod": "npm run lint && webpack --config webpack.prod.js",
+    "test": "jest",
+    "lint": "eslint --ext .js,.vue src"
   },
   "babel": {
     "presets": [
