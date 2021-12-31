@@ -1,2 +1,8 @@
 # distributable folder
 dist/*
+
+# webpack
+webpack.*.js
+
+# tests (not currently used)
+tests/*

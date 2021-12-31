@@ -22,6 +22,7 @@ Refresh already open YouTube video tabs to get the extension working on these pa
 ## Project Details
 The project is currently implemented using Javascript, Vue (with Vuex for centralized state management) and Bootstrap. It makes use of the Chrome Browser API for persistent storage, inter-service communication, and hotkeys.
 Tools used in this project includes NPM and webpack.
+ESLint is used, configured to check against the Airbnb style guide.
 
 ### Organization
 - `./dist/`: contains the installable chrome extension.
@@ -48,9 +49,9 @@ Install all Node dependencies by running from project root `/`:
 `npm install`
 
 Then, build the .js bundles by running one of:
-- development build
+- development build (for easy debugging)
   - `npm run dev`
-- production build
+- production build (for efficiency)
   - `npm run prod`
 
 This builds the source .js files to `dist/js/`.
