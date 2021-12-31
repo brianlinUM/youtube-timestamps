@@ -10,6 +10,7 @@
 - Apply ESLint with Airbnb style guide and fix styling
 - Add bootstrap to npm instead of in dist
 - Button to restore original title of video
+- Separate Chrome API code from rest of extension code, to make it easy to port to firefox (possible future plan)
 
 # Known bugs:
 - Extension still allows adding of timestamp when the YT video page has error (e.g. Private Video)

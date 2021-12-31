@@ -1,4 +1,8 @@
 # Changelog
+### v1.1.0:
+*TODO ADD DATE*
+- Add ESLint with Airbnb Style Guide, fixed styling in sourcecode.
+
 ### v1.0.0:
 *August 31st, 2021*
 - Improve responsiveness by alerting user when timestamp is added successsfully.
