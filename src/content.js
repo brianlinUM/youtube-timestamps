@@ -2,9 +2,7 @@
 // For functions that need access to webpage DOM.
 import { convertTimeFormat } from './common/obtainTimestamp';
 
-// console.log('Content Script Running');
-
-chrome.runtime.sendMessage({ msg: 'content-script-loaded' });
+const videoHandle = document.getElementsByTagName('video')[0];
 
 // Parse the current page URL for the video ID and returns the ID.
 // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
@@ -23,7 +21,7 @@ function getVideoId() {
 
 // Obtain all relevant info for the timestamp and returns it.
 function getCurrentTimestampInfo() {
-  const time = document.getElementsByTagName('video')[0].currentTime;
+  const time = videoHandle.currentTime;
   const videoId = getVideoId();
   // obtain title by scraping webpage
   const title = document.getElementsByClassName(
@@ -37,10 +35,13 @@ function getCurrentTimestampInfo() {
   };
 }
 
+function checkVideoAvailable() {
+  return videoHandle.src !== '';
+}
+
 // Change video's current time
 function changeTime(newTime) {
-  const video = document.getElementsByTagName('video')[0];
-  video.currentTime = newTime;
+  videoHandle.currentTime = newTime;
 }
 
 // Inject a notification to the page DOM, indicating to user
@@ -94,13 +95,12 @@ function listenMessages() {
     } else if (request.msg === 'change-time') {
       changeTime(request.timestamp);
     } else if (request.msg === 'check-content-script-loaded') {
-      response({ msg: 'content-script-loaded' });
-      const videoId = getVideoId();
-      chrome.runtime.sendMessage({ msg: 'update-current-videoId', videoId });
+      response({ msg: 'content-script-loaded', videoId: getVideoId(), videoAvailable: checkVideoAvailable() });
     }
   });
 }
 
-const videoId = getVideoId();
-chrome.runtime.sendMessage({ msg: 'update-current-videoId', videoId });
+// for when popup is already open but a new video is loaded, thus making it necessary for the popup
+// to know about this video. (see comments in PopupContainer.vue)
+chrome.runtime.sendMessage({ msg: 'content-script-loaded', videoId: getVideoId(), videoAvailable: checkVideoAvailable() });
 listenMessages();

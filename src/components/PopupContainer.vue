@@ -36,7 +36,7 @@ import PopupFooter from './PopupFooter.vue';
 import RemoveAllVideosModal from './RemoveAllVideosModal.vue';
 import RemoveVideoModal from './RemoveVideoModal.vue';
 import AboutModal from './AboutModal.vue';
-import { queryCurrentTab } from '../common/obtainCurrentTab';
+import { sendMessageOnVideo } from '../common/obtainCurrentTab';
 
 export default {
   components: {
@@ -57,36 +57,37 @@ export default {
       if (request.msg === 'update-timestamp') {
         this.addVideoTimestampSynced(request.timestampData);
       } else if (request.msg === 'content-script-loaded') {
+        // this block is for the following scenario:
+        // 1) user opens a video via the popup OR immediately opens the popup
+        //    upon loading a new video tab (and making it active tab)
+        // 2) effects in popup is that contentScriptReady & isYoutubeVideo
+        //    flags are disabled to prevent user from adding timestamp when
+        //    content script hasn't been loaded yet (not able to access DOM yet).
+        // 3) popup is still open, so it needs content script to notify popup
+        //    (hence this listener) about the video and if it's ok to obtain timestamps.
         this.setContentScriptReady(true);
-      } else if (request.msg === 'update-current-videoId') {
         this.setCurrentVideoId(request.videoId);
+        this.setIsYouTubeVideo(request.videoAvailable);
       }
     });
 
-    // we only enable add timestamp button in header if
-    // the current tab is a YouTube video
-    queryCurrentTab((tabs) => {
-      const localIsYouTubeVideo = tabs.length > 0;
-      this.setIsYouTubeVideo(localIsYouTubeVideo);
-      // contentScriptReady is false by default. Leave as false if not
-      // YT video. If is YT video, then check if content script is loaded.
-      if (localIsYouTubeVideo) {
-        chrome.tabs.sendMessage(
-          tabs[0].id,
-          { msg: 'check-content-script-loaded' },
-          (response) => {
-            // the if statement is required to prevent error in the
-            // case of content script not running i.e. user is
-            // not browsing youtube.
-            if (!chrome.runtime.lastError && response) {
-              if (response.msg === 'content-script-loaded') {
-                this.setContentScriptReady(true);
-              }
-            }
-          },
-        );
+    // this block is for the following scenario (similar to above):
+    // 1) user opens a new video WITHOUT the popup being open
+    // 2) user opens popup
+    // 3) newly opened popup needs to know about the current video's information, hence
+    //    this message to content script.
+    sendMessageOnVideo({ msg: 'check-content-script-loaded' }, (response) => {
+      // the if statement is required to prevent error in the
+      // case of content script not running i.e. user is
+      // not browsing youtube.
+      if (!chrome.runtime.lastError && response) {
+        if (response.msg === 'content-script-loaded') {
+          this.setContentScriptReady(true);
+          this.setCurrentVideoId(response.videoId);
+          this.setIsYouTubeVideo(response.videoAvailable);
+        }
       }
-    }, 'https://www.youtube.com/watch?v=*');
+    });
   },
   methods: {
     ...mapActions(['initializeVideos', 'addVideoTimestampSynced']),
