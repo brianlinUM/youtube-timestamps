@@ -2,6 +2,8 @@
 ### v1.1.0:
 *TODO ADD DATE*
 - Add ESLint with Airbnb Style Guide, fixed styling in sourcecode.
+- Fix bug allowing user to add timestamp when video hasn't loaded yet, resulting in error.
+- Fix bug introduced by an update for Chrome API of sendMessage to use promises, leading to uncaught promise error.
 
 ### v1.0.0:
 *August 31st, 2021*

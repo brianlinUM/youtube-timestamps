@@ -7,10 +7,10 @@
 - Checkboxing for deletion (instead of a delete button for each timestamp)
 - Shortcuts to move to next/previous timestamp of current video
 - Place currently playing video first in list
-- Apply ESLint with Airbnb style guide and fix styling
+- ~~Apply ESLint with Airbnb style guide and fix styling~~ (Done, incl. in next update)
 - Add bootstrap to npm instead of in dist
 - Button to restore original title of video
 - Separate Chrome API code from rest of extension code, to make it easy to port to firefox (possible future plan)
 
 # Known bugs:
-- Extension still allows adding of timestamp when the YT video page has error (e.g. Private Video)
+- ~~Extension still allows adding of timestamp when the YT video page has error (e.g. Private Video)~~ (Done, incl. in next update)

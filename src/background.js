@@ -12,7 +12,7 @@ function sendUpdatePopupInstance(timestampData) {
     // Don't know a better way to handle this yet.
     // Better method is to not send message in the first place if it is possible to detect when
     // popup is open or not. Left console.log for debugging purposes
-    .catch((e) => { console.log('Suppressed', e); });
+    .catch((e) => { console.log('YTTimeLabels Suppressed', e); });
 }
 
 function listenHotkeys() {

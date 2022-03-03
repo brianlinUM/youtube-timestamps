@@ -89,9 +89,12 @@ function listenMessages() {
   // Listen for add timestamp request msg from popup
   chrome.runtime.onMessage.addListener((request, sender, response) => {
     if (request.msg === 'obtain-timestamp') {
-      const timestampData = getCurrentTimestampInfo();
-      response(timestampData);
-      pushSuccessNotification(timestampData.timestamp);
+      // prevent adding timestamp on invalid videos
+      if (checkVideoAvailable()) {
+        const timestampData = getCurrentTimestampInfo();
+        response(timestampData);
+        pushSuccessNotification(timestampData.timestamp);
+      }
     } else if (request.msg === 'change-time') {
       changeTime(request.timestamp);
     } else if (request.msg === 'check-content-script-loaded') {
@@ -107,5 +110,5 @@ chrome.runtime.sendMessage({ msg: 'content-script-loaded', videoId: getVideoId()
   // Don't know a better way to handle this yet.
   // Better method is to not send message in the first place if it is possible to detect when popup
   // is open or not. Left console.log for debugging purposes
-  .catch((e) => { console.log('Suppressed', e); });
+  .catch((e) => { console.log('YTTimeLabels Suppressed', e); });
 listenMessages();
