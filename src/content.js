@@ -2,8 +2,6 @@
 // For functions that need access to webpage DOM.
 import { convertTimeFormat } from './common/obtainTimestamp';
 
-const videoHandle = document.getElementsByTagName('video')[0];
-
 // Parse the current page URL for the video ID and returns the ID.
 // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 function getVideoId() {
@@ -21,7 +19,7 @@ function getVideoId() {
 
 // Obtain all relevant info for the timestamp and returns it.
 function getCurrentTimestampInfo() {
-  const time = videoHandle.currentTime;
+  const time = document.getElementsByTagName('video')[0].currentTime;
   const videoId = getVideoId();
   // obtain title by scraping webpage
   const title = document.getElementsByClassName(
@@ -36,12 +34,14 @@ function getCurrentTimestampInfo() {
 }
 
 function checkVideoAvailable() {
-  return videoHandle.src !== '';
+  const video = document.getElementsByTagName('video')[0];
+  // check to prevent error when is YT Home page, no video element
+  return video && video.src !== '';
 }
 
 // Change video's current time
 function changeTime(newTime) {
-  videoHandle.currentTime = newTime;
+  document.getElementsByTagName('video')[0].currentTime = newTime;
 }
 
 // Inject a notification to the page DOM, indicating to user
