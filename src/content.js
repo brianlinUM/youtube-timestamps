@@ -21,10 +21,17 @@ function getVideoId() {
 function getCurrentTimestampInfo() {
   const time = document.getElementsByTagName('video')[0].currentTime;
   const videoId = getVideoId();
+
   // obtain title by scraping webpage
-  const title = document.getElementsByClassName(
+  let title = document.getElementsByClassName(
     'title style-scope ytd-video-primary-info-renderer',
-  )[0].firstChild.innerText;
+  )[0];
+  // video titles load after content script and video has loaded
+  // so need to check if title has loaded yet.
+  if (!title) {
+    return null;
+  }
+  title = title.firstChild.innerText;
 
   return {
     timestamp: Math.floor(time),
@@ -92,8 +99,11 @@ function listenMessages() {
       // prevent adding timestamp on invalid videos
       if (checkVideoAvailable()) {
         const timestampData = getCurrentTimestampInfo();
-        response(timestampData);
-        pushSuccessNotification(timestampData.timestamp);
+        // check if timestamp data is available
+        if (timestampData) {
+          response(timestampData);
+          pushSuccessNotification(timestampData.timestamp);
+        }
       }
     } else if (request.msg === 'change-time') {
       changeTime(request.timestamp);
