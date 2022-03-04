@@ -103,7 +103,7 @@ export default {
       // let parent handle both storage and instance updates.
       // This focus on retrieving timestamp only
       sendObtainTimestampRequest((timestampData) => {
-        if (timestampData) {
+        if (!chrome.runtime.lastError && timestampData) {
           timestampData.label = this.timestampLabel;
           this.timestampLabel = '';
           this.addVideoTimestampSynced(timestampData);
