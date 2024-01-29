@@ -25,7 +25,7 @@
           </li>
           <!-- list timestamps -->
           <li
-            v-for="(label, timestamp) in videoMeta.timestamps" :key="timestamp"
+            v-for="(label, timestamp) in filteredTimestamps" :key="timestamp"
             class="list-group-item p-2"
           >
             <TimestampItem
@@ -72,6 +72,25 @@ export default {
   computed: {
     currentVideoClass() {
       return { highlightedVideo: this.isCurrentVideo };
+    },
+    // timestamps with labels matching the label query.
+    filteredTimestamps() {
+      const { labelQuery } = this.$store.state.searchQueryStore;
+      // allow all if no query.
+      if (labelQuery === '') {
+        return this.videoMeta.timestamps;
+      }
+
+      // construct filter for js object
+      // https://stackoverflow.com/questions/5072136/javascript-filter-for-objects
+      const objFilter = (obj, predicate) => Object.fromEntries(
+        Object.entries(obj).filter(predicate),
+      );
+
+      return objFilter(
+        this.videoMeta.timestamps,
+        ([, label]) => label.toLowerCase().includes(labelQuery),
+      );
     },
   },
 };
