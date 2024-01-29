@@ -2,14 +2,14 @@
   <div class="input-group input-group-sm">
     <input
       type="text" class="form-control"
-      placeholder="Title Search" v-model="titleQuery"
-            title="Search Videos"
+      placeholder="Title filter" v-model="titleQuery"
+            title="search title"
     >
 
     <input
       type="text" class="form-control"
-      placeholder="Label Search" v-model="labelQuery"
-            title="Search Labels"
+      placeholder="Label filter" v-model="labelQuery"
+            title="search labels"
     >
 
     <button
@@ -76,7 +76,7 @@ export default {
       ];
     },
     tooltipText() {
-      return this.isSearching ? 'Clear Search' : '';
+      return this.isSearching ? 'Clear filters' : '';
     },
   },
 };
