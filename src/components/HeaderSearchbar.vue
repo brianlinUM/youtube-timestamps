@@ -6,6 +6,12 @@
             title="Search Videos"
     >
 
+    <input
+      type="text" class="form-control"
+      placeholder="Label Search" v-model="labelQuery"
+            title="Search Labels"
+    >
+
     <button
       type="button" :class="buttonColor"
       :disabled="!isSearching" @click="clearSearch"
@@ -32,6 +38,7 @@ export default {
   methods: {
     clearSearch() {
       this.$store.commit('setTitleQuery', '');
+      this.$store.commit('setLabelQuery', '');
     },
   },
   computed: {
@@ -48,8 +55,16 @@ export default {
         this.$store.commit('setTitleQuery', newQuery);
       },
     },
+    labelQuery: {
+      get() {
+        return this.$store.state.searchQueryStore.labelQuery;
+      },
+      set(newQuery) {
+        this.$store.commit('setLabelQuery', newQuery);
+      },
+    },
     isSearching() {
-      return this.titleQuery !== '';
+      return this.titleQuery !== '' || this.labelQuery !== '';
     },
     buttonColor() {
       return [
