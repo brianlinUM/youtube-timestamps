@@ -38,14 +38,39 @@ const getters = {
     return videosList;
   },
   filteredVideos: (_state, _getters) => {
-    const { titleQueryString } = _getters;
+    const { titleQueryString, labelQueryString } = _getters;
+
     // return all videos if there is no query
-    if (titleQueryString === '') return _getters.orderedVideos;
+    if (titleQueryString === '' && labelQueryString === '') {
+      return _getters.orderedVideos;
+    }
 
     // return videos with titles that match the query
     return _getters.orderedVideos.filter((video) => {
+      // standardise to lowercase to match query strs
       const videoTitle = video[1].title.toLowerCase();
-      return videoTitle.includes(titleQueryString);
+      const videoLabels = Object.values(video[1].timestamps).map(
+        (label) => label.toLowerCase(),
+      );
+
+      // checks if label contains the query.
+      const hasLabelQuery = (label) => (
+        label.includes(labelQueryString)
+      );
+
+      if (titleQueryString !== '' && labelQueryString === '') {
+        return videoTitle.includes(titleQueryString);
+      }
+
+      if (titleQueryString === '' && labelQueryString !== '') {
+        return videoLabels.some(hasLabelQuery);
+      }
+
+      // both query types
+      return (
+        videoTitle.includes(titleQueryString)
+        && (videoLabels.some(hasLabelQuery))
+      );
     });
   },
 };
