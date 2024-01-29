@@ -7,6 +7,7 @@
 - Fix bug introduced by an update for Chrome API of sendMessage to use promises, leading to uncaught promise error.
 - Apply non-breaking updates to npm packages to fix most vulnerabilities.
 - Removed jest and related packages.
+- Add tooltip to clear search button.
 
 ### v1.0.0:
 *August 31st, 2021*

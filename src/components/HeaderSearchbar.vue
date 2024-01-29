@@ -9,6 +9,7 @@
     <button
       type="button" :class="buttonColor"
       :disabled="!isSearching" @click="clearSearch"
+      :title="tooltipText"
     >
       <!-- eslint-disable max-len -->
       <!-- search icon -->
@@ -58,6 +59,9 @@ export default {
           'btn-secondary': !this.isSearching,
         },
       ];
+    },
+    tooltipText() {
+      return this.isSearching ? 'Clear Search' : '';
     },
   },
 };
