@@ -2,8 +2,8 @@
   <div class="input-group input-group-sm">
     <input
       type="text" class="form-control"
-      placeholder="Title Search" v-model="searchQuery"
-      title="Search Videos"
+      placeholder="Title Search" v-model="titleQuery"
+            title="Search Videos"
     >
 
     <button
@@ -31,25 +31,25 @@
 export default {
   methods: {
     clearSearch() {
-      this.$store.commit('setSearchQuery', '');
+      this.$store.commit('setTitleQuery', '');
     },
   },
   computed: {
     // two way binding to vuex search module.
     // need this solution since vuex is unidirectional.
     // https://dilshankelsen.com/v-model-with-vuex/
-    searchQuery: {
+    titleQuery: {
       get() {
         // states by default are module namespaced
-        return this.$store.state.searchQueryStore.searchQuery;
+        return this.$store.state.searchQueryStore.titleQuery;
       },
       set(newQuery) {
         // commits by default have global namespace
-        this.$store.commit('setSearchQuery', newQuery);
+        this.$store.commit('setTitleQuery', newQuery);
       },
     },
     isSearching() {
-      return this.searchQuery !== '';
+      return this.titleQuery !== '';
     },
     buttonColor() {
       return [

@@ -38,14 +38,14 @@ const getters = {
     return videosList;
   },
   filteredVideos: (_state, _getters) => {
-    const { queryString } = _getters;
+    const { titleQueryString } = _getters;
     // return all videos if there is no query
-    if (queryString === '') return _getters.orderedVideos;
+    if (titleQueryString === '') return _getters.orderedVideos;
 
     // return videos with titles that match the query
     return _getters.orderedVideos.filter((video) => {
       const videoTitle = video[1].title.toLowerCase();
-      return videoTitle.includes(queryString);
+      return videoTitle.includes(titleQueryString);
     });
   },
 };

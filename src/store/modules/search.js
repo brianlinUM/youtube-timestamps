@@ -5,19 +5,19 @@
 // called in the popup.
 
 const state = () => {
-  const searchQuery = '';
-  return { searchQuery };
+  const titleQuery = '';
+  return { titleQuery };
 };
 
 const getters = {
   // normalized query string, for use in search
   // filter in videos module.
-  queryString: (_state) => _state.searchQuery.toLowerCase(),
+  titleQueryString: (_state) => _state.titleQuery.toLowerCase(),
 };
 
 const mutations = {
-  setSearchQuery(_state, newQuery) {
-    _state.searchQuery = newQuery;
+  setTitleQuery(_state, newQuery) {
+    _state.titleQuery = newQuery;
   },
 };
 
