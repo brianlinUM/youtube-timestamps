@@ -20,10 +20,15 @@ const state = () => {
 
 const getters = {
   orderedVideos: (_state) => {
-    const videosList = Object.keys(_state.videos)
-      .map((videoId) => [videoId, _state.videos[videoId]]);
+    // videos that are not currently played.
+    // format: [[videoId, videoData],...]
+    const nonPlayingList = Object.entries(_state.videos).filter(
+      ([videoId]) => videoId !== _state.currentVideoId,
+    );
+
     // sort videos by title
-    videosList.sort((video1, video2) => {
+    nonPlayingList.sort((video1, video2) => {
+      // index 1 is video data.
       const title1 = video1[1].title.toLowerCase();
       const title2 = video2[1].title.toLowerCase();
       if (title1 < title2) {
@@ -35,7 +40,16 @@ const getters = {
       // same titles
       return 0;
     });
-    return videosList;
+
+    // if there is a currently playing video
+    if (_state.currentVideoId !== '') {
+      const playingVideoData = [
+        _state.currentVideoId, _state.videos[_state.currentVideoId]];
+      // place playing video first
+      return [playingVideoData].concat(nonPlayingList);
+    }
+
+    return nonPlayingList;
   },
   filteredVideos: (_state, _getters) => {
     const { titleQueryString, labelQueryString } = _getters;
