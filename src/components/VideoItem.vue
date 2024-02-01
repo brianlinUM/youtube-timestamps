@@ -102,6 +102,7 @@ export default {
 }
 .highlightedVideo {
   color: #198754;
+  font-weight: bold;
 }
 .videoTimestamp {
   font-size: 12px;
