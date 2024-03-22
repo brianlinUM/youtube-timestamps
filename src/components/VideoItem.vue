@@ -25,11 +25,11 @@
           </li>
           <!-- list timestamps -->
           <li
-            v-for="(label, timestamp) in filteredTimestamps" :key="timestamp"
+            v-for="(label, timestamp, orderIdx) in filteredTimestamps" :key="timestamp"
             class="list-group-item p-2"
           >
             <TimestampItem
-              :timestamp="timestamp" :label="label" :videoId="videoId"
+              :timestamp="timestamp" :label="label" :videoId="videoId" :orderIdx="orderIdx"
               @change-video-and-time="changeVideoAndTime"
             />
           </li>

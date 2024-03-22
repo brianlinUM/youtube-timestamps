@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between align-items-center mb-2">
       <form v-on:submit.prevent="sendTimestampRequest" id="timestamp-form" class="input-group">
         <input
-          type="text" class="form-control"
+          type="text" class="form-control" id="input-timestamp-label"
           :placeholder="inputPlaceholderText" v-model="timestampLabel"
           :disabled="disableAddTimestamp"
         >
