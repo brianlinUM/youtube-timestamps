@@ -4,7 +4,7 @@
     <div class="container-fluid navbar-container">
       <form v-on:submit.prevent="changeTitle" class="input-group input-group-sm w-75">
         <input
-          type="text" class="form-control"
+          type="text" class="form-control" :id="`input-video-title-${videoId}`"
           placeholder="Add a Title" v-model="titleEditInput"
           title="Edit Video Title"
         >

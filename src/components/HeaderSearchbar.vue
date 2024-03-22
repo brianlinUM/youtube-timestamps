@@ -1,13 +1,13 @@
 <template>
   <div class="input-group input-group-sm">
     <input
-      type="text" class="form-control"
+      type="text" class="form-control" id="input-title-filter"
       placeholder="Title filter" v-model="titleQuery"
             title="search title"
     >
 
     <input
-      type="text" class="form-control"
+      type="text" class="form-control" id="input-label-filter"
       placeholder="Label filter" v-model="labelQuery"
             title="search labels"
     >
