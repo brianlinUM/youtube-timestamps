@@ -15,3 +15,4 @@
 # Known bugs:
 - ~~Extension still allows adding of timestamp when the YT video page has error (e.g. Private Video)~~ (Done, incl. in next update)
 - console warning: duplicate form field id for the "Add a label" form.
+- console error: when loading video tab then clicking on timestamp. "Error: Could not establish connection. Receiving end does not exist."
