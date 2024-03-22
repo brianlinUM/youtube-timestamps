@@ -41,8 +41,8 @@ const getters = {
       return 0;
     });
 
-    // if there is a currently playing video
-    if (_state.currentVideoId !== '') {
+    // if there is a currently playing video in our saved video list
+    if (_state.currentVideoId !== '' && _state.currentVideoId in _state.videos) {
       const playingVideoData = [
         _state.currentVideoId, _state.videos[_state.currentVideoId]];
       // place playing video first
