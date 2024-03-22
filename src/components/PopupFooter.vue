@@ -42,18 +42,3 @@ img {
   margin-left: 15px;
 }
 </style>
-
-<script>
-import { mapState } from 'vuex';
-
-export default {
-  computed: {
-    isNoVideos() {
-      return Object.keys(this.videos).length === 0;
-    },
-    ...mapState({
-      videos: (state) => state.videosStore.videos,
-    }),
-  },
-};
-</script>

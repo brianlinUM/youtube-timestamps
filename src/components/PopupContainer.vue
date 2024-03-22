@@ -11,7 +11,6 @@
     <!-- Bootstrap modal can not have fixed, absolute, or relative positioned parent. -->
     <!-- Will cause modal component to show underneath fade background -->
     <!-- https://weblog.west-wind.com/posts/2016/sep/14/bootstrap-modal-dialog-showing-under-modal-background -->
-    <RemoveAllVideosModal/>
     <RemoveVideoModal/>
     <AboutModal/>
     <SettingModal/>
@@ -34,7 +33,6 @@ import { mapActions, mapMutations } from 'vuex';
 import PopupHeader from './PopupHeader.vue';
 import VideoList from './VideoList.vue';
 import PopupFooter from './PopupFooter.vue';
-import RemoveAllVideosModal from './RemoveAllVideosModal.vue';
 import RemoveVideoModal from './RemoveVideoModal.vue';
 import AboutModal from './AboutModal.vue';
 import SettingModal from './SettingModal.vue';
@@ -45,7 +43,6 @@ export default {
     PopupHeader,
     VideoList,
     PopupFooter,
-    RemoveAllVideosModal,
     RemoveVideoModal,
     AboutModal,
     SettingModal,
