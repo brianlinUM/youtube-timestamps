@@ -1,6 +1,6 @@
 {
   "name": "youtube-timestamps",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Chrome Extension for saving labelled timestamps of YouTube videos",
   "author": "Brian Lin <brianlin.software@gmail.com>",
   "homepage": "https://github.com/brianlinUM/youtube-timestamps#readme",
@@ -19,33 +19,14 @@
   "main": "src/popup.js",
   "private": true,
   "scripts": {
-    "dev": "webpack --config webpack.dev.js",
-    "prod": "webpack --config webpack.prod.js",
-    "test": "jest"
+    "dev": "npm run lint && webpack --config webpack.dev.js",
+    "prod": "npm run lint && webpack --config webpack.prod.js",
+    "lint": "eslint --ext .js,.vue src"
   },
   "babel": {
     "presets": [
       "@babel/preset-env"
     ]
-  },
-  "jest": {
-    "verbose": true,
-    "setupFilesAfterEnv": [
-      "./jest.setup.js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "vue",
-      "json"
-    ],
-    "modulePaths": [
-      "/src"
-    ],
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.html?$": "html-loader-jest",
-      "^.+\\.vue$": "vue-jest"
-    }
   },
   "dependencies": {
     "vue": "^2.6.12",
@@ -58,10 +39,10 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.0",
-    "html-loader-jest": "^0.2.1",
-    "jest": "^26.6.3",
-    "jest-chrome": "^0.7.0",
-    "vue-jest": "^3.0.7",
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-vue": "^8.2.0",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
     "webpack": "^5.28.0",
