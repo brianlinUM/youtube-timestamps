@@ -14,6 +14,7 @@
     <RemoveAllVideosModal/>
     <RemoveVideoModal/>
     <AboutModal/>
+    <SettingModal/>
   </div>
 </template>
 
@@ -36,6 +37,7 @@ import PopupFooter from './PopupFooter.vue';
 import RemoveAllVideosModal from './RemoveAllVideosModal.vue';
 import RemoveVideoModal from './RemoveVideoModal.vue';
 import AboutModal from './AboutModal.vue';
+import SettingModal from './SettingModal.vue';
 import { sendMessageOnVideo } from '../common/obtainCurrentTab';
 
 export default {
@@ -46,6 +48,7 @@ export default {
     RemoveAllVideosModal,
     RemoveVideoModal,
     AboutModal,
+    SettingModal,
   },
   mounted() {
     // Initialize local data from chrome storage

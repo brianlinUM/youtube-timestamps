@@ -12,11 +12,15 @@
     </h6>
 
     <button
-      type="button" class="btn btn-sm btn-danger"
-      data-bs-toggle="modal" data-bs-target="#remove-all-modal"
-      :disabled="isNoVideos" title="Remove all videos"
+      id="help-btn"
+      class="
+        btn btn-sm btn-outline-secondary
+        d-flex justify-content-center align-items-center
+      "
+      data-bs-toggle="modal" data-bs-target="#about-modal"
+      title="About"
     >
-      Remove All
+      <em>i</em>
     </button>
   </div>
 </template>
@@ -30,6 +34,12 @@ img {
 }
 #footer-title-right {
   color: #3399FF;
+}
+#help-btn {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  margin-left: 15px;
 }
 </style>
 

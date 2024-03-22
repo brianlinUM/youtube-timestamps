@@ -25,12 +25,12 @@
       </form>
 
       <button
-        id="help-btn"
+        id="setting-btn"
         class="
           btn btn-sm btn-outline-secondary
           d-flex justify-content-center align-items-center
         "
-        data-bs-toggle="modal" data-bs-target="#about-modal"
+        data-bs-toggle="modal" data-bs-target="#setting-modal"
         title="About"
       >
         <em>i</em>
@@ -42,7 +42,7 @@
 </template>
 
 <style scoped>
-#help-btn {
+#setting-btn {
   height: 25px;
   width: 25px;
   border-radius: 50%;
