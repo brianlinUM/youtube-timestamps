@@ -10,6 +10,7 @@
 - Add tooltip to clear search button.
 - Add label search that is in conjunction with existing title search.
 - If video list contains a currently playing video, that video will be placed first and emphasised (bolded).
+- Fix duplicate id error in timestamp label textarea.
 
 ### v1.0.0:
 *August 31st, 2021*

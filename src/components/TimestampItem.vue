@@ -24,8 +24,9 @@
       <p v-show="!isLabelEditing" class="m-0 p-0"> {{ label === "" ? "Add a Label" : label }} </p>
       <!-- Only show edit text area if user is editing -->
       <div v-show="isLabelEditing">
+        <!-- need unique id to prevent duplicate id console error -->
         <textarea
-          class="form-control p-2" id="edit-label-area" rows="2"
+          class="form-control p-2" :id="`edit-label-area-${videoId}-${orderIdx}`" rows="2"
           v-model='labelEditInput' placeholder="Add a Label"
           title="Edit Timestamp Label"
         >
@@ -57,7 +58,7 @@ import { queryCurrentTab } from '../common/obtainCurrentTab';
 import { convertTimeFormat } from '../common/obtainTimestamp';
 
 export default {
-  props: ['videoId', 'timestamp', 'label'],
+  props: ['videoId', 'timestamp', 'label', 'orderIdx'],
   emits: ['change-video-and-time'],
   components: { RemoveButton },
   data() {
