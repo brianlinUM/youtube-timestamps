@@ -5,15 +5,17 @@ initializeStore.js (vuex store)
     - search.js
 
 popup.js (vue root & popup entry)
-    - popup.vue (component)
-        - Header.vue
-            - Searchbar.vue
+    - PopupContainer.vue
+        - PopupHeader.vue
+            - HeaderSearchbar.vue
         - VideoList.vue
             - VideoItem.vue (for each video)
                 - VideoNav.vue
                 - TimestampItem.vue (for each timestamp)
                     - RemoveButton.vue
-        - Footer.vue
-        - RemoveAllVideosModal.vue
+        - PopupFooter.vue
         - RemoveVideoModal.vue
         - AboutModal.vue
+        - SettingModal.vue
+            - UnsafeSettingsCard.vue
+                - DeleteAllConfirm.vue
