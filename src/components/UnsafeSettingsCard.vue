@@ -1,11 +1,11 @@
 <template>
-  <div class="card" style="width: 18rem;">
-    <div class="card-header">
-      Unsafe Functions
-      <button type="button" class="btn btn-sm btn-primary"
+  <div class="card" style="width: 100%">
+    <div class="card-header d-flex flex-row justify-content-between">
+      <span>Unsafe Functions</span>
+      <button id="unsafeToggle" type="button" class="btn btn-sm btn-primary"
         data-bs-toggle="collapse" data-bs-target="#unsafe-options"
         @click="isUnsafeEnabled = !isUnsafeEnabled">
-        {{ this.isUnsafeEnabled ? 'Unhide' : 'Hide' }}
+        {{ this.isUnsafeEnabled ? 'Hide' : 'Show' }}
       </button>
     </div>
     <ul id="unsafe-options" class="list-group list-group-flush collapse">
@@ -22,6 +22,12 @@
     </ul>
   </div>
 </template>
+
+<style scoped>
+#unsafeToggle {
+  width: 25%;
+}
+</style>
 
 <script>
 import { mapState, mapActions } from 'vuex';
