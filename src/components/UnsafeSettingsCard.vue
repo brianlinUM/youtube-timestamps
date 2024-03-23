@@ -24,12 +24,7 @@
       class="list-group list-group-flush collapse"
     >
       <li class="list-group-item">
-        <button
-          type="button" :class="`btn btn-sm ml-3 ${deleteColor}`"
-          @click="removeAllDataSynced" :disabled="isNoVideos || !isUnsafeEnabled"
-        >
-          {{ deleteText }}
-        </button>
+        <DeleteAllConfirm :isUnsafeEnabled="isUnsafeEnabled"/>
       </li>
       <li class="list-group-item">Test 2</li>
       <li class="list-group-item">Test 3</li>
@@ -44,30 +39,14 @@
 </style>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import DeleteAllConfirm from './DeleteAllConfirm.vue';
 
 export default {
+  components: { DeleteAllConfirm },
   data() {
     return {
       isUnsafeEnabled: false,
     };
-  },
-  computed: {
-    ...mapState({
-      videos: (state) => state.videosStore.videos,
-    }),
-    isNoVideos() {
-      return Object.keys(this.videos).length === 0;
-    },
-    deleteText() {
-      return this.isNoVideos ? 'No Videos' : 'Delete All';
-    },
-    deleteColor() {
-      return this.isNoVideos ? 'btn-secondary' : 'btn-danger';
-    },
-  },
-  methods: {
-    ...mapActions(['removeAllDataSynced']),
   },
 };
 </script>

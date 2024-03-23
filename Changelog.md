@@ -11,6 +11,8 @@
 - Add label search that is in conjunction with existing title search.
 - If video list contains a currently playing video, that video will be placed first and emphasised (bolded).
 - Fix duplicate id error in timestamp label textarea. Also added id to other forms.
+- Added settings modal, button in header. Moved "about me" modal button to footer.
+- Moved remove all button into settings, with multiple safeguards against accidental clicks.
 
 ### v1.0.0:
 *August 31st, 2021*
