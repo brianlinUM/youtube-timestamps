@@ -8,20 +8,20 @@
       Type "Delete All" to confirm:
     </p>
     <div class="input-group input-group-sm">
-    <input
-      type="text" class="form-control" id="input-delete-all-confirm"
-      v-model="confirmText" title="Type confirmation"
-      :disabled="this.isNoVideos || !this.isUnsafeEnabled"
-    >
+      <input
+        type="text" class="form-control" id="input-delete-all-confirm"
+        v-model="confirmText" title="Type confirmation"
+        :disabled="this.isNoVideos || !this.isUnsafeEnabled"
+      >
 
-    <button
-      type="button" :class="`btn btn-sm ${deleteColor}`"
-      :disabled="!this.isAllowDelete" @click="removeAll"
-      :title="tooltipText"
-    >
-    {{ buttonText }}
-    </button>
-  </div>
+      <button
+        type="button" :class="`btn btn-sm ${deleteColor}`"
+        :disabled="!this.isAllowDelete" @click="removeAll"
+        :title="tooltipText"
+      >
+      {{ buttonText }}
+      </button>
+    </div>
   </div>
 </template>
 
