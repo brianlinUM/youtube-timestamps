@@ -78,5 +78,12 @@ export default {
       }
     },
   },
+  watch: {
+    isUnsafeEnabled(newVal) {
+      if (!newVal) {
+        this.confirmText = '';
+      }
+    },
+  },
 };
 </script>
