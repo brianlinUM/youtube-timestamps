@@ -8,13 +8,7 @@
           </h5>
         </div>
         <div class="modal-body py-2">
-          <p>Delete Button:</p>
-          <button
-            type="button" :class="`btn btn-sm ml-3 ${deleteColor}`"
-            @click="removeAllDataSynced" :disabled="isNoVideos"
-          >
-            {{ deleteText }}
-          </button>
+          <UnsafeSettingsCard/>
         </div>
         <div class="modal-footer py-2">
           <button
@@ -35,25 +29,9 @@
 </style>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import UnsafeSettingsCard from './UnsafeSettingsCard.vue';
 
 export default {
-  computed: {
-    isNoVideos() {
-      return Object.keys(this.videos).length === 0;
-    },
-    ...mapState({
-      videos: (state) => state.videosStore.videos,
-    }),
-    deleteText() {
-      return this.isNoVideos ? 'No Videos' : 'Delete All';
-    },
-    deleteColor() {
-      return this.isNoVideos ? 'btn-secondary' : 'btn-danger';
-    },
-  },
-  methods: {
-    ...mapActions(['removeAllDataSynced']),
-  },
+  components: { UnsafeSettingsCard },
 };
 </script>
