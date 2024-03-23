@@ -2,12 +2,17 @@
   <div class="card" style="width: 18rem;">
     <div class="card-header">
       Unsafe Functions
+      <button type="button" class="btn btn-sm btn-primary"
+        data-bs-toggle="collapse" data-bs-target="#unsafe-options"
+        @click="isUnsafeEnabled = !isUnsafeEnabled">
+        {{ this.isUnsafeEnabled ? 'Unhide' : 'Hide' }}
+      </button>
     </div>
-    <ul class="list-group list-group-flush">
+    <ul id="unsafe-options" class="list-group list-group-flush collapse">
       <li class="list-group-item">
         <button
           type="button" :class="`btn btn-sm ml-3 ${deleteColor}`"
-          @click="removeAllDataSynced" :disabled="isNoVideos"
+          @click="removeAllDataSynced" :disabled="isNoVideos || !isUnsafeEnabled"
         >
           {{ deleteText }}
         </button>
@@ -22,6 +27,11 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
+  data() {
+    return {
+      isUnsafeEnabled: false,
+    };
+  },
   computed: {
     ...mapState({
       videos: (state) => state.videosStore.videos,
