@@ -1,7 +1,7 @@
 <template>
   <div>
     <p style="font-weight: bold">
-      Delete all videos and timestamps.
+      Delete all videos and timestamps
     </p>
     <p>
       Warning: data loss is permanent.
