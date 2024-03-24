@@ -12,7 +12,7 @@
         "128": "/images/icon128.png"
     },
   
-    "permissions": ["storage", "activeTab"],
+    "permissions": ["storage", "activeTab", "downloads"],
     "action": {
         "default_title": "YouTube Time Labels Popup",
         "default_popup": "/html/popup.html" 

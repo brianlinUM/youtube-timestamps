@@ -8,6 +8,7 @@
           </h5>
         </div>
         <div class="modal-body py-2">
+          <ExportCard/>
           <UnsafeSettingsCard/>
         </div>
         <div class="modal-footer py-2">
@@ -29,9 +30,10 @@
 </style>
 
 <script>
+import ExportCard from './ExportCard.vue';
 import UnsafeSettingsCard from './UnsafeSettingsCard.vue';
 
 export default {
-  components: { UnsafeSettingsCard },
+  components: { ExportCard, UnsafeSettingsCard },
 };
 </script>

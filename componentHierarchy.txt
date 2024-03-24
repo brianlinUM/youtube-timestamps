@@ -17,5 +17,6 @@ popup.js (vue root & popup entry)
         - RemoveVideoModal.vue
         - AboutModal.vue
         - SettingModal.vue
+            - ExportCard.vue
             - UnsafeSettingsCard.vue
                 - DeleteAllConfirm.vue
