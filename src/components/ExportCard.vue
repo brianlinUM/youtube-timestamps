@@ -37,6 +37,8 @@ export default {
   },
   methods: {
     downloadExport() {
+      // this obtains from persistant store rather than app state.
+      // better since this is the source of truth.
       getAllData((allData) => {
         const result = JSON.stringify(allData);
         const url = `data:application/json,${result}`;
