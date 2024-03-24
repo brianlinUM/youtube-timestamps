@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>
+    <p style="font-weight: bold">
       Delete all videos and timestamps.
     </p>
     <p>
