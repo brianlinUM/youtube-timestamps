@@ -55,7 +55,7 @@ export default {
       if (!this.isNoVideos) return 'Delete all data first';
       if (!this.isValidFileUploaded) return 'Select valid JSON first';
 
-      return 'Import File';
+      return 'Attempt import';
     },
     buttonColor() {
       return this.isAllowImport ? 'btn-primary' : 'btn-secondary';
@@ -63,6 +63,7 @@ export default {
   },
   methods: {
     handleInputChange(event) {
+      this.isShowInvalidText = false; // reset
       this.parseInputFile(event.target.files[0]);
     },
     parseInputFile(file) {
