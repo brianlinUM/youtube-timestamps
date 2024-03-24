@@ -20,3 +20,4 @@ popup.js (vue root & popup entry)
             - ExportCard.vue
             - UnsafeSettingsCard.vue
                 - DeleteAllConfirm.vue
+                - ImportCard.vue

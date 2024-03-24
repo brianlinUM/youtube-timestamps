@@ -13,6 +13,7 @@
 - Fix duplicate id error in timestamp label textarea. Also added id to other forms.
 - Added settings modal, button in header. Moved "about me" modal button to footer.
 - Moved remove all button into settings, with multiple safeguards against accidental clicks.
+- Add import/export JSON function to settings. Requires a new "downloads" manifest.json permission.
 
 ### v1.0.0:
 *August 31st, 2021*
