@@ -26,7 +26,9 @@
       <li class="list-group-item">
         <DeleteAllConfirm :isUnsafeEnabled="isUnsafeEnabled"/>
       </li>
-      <li class="list-group-item">Test 2</li>
+      <li class="list-group-item">
+        <ImportCard :isUnsafeEnabled="isUnsafeEnabled"/>
+      </li>
       <li class="list-group-item">Test 3</li>
     </ul>
   </div>
@@ -40,9 +42,10 @@
 
 <script>
 import DeleteAllConfirm from './DeleteAllConfirm.vue';
+import ImportCard from './ImportCard.vue';
 
 export default {
-  components: { DeleteAllConfirm },
+  components: { DeleteAllConfirm, ImportCard },
   data() {
     return {
       isUnsafeEnabled: false,
