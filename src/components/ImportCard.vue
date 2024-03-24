@@ -8,12 +8,17 @@
       As a precaution, there needs to be no existing data in the app.
     </p>
     <div class="">
-      <input class="form-control form-control-sm mb-1" id="input-import-file" type="file">
+      <input ref="fileUpload"
+        class="form-control form-control-sm mb-1"
+        id="input-import-file" type="file"
+        accept="application/json"
+        :disabled="!isAllowInput" @change="handleInputChange"
+      >
       <button
         type="button" :class="`btn btn-sm btn-primary`"
-        :disabled="!this.allowImport"
+        :disabled="!isAllowImport"
       >
-        Import File
+        {{ buttonText }}
       </button>
     </div>
   </div>
@@ -24,12 +29,42 @@ import { mapState } from 'vuex';
 
 export default {
   props: ['isUnsafeEnabled'],
+  data() {
+    return {
+      isFileUploaded: false,
+    };
+  },
   computed: {
     ...mapState({
       isNoVideos: (state) => Object.keys(state.videosStore.videos).length === 0,
     }),
-    allowImport() {
+    isAllowInput() {
       return this.isUnsafeEnabled && this.isNoVideos;
+    },
+    isAllowImport() {
+      return this.isAllowInput && this.isFileUploaded;
+    },
+    buttonText() {
+      if (!this.isNoVideos) return 'Delete all data first';
+      if (!this.isFileUploaded) return 'Select file first';
+
+      return 'Import File';
+    },
+  },
+  methods: {
+    handleInputChange(event) {
+      this.isFileUploaded = event.target.files.length === 1;
+    },
+  },
+  watch: {
+    isUnsafeEnabled(newVal) {
+      if (!newVal) {
+        // clear input
+        this.$refs.fileUpload.value = null;
+        // need this to trigger reactivity since setting value to null
+        // does not count as a change event.
+        this.isFileUploaded = false;
+      }
     },
   },
 };
