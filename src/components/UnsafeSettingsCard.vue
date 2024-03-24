@@ -17,7 +17,7 @@
         data-bs-toggle="collapse" data-bs-target="#unsafe-options"
         @click="isUnsafeEnabled = !isUnsafeEnabled"
       >
-        {{ this.isUnsafeEnabled ? 'Hide' : 'Show' }}
+        {{ this.isUnsafeEnabled ? 'Disable' : 'Enable' }}
       </button>
     </div>
     <ul id="unsafe-options"
