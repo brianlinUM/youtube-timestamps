@@ -137,6 +137,11 @@ const actions = {
       commit('overwriteVideos', data);
     });
   },
+  overwriteVideosSynced({ commit }, newVideos) {
+    PersistStore.overwriteAllData(newVideos, () => {
+      commit('overwriteVideos', newVideos);
+    });
+  },
   // Adds a timestamp to a video, creating a new video record if it isn't
   // already recorded.
   // timestampData: {videoId, title, timestamp, label?}

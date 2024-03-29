@@ -67,8 +67,12 @@ export function removeVideo(videoId) {
   chrome.storage.local.remove(videoId);
 }
 
-export function removeAllData() {
-  chrome.storage.local.clear();
+export function removeAllData(setCallback = null) {
+  chrome.storage.local.clear(() => {
+    if (setCallback !== null) {
+      setCallback();
+    }
+  });
 }
 
 export function getAllData(getCallback) {
@@ -79,4 +83,16 @@ export function getAllData(getCallback) {
 export function printAllData() {
   // eslint-disable-next-line no-console
   getAllData((data) => { console.log(data); });
+}
+
+export function overwriteAllData(newData, setCallback = null) {
+  // remove existing first to prevent confusion on new vs old.
+  removeAllData(() => {
+    // needs to occurs after removal to prevent adding then removing
+    chrome.storage.local.set(newData, () => {
+      if (setCallback !== null) {
+        setCallback();
+      }
+    });
+  });
 }

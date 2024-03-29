@@ -17,7 +17,7 @@
       >
       <button
         type="button" :class="`btn btn-sm ${buttonColor}`"
-        :disabled="!isAllowImport"
+        :disabled="!isAllowImport" @click="attemptOverwrite"
       >
         {{ buttonText }}
       </button>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   props: ['isUnsafeEnabled'],
@@ -76,10 +76,13 @@ export default {
         const obj = JSON.parse(event.target.result);
         this.input_obj = obj;
       } catch (e) {
-        this.isShowInvalidText = true;
-        setTimeout(() => { this.isShowInvalidText = false; }, 2000);
-        this.resetInput();
+        this.tempShowInvalidText();
       }
+    },
+    tempShowInvalidText() {
+      this.isShowInvalidText = true;
+      setTimeout(() => { this.isShowInvalidText = false; }, 2000);
+      this.resetInput();
     },
     resetInput() {
       // clear input
@@ -88,6 +91,57 @@ export default {
       // does not count as a change event.
       this.input_obj = {};
     },
+    attemptOverwrite() {
+      const isPositiveInt = (str) => /^\+?(0|[1-9]\d*)$/.test(str);
+
+      // First validate the imported data.
+      const validateTimestamps = (timestamps) => {
+        if (typeof timestamps !== 'object') {
+          this.tempShowInvalidText(); return;
+        }
+        Object.entries(timestamps).forEach((entry) => {
+          const [timestamp, label] = entry;
+          if (
+            (!isPositiveInt(timestamp))
+            || (typeof label !== 'string')
+          ) this.tempShowInvalidText();
+        });
+      };
+
+      if (typeof this.input_obj !== 'object') {
+        this.tempShowInvalidText(); return;
+      }
+
+      // validate videoMeta
+      Object.keys(this.input_obj).forEach((videoId) => {
+        if (typeof videoId !== 'string') {
+          this.tempShowInvalidText(); return;
+        }
+
+        const videoMeta = this.input_obj[videoId];
+
+        if (typeof videoMeta !== 'object') {
+          this.tempShowInvalidText(); return;
+        }
+
+        if (
+          (Object.keys(videoMeta).length !== 2)
+          || !('title' in videoMeta)
+          || !('timestamps' in videoMeta)
+        ) { this.tempShowInvalidText(); return; }
+
+        if (typeof videoMeta.title !== 'string') {
+          this.tempShowInvalidText(); return;
+        }
+
+        validateTimestamps(videoMeta.timestamps);
+      });
+
+      // if passes all validation check then will reach here.
+      // commit to both vue state and persistent store.
+      this.overwriteVideosSynced(this.input_obj);
+    },
+    ...mapActions(['overwriteVideosSynced']),
   },
   watch: {
     isUnsafeEnabled(newVal) {
