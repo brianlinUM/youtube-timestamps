@@ -35,6 +35,7 @@ export default {
     return {
       input_obj: {},
       isShowInvalidText: false,
+      isShowSuccessText: false,
     };
   },
   computed: {
@@ -53,12 +54,16 @@ export default {
     buttonText() {
       // invalid condition is first to let it have priority
       if (this.isShowInvalidText) return 'Invalid JSON';
+      if (this.isShowSuccessText) return 'Import Success!';
       if (!this.isNoVideos) return 'Delete all data first';
       if (!this.isValidFileUploaded) return 'Select valid JSON first';
 
       return 'Attempt import';
     },
     buttonColor() {
+      if (this.isShowInvalidText) return 'btn-warning';
+      if (this.isShowSuccessText) return 'btn-success';
+
       return this.isAllowImport ? 'btn-primary' : 'btn-secondary';
     },
   },
@@ -85,8 +90,15 @@ export default {
       }
     },
     tempShowInvalidText() {
+      this.isShowSuccessText = false;
       this.isShowInvalidText = true;
       setTimeout(() => { this.isShowInvalidText = false; }, 2000);
+      this.resetInput();
+    },
+    tempShowSuccessText() {
+      this.isShowInvalidText = false;
+      this.isShowSuccessText = true;
+      setTimeout(() => { this.isShowSuccessText = false; }, 3000);
       this.resetInput();
     },
     resetInput() {
@@ -152,6 +164,7 @@ export default {
         // if passes all validation check then will reach here.
         // commit to both vue state and persistent store.
         this.overwriteVideosSynced(this.input_obj);
+        this.tempShowSuccessText();
       } else {
         this.tempShowInvalidText();
       }
