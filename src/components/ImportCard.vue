@@ -6,7 +6,8 @@
     <p>
       Warning: this overwrites the existing data.
       As a precaution, there needs to be no existing data in the app.
-      If the button is disabled, check that the JSON is valid.
+      If the button is disabled, check that the JSON is valid. Only import
+      data that originated from this extension.
     </p>
     <div>
       <input ref="fileUpload"

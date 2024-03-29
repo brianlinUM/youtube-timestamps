@@ -41,7 +41,9 @@ export default {
       // better since this is the source of truth.
       getAllData((allData) => {
         const result = JSON.stringify(allData);
-        const url = `data:application/json,${result}`;
+        // this 'escapes' special chars
+        const encoded = encodeURIComponent(result);
+        const url = `data:application/json,${encoded}`;
 
         // Save as file
         chrome.downloads.download({
