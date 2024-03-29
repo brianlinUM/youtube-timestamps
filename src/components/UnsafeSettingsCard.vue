@@ -11,7 +11,7 @@
           <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
         </svg>
 
-        Unsafe Functions
+        Caution Zone
       </span>
       <button id="unsafeToggle" type="button" class="btn btn-sm btn-danger"
         data-bs-toggle="collapse" data-bs-target="#unsafe-options"
