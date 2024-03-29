@@ -89,3 +89,4 @@ See `changelog.md` for additional details, and `Plans.md` for ideas.
 - **v0.2.0**: released April 11th, 2021. Improves UI and supports custom labels for timestamps.
 - **v0.2.1**: released May 6th, 2021. Fixes issue when adding timestamp if content script is not loaded.
 - **v1.0.0**: released August 31st, 2021. First release on chrome store. Added various UX improvements, including search filter, success confirmation popup, and ordering of video list by title. Changed extension name to "YouTube Time Labels".
+- **v1.1.0**: released March 29th, 2024. Many new features, including ability to search by label, and import/export data. UX improvements such as displaying currently playing video first, and moving delete all button somewhere safer. Various bug fixes. Also added ESLint.

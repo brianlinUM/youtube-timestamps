@@ -1,6 +1,6 @@
 # Changelog
 ### v1.1.0:
-*TODO ADD DATE*
+*March 29th, 2024*
 - Add ESLint with Airbnb Style Guide, fixed styling in source code.
 - Fix bug allowing user to add timestamp when video hasn't loaded yet, resulting in error.
 - Fix bug allowing user to add timestamp when video is invalid.
