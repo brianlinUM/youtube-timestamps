@@ -1,7 +1,23 @@
 # Changelog
+### v1.1.0:
+*March 29th, 2024*
+- Add ESLint with Airbnb Style Guide, fixed styling in source code.
+- Fix bug allowing user to add timestamp when video hasn't loaded yet, resulting in error.
+- Fix bug allowing user to add timestamp when video is invalid.
+- Fix bug introduced by an update for Chrome API of sendMessage to use promises, leading to uncaught promise error.
+- Apply non-breaking updates to npm packages to fix most vulnerabilities.
+- Removed jest and related packages.
+- Add tooltip to clear search button.
+- Add label search that is in conjunction with existing title search.
+- If video list contains a currently playing video, that video will be placed first and emphasised (bolded).
+- Fix duplicate id error in timestamp label textarea. Also added id to other forms.
+- Added settings modal, button in header. Moved "about me" modal button to footer.
+- Moved remove all button into settings, with multiple safeguards against accidental clicks.
+- Add import/export JSON function to settings. Requires a new "downloads" manifest.json permission.
+
 ### v1.0.0:
 *August 31st, 2021*
-- Improve responsiveness by alerting user when timestamp is added successsfully.
+- Improve responsiveness by alerting user when timestamp is added successfully.
 - Add 'About' information popup.
 - List videos by title, in UNICODE order.
 - Implement filter searching for videos.
