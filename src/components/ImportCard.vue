@@ -76,6 +76,10 @@ export default {
       try {
         const obj = JSON.parse(event.target.result);
         this.input_obj = obj;
+        // perform check as soon as uploaded.
+        if (!this.validateImportFile()) {
+          this.tempShowInvalidText();
+        }
       } catch (e) {
         this.tempShowInvalidText();
       }
@@ -92,55 +96,65 @@ export default {
       // does not count as a change event.
       this.input_obj = {};
     },
-    attemptOverwrite() {
+    // checks that the uploaded JSON file is valid and well-formed.
+    // returns true if passes, false otherwise.
+    validateImportFile() {
       const isPositiveInt = (str) => /^\+?(0|[1-9]\d*)$/.test(str);
 
       // First validate the imported data.
       const validateTimestamps = (timestamps) => {
         if (typeof timestamps !== 'object') {
-          this.tempShowInvalidText(); return;
+          return false;
         }
-        Object.entries(timestamps).forEach((entry) => {
+
+        const res = Object.entries(timestamps).every((entry) => {
           const [timestamp, label] = entry;
-          if (
-            (!isPositiveInt(timestamp))
-            || (typeof label !== 'string')
-          ) this.tempShowInvalidText();
+          return (isPositiveInt(timestamp)) && (typeof label === 'string');
         });
+
+        return res;
       };
 
       if (typeof this.input_obj !== 'object') {
-        this.tempShowInvalidText(); return;
+        return false;
       }
 
       // validate videoMeta
-      Object.keys(this.input_obj).forEach((videoId) => {
+      const res = Object.keys(this.input_obj).every((videoId) => {
         if (typeof videoId !== 'string') {
-          this.tempShowInvalidText(); return;
+          return false;
         }
 
         const videoMeta = this.input_obj[videoId];
 
         if (typeof videoMeta !== 'object') {
-          this.tempShowInvalidText(); return;
+          return false;
         }
 
         if (
           (Object.keys(videoMeta).length !== 2)
           || !('title' in videoMeta)
           || !('timestamps' in videoMeta)
-        ) { this.tempShowInvalidText(); return; }
+        ) { return false; }
 
         if (typeof videoMeta.title !== 'string') {
-          this.tempShowInvalidText(); return;
+          return false;
         }
 
-        validateTimestamps(videoMeta.timestamps);
+        return validateTimestamps(videoMeta.timestamps);
       });
 
-      // if passes all validation check then will reach here.
-      // commit to both vue state and persistent store.
-      this.overwriteVideosSynced(this.input_obj);
+      return res;
+    },
+    attemptOverwrite() {
+      // check again just in case somehow manage to skip check on upload.
+      if (this.validateImportFile()) {
+        // if passes all validation check then will reach here.
+        // commit to both vue state and persistent store.
+        this.overwriteVideosSynced(this.input_obj);
+      } else {
+        this.tempShowInvalidText();
+      }
     },
     ...mapActions(['overwriteVideosSynced']),
   },
