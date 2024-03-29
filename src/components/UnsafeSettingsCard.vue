@@ -29,7 +29,6 @@
       <li class="list-group-item">
         <ImportCard :isUnsafeEnabled="isUnsafeEnabled"/>
       </li>
-      <li class="list-group-item">Test 3</li>
     </ul>
   </div>
 </template>
